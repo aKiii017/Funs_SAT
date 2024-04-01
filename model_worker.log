@@ -1,0 +1,2 @@
+nohup: ignoring input
+/home/mail-ecnu/Public/wjh/miniconda3/envs/funs/bin/python3: Error while finding module specification for 'fastchat.serve.model_worker' (ModuleNotFoundError: No module named 'fastchat')
