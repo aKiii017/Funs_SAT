@@ -220,9 +220,9 @@ def text_to_program(code: str) -> Program:
 
 def text_to_function(text: str) -> Function:
     """Returns Function object by parsing input text using Python AST."""
-    print("test\n",text)
-    text="class Solver {};\n"+text
-    print("test\n",text)
+    # print("test\n",text)
+    # text="class Solver {};\n"+text
+    # print("test\n",text)
     program = text_to_program(text)
     if len(program.functions) != 1:
         raise ValueError(f'Only one function expected, got {len(program.functions)}'

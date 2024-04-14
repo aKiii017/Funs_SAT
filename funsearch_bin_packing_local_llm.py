@@ -30,14 +30,22 @@ class LocalLLM(sampler.LLM):
                             #  'Only output the Python code, no descriptions.'
                             #  'Only generate the improved version of priority function,dont generate extra functions and other code annotation.'
                             #  'Improved function should be different from previous functions,and must inclue return value.Do not generate same function and code annotation.'
-                             'Given the existing priority_v0 function, please generate an optimized version named priority_v*. '
-                             'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
-                             'The function is used in SAT solvers to increase the activity of a variable.'
-                             'In the context of SAT solvers that use the VSIDS heuristic, the activity of a variable represents how often the variable has been involved in conflicts.'
-                             'The new versions should try to help SAT solver escape from local optimum.'
-                             'Ensure the function is significantly different and more advanced than the prior versions. '
-                             'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-                             'Existing priority_v0 function for reference:'
+                            'Given the existing priority_v0 function, please generate an optimized version named priority_v*. '
+                            'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
+                            'The function is used in SAT solvers to increase the activity of a variable.'
+                            'In the context of SAT solvers that use the VSIDS heuristic, the activity of a variable represents how often the variable has been involved in conflicts.'
+                            'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
+                            'Ensure the function is significantly different and more advanced than the prior versions. '
+                            'Only the C++ code for the function is required, without any additional descriptions or annotations.'
+                            'Existing priority_v0 function for reference:'
+                            'Args:'
+                                'activity: An array that represents the activity level of variables.'
+                                'var_inc: var_inc: A base increment (default is 1) representing the basic amount by which a variable\'s activity is increased with each conflict.'
+                                'vars: An integer representing the total number of variables.'
+                                'vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.'
+                                    'If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  '
+                                'var: The variable number whose activity is to be increased.' 
+                                'coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.'
                              )
         # additional_prompt = ('Be creative and you can insert multiple if-else and for-loop in the code logic.Please provide the improved priority function which is used in bin packiong problem,and just output the "priority" function, no other explanations needed.Your generated function must be different from previous functions.Use the python code to response.\nFunctions shows below.')
         self._batch_inference = batch_inference
@@ -181,21 +189,21 @@ class Sandbox(evaluator.Sandbox):
             script_path = os.path.expanduser("/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main/EasySAT.sh")
 
            
-            command_make = [
-                "make","-C",
-                "/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main",
-                # script_path
-            ]
+            # command_make = [
+            #     "make","-C",
+            #     "/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main",
+            #     # script_path
+            # ]
             import re
 
             command_run = [
                 # "make","-C",
-                # "/mnt/data/linyanqiu/funsearch_sat_cpp/implementation/EasySAT-main",
+                # "/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main",
                 script_path
             ]
             import re
             # 运行命令
-            subprocess.run(command_make, capture_output=True, text=True, check=True)
+            # subprocess.run(command_make, capture_output=True, text=True, check=True)
             result = subprocess.run(command_run, capture_output=True, text=True, check=True)
 
             flag = result.returncode
@@ -210,7 +218,6 @@ class Sandbox(evaluator.Sandbox):
             if flag == 0:
                 # 确保结果被正确解析并放入队列
                 # result_queue.put((result, True))
-                print(result)
                 return result,True
             else:
                 # result_queue.put((None, False))
@@ -311,13 +318,19 @@ class Sandbox(evaluator.Sandbox):
 specification = r'''
 #include "EasySAT.hpp"
 #include <fstream>
-class Solver {};
-void Solver::priority(int var, double coeff) {
+using namespace std;
+
+void priority(double*& activity, double& var_inc, int vars, Heap<GreaterActivity>& vsids, int var, double coeff) {
     /*
     The function is used in SAT solvers to increase the activity of a variable.
     Args:
-        var: The variable whose activity is to be changed. 
-        coeff: To adjust the coefficient of variable activity. 
+        activity: An array that represents the activity level of variables.
+        var_inc: A base increment (default is 1) representing the basic amount by which a variable's activity is increased with each conflict.
+        vars: An integer representing the total number of variables.
+        vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.
+            If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  
+        var: The variable number whose activity is to be increased. 
+        coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.
     */
     if ((activity[var] += var_inc * coeff) > 1e100) {           // Update score and prevent float overflow
         for (int i = 1; i <= vars; i++) activity[i] *= 1e-100;
@@ -342,5 +355,5 @@ if __name__ == '__main__':
         config=config,
         max_sample_nums=global_max_sample_num,
         class_config=class_config,
-        log_dir='logs/funsearch_local_llm_t100_n10_032601',
+        log_dir='logs/funsearch_local_llm_test2022_040701',
     )

@@ -121,9 +121,10 @@ void Solver::alloc_memory() {
 }
 
 // void Solver::bump_var(int var, double coeff) {
-//     if ((activity[var] += var_inc * coeff) > 1e100) {           // Update score and prevent float overflow
-//         for (int i = 1; i <= vars; i++) activity[i] *= 1e-100;
-//         var_inc *= 1e-100;}
+//     // if ((activity[var] += var_inc * coeff) > 1e100) {           // Update score and prevent float overflow
+//     //     for (int i = 1; i <= vars; i++) activity[i] *= 1e-100;
+//     //     var_inc *= 1e-100;}
+//     priority(activity, var_inc, vars, var, coeff);
 //     if (vsids.inHeap(var)) vsids.update(var);                 // update heap
 // }
 
@@ -188,7 +189,8 @@ int Solver::analyze(int conflict, int &backtrackLevel, int &lbd) {
         for (int i = (resolve_lit == 0 ? 0 : 1); i < (int)c.lit.size(); i++) {
             int var = abs(c[i]);
             if (mark[var] != time_stamp && level[var] > 0) {
-                priority(var, 0.5);
+                // bump_var(var, 0.5);
+                priority(activity, var_inc, vars, vsids, var, 0.5);
                 bump.push_back(var);
                 mark[var] = time_stamp;
                 if (level[var] >= highestLevel) should_visit_ct++;
@@ -222,7 +224,7 @@ int Solver::analyze(int conflict, int &backtrackLevel, int &lbd) {
         learnt[max_id] = learnt[1], learnt[1] = p, backtrackLevel = level[abs(p)];
     }
     for (int i = 0; i < (int)bump.size(); i++)       // heuristically bump some variables.
-        if (level[bump[i]] >= backtrackLevel - 1) priority(bump[i], 1);
+        if (level[bump[i]] >= backtrackLevel - 1)  priority(activity, var_inc, vars, vsids, bump[i], 1); // bump_var(bump[i], 1);//
     return 0;
 }
 

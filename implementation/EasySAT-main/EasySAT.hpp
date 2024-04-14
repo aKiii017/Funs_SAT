@@ -87,7 +87,7 @@ public:
     int  solve();                                           // Solving.
     int  decide();                                          // Pick desicion variable.
     int  add_clause(std::vector<int> &c);                    // add new clause to clause database.
-    void priority(int var, double mult);                     // update activity      
+    // void priority(int var, double mult);                     // update activity      
     void restart();                                         // do restart.                                      
     void reduce();                                          // do clause management.
     void rephase();                                         // do rephase.

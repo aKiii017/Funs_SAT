@@ -228,7 +228,7 @@ class Evaluator:
     def extract_priority_body(self, code):
         import re
         # 查找函数开始的位置
-        pattern_start = r"void Solver::priority\(.*?\)\s*{"
+        pattern_start = r"void priority\(.*?\)\s*{"
         start_match = re.search(pattern_start, code)
         if not start_match:
             return "Function start not found."
@@ -270,9 +270,9 @@ class Evaluator:
         with open(file_path, 'r') as file:
             content = file.read()
 
-        # 正则表达式匹配Solver::priority函数的定义及其函数体
+        # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
-        pattern = r"(void Solver::priority\(.*?\)\s*{)([\s\S]*?)(^\})"
+        pattern = r"(void priority\(.*?\)\s*{)([\s\S]*?)(^\})"
 
         # 构建新的函数体，确保新代码的正确缩进
         replacement = r"\1\n" + new_body_code.replace("\n", "\n    ") + r"\n\3"
