@@ -53,25 +53,29 @@ class LocalLLM(sampler.LLM):
         self._additional_prompt = additional_prompt
         self._trim = True
 
-    def draw_samples(self, prompt: str) -> Collection[str]:
+    def draw_samples(self, prompt: str,count_list) -> Collection[str]:
         """Returns multiple predicted continuations of `prompt`."""
         all_samples = []
         if self._batch_inference:
-            response = self._do_request(prompt)
+            response = self._do_request(prompt,count_list)
             for res in response:
                 all_samples.append(res)
         else:
             for _ in range(self._samples_per_prompt):
-                response = self._do_request(prompt)
+                response = self._do_request(prompt,count_list)
                 all_samples.append(response)
         return all_samples
 
-    def _do_request(self, content: str) -> str:
+    def _do_request(self, content: str,count_list) -> str:
         import re
         # import pdb;pdb.set_trace()
         content = '\n'.join([self._additional_prompt,content])
         content = '\n'.join([content, 'Your task is to create the optimized priority_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
-        
+        content = '\n'.join([content, 'Dict: '+str(count_list)])
+        content = '\n'.join([content, 'In this Dict, the key represents time in seconds, and the value represents the number of instances successfully executed in the corresponding time. You should try to maximize the values.'])
+
+        # content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within 500s, you need to try to maximum this value.'])
+       
         # first_function_end = content.find('return priorities') + len('return priorities')
         # content = content[:first_function_end] + re.sub(r'\ndef priority_v\d.*?(?=\ndef|$)', '', content[first_function_end:], flags=re.DOTALL)
         # content = '\n'.join([self._additional_prompt, content])
@@ -204,12 +208,21 @@ class Sandbox(evaluator.Sandbox):
             import re
             # 运行命令
             # subprocess.run(command_make, capture_output=True, text=True, check=True)
-            result = subprocess.run(command_run, capture_output=True, text=True, check=True)
+            out = subprocess.run(command_run, capture_output=True, text=True, check=True)
 
-            flag = result.returncode
+            flag = out.returncode
             # result = float(result.stdout)
-            result = re.search(r"AVGtime: (-\d+(\.+\d+)?)", result.stdout)
-            result = float(result.group(1))
+            # result = re.search(r"AVGtime: (-\d+(\.+\d+)?)", result.stdout)
+            result = re.search(r"SUCCESScount: (\d+(\.+\d+)?)", out.stdout)
+            result = int(result.group(1))
+
+            count_list={}
+            for i in [100,200,300,400,500,1000]:
+                value = re.search(str(i)+r"Scount: (\d+(\.+\d+)?)", out.stdout)
+                value = int(value.group(1))
+                count_list[i] = value
+
+            print(count_list)
             # result = re.search(r"result:(\d+(\.\d+)?)", result.stdout)
             # result = re.search(r"result:(\d+(\.\d+)?)", result.stdout)
 
@@ -218,14 +231,14 @@ class Sandbox(evaluator.Sandbox):
             if flag == 0:
                 # 确保结果被正确解析并放入队列
                 # result_queue.put((result, True))
-                return result,True
+                return result,True, count_list
             else:
                 # result_queue.put((None, False))
-                return None, False
+                return None, False, count_list
         except Exception as e:
             # 如果出现异常，我们认为执行失败
             # result_queue.put((None, False))
-            return None, False
+            return None, False, {}
     def run(
             self,
             program: str,
@@ -264,14 +277,14 @@ class Sandbox(evaluator.Sandbox):
 
         # 这里我们假设`_compile_and_run_function`将负责使用`subprocess`来执行程序
         # 注意：由于我们不再直接使用multiprocessing.Process，下面的调用方式需要调整
-        
-        isok, result = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate)
+        count_list={}
+        isok, result, count_list = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate)
         
 
         # 获取结果，这部分可能需要根据你的实际情况进行调整
         #TODO:1.需要处理不运行or效果不如最佳的结果（也可以不做统计，仅保留最后最优的结果？）2.修改evulate的process为5个(done) 3.需要对启发式的bin packing code重构以兼容双NUMA的request(done)
          
-        results = isok,result
+        results = isok,result, count_list
         
         if self._verbose:
             print(f'================= Evaluated Program =================')
@@ -321,21 +334,29 @@ specification = r'''
 using namespace std;
 
 void priority(double*& activity, double& var_inc, int vars, Heap<GreaterActivity>& vsids, int var, double coeff) {
-    /*
-    The function is used in SAT solvers to increase the activity of a variable.
-    Args:
-        activity: An array that represents the activity level of variables.
-        var_inc: A base increment (default is 1) representing the basic amount by which a variable's activity is increased with each conflict.
-        vars: An integer representing the total number of variables.
-        vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.
-            If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  
-        var: The variable number whose activity is to be increased. 
-        coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.
-    */
-    if ((activity[var] += var_inc * coeff) > 1e100) {           // Update score and prevent float overflow
-        for (int i = 1; i <= vars; i++) activity[i] *= 1e-100;
-        var_inc *= 1e-100;}
-    if (vsids.inHeap(var)) vsids.update(var);                 // update heap
+    const double MAX_ACTIVITY = 700, ACTIVITY_FACTOR = 0.9, DECAY_FACTOR = 0.95, DECAY_THRESHOLD = 0.001;
+    double& var_activity = activity[var];
+
+    // Increase the activity of the variable by the coeff
+    var_activity += coeff;
+
+    // Increase the base increment var_inc if the variable's activity is at the maximum threshold
+    if (var_activity >= MAX_ACTIVITY) {
+        var_activity = MAX_ACTIVITY;
+        for (int i = 0; i < vars; ++i)
+            activity[i] *= ACTIVITY_FACTOR;
+        var_inc *= ACTIVITY_FACTOR;
+    }
+    // If the variable's activity is below the decay threshold, reset activity to 0
+    else if (var_activity < DECAY_THRESHOLD) {
+        activity[var] = 0.0;
+        var_inc *= DECAY_FACTOR;
+        for (int i = 0; i < vars; ++i)
+            activity[i] *= DECAY_FACTOR;
+    }
+
+    // Update the variable in the heap
+    vsids.update(var);
 }
 
 '''
@@ -355,5 +376,5 @@ if __name__ == '__main__':
         config=config,
         max_sample_nums=global_max_sample_num,
         class_config=class_config,
-        log_dir='logs/funsearch_local_llm_test2022_040701',
+        log_dir='logs/funsearch_local_llm_2023list1000_1000_042001',
     )

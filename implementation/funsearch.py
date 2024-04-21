@@ -86,7 +86,7 @@ def main(
 
     # We send the initial implementation to be analysed by one of the evaluators.
     initial = template.get_function(function_to_evolve).body
-    evaluators[0].analyse(initial, island_id=None, version_generated=None, profiler=profiler)
+    count_list=evaluators[0].analyse(initial, island_id=None, version_generated=None, profiler=profiler)
 
     # Set global max sample nums.
     samplers = [sampler.Sampler(database, evaluators, config.samples_per_prompt, max_sample_nums=max_sample_nums, llm_class=class_config.llm_class)
@@ -96,4 +96,4 @@ def main(
     # sampler enters an infinite loop, without parallelization only the first
     # sampler will do any work.
     for s in samplers:
-        s.sample(profiler=profiler)
+        s.sample(count_list, profiler=profiler)

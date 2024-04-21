@@ -291,7 +291,7 @@ class Evaluator:
             island_id: int | None,
             version_generated: int | None,
             **kwargs  # RZ: add this to do profile
-    ) -> None:
+    ) -> dict:
         """Compiles the sample into a program and executes it on test inputs.
 
         Args:
@@ -299,6 +299,7 @@ class Evaluator:
                     no description before it (except annotations), no symbols before it.
                     Or the "_sample_to_program" function will fail!!!
         """
+        count_list={}
         # RZ: 'new_function' refers to the evolved function ('def' statement + function body)
         # RZ: 'program' is the template code + new_function
         new_function, program = _sample_to_program(
@@ -312,7 +313,7 @@ class Evaluator:
             # current_input is a key (perhaps in string type)
             # do not ignore this when implementing SandBox !!!
             
-            test_output, runs_ok = self._sandbox.run(
+            test_output, runs_ok, count_list = self._sandbox.run(
                 program, self._function_to_run, self._function_to_evolve, self._inputs, current_input,
                 self._timeout_seconds
             )
@@ -354,3 +355,5 @@ class Evaluator:
                 new_function.sample_time = sample_time
                 new_function.evaluate_time = evaluate_time
                 profiler.register_function(new_function)
+
+        return count_list

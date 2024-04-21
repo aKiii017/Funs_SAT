@@ -37,7 +37,7 @@ class LLM(ABC):
         raise NotImplementedError('Must provide a language model.')
 
     @abstractmethod
-    def draw_samples(self, prompt: str) -> Collection[str]:
+    def draw_samples(self, prompt: str,count_list) -> Collection[str]:
         """Returns multiple predicted continuations of `prompt`."""
         return [self._draw_sample(prompt) for _ in range(self._samples_per_prompt)]
 
@@ -61,7 +61,7 @@ class Sampler:
         self._llm = llm_class(samples_per_prompt)
         self._max_sample_nums = max_sample_nums
 
-    def sample(self, **kwargs):
+    def sample(self, count_list, **kwargs):
         """Continuously gets prompts, samples programs, sends them for analysis.
         """
         while True:
@@ -72,7 +72,7 @@ class Sampler:
             prompt = self._database.get_prompt()
             reset_time = time.time()
             
-            samples = self._llm.draw_samples(prompt.code)
+            samples = self._llm.draw_samples(prompt.code, count_list)
             
             sample_time = (time.time() - reset_time) / self._samples_per_prompt
             # This loop can be executed in parallel on remote evaluator machines.
