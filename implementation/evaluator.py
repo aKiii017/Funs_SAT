@@ -266,7 +266,7 @@ class Evaluator:
     
     def update_priority_function_body(self, new_body_code):
         import re
-        file_path = '/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main/priority.cpp'
+        file_path = '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/priority.cpp'
         with open(file_path, 'r') as file:
             content = file.read()
 

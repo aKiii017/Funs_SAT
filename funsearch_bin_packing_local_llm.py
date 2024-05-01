@@ -11,6 +11,7 @@ from implementation import evaluator
 from implementation import code_manipulation
 import bin_packing_utils
 
+import os
 
 class LocalLLM(sampler.LLM):
     """Language model that predicts continuation of provided source code.
@@ -71,8 +72,25 @@ class LocalLLM(sampler.LLM):
         # import pdb;pdb.set_trace()
         content = '\n'.join([self._additional_prompt,content])
         content = '\n'.join([content, 'Your task is to create the optimized priority_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
-        content = '\n'.join([content, 'Dict: '+str(count_list)])
-        content = '\n'.join([content, 'In this Dict, the key represents time in seconds, and the value represents the number of instances successfully executed in the corresponding time. You should try to maximize the values.'])
+        content = '\n'.join([content, 'Do not include exceptional interruptions.'])
+        content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within 700s, you need to try to maximum this value.'])
+        content = '\n'.join([content, 'This Dict is provided for reference: '+str(count_list)])
+        content = '\n'.join([content, 'In this Dict, the key represents time in seconds, and the value represents the number of instances successfully executed in the corresponding time.'])
+        
+        JSONfile='JSONfile/2023list1000_1000_043001.json'
+        if not os.path.exists(JSONfile):
+            with open(JSONfile, 'w') as outfile:
+                data = []
+        else:
+            with open(JSONfile, 'r') as infile:
+                try:
+                # 尝试加载JSON数据
+                    data = json.load(infile)
+                except json.JSONDecodeError:
+            # 如果文件为空或不是有效的JSON格式，初始化为空数组
+                    data = []    # 文件存在，打开文件        
+
+        new_record = {'id': len(data) + 1, 'prompt': content, 'response': None}
 
         # content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within 500s, you need to try to maximum this value.'])
        
@@ -112,7 +130,7 @@ class LocalLLM(sampler.LLM):
                 
                 from openai import OpenAI
                 openai_api_key = "EMPTY"
-                openai_api_base = "http://localhost:8000/v1"
+                openai_api_base = "http://172.23.148.56:8000/v1"
                 
                 # --------------Local implement------------------------
                 # from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -131,7 +149,7 @@ class LocalLLM(sampler.LLM):
                 
                 # --------------api implement------------------------
                 openai_api_key = "EMPTY"
-                openai_api_base = "http://localhost:8000/v1"
+                openai_api_base = "http://172.23.148.56:8000/v1"
                 client = OpenAI(
                     api_key=openai_api_key,
                     base_url=openai_api_base,
@@ -144,7 +162,16 @@ class LocalLLM(sampler.LLM):
                 
                 print("Completion result:", json.loads(completion.json())['choices'][0]['text'])
                 response = json.loads(completion.json())['choices'][0]['text'] #给model发送prompt
-                
+
+                new_record['response'] = response
+
+                data.append(new_record)
+
+                with open(JSONfile, 'w') as outfile:
+                    json.dump(data, outfile, indent=4)
+
+
+
                 # import pdb;pdb.set_trace()
                 # --------------api implement------------------------
                 print('------------old------------')
@@ -190,19 +217,12 @@ class Sandbox(evaluator.Sandbox):
             import subprocess
             # conda_env = 'sf'
             # script_path = os.path.expanduser("~/funsearch_vm_schecduling/implementation/vm/VMAgent_plus/vmagent/test_baselines.py")
-            script_path = os.path.expanduser("/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main/EasySAT.sh")
+            script_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/EasySAT.sh")
 
            
-            # command_make = [
-            #     "make","-C",
-            #     "/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main",
-            #     # script_path
-            # ]
             import re
 
             command_run = [
-                # "make","-C",
-                # "/mnt/data/linyanqiu/Fun_SAT/implementation/EasySAT-main",
                 script_path
             ]
             import re
@@ -212,12 +232,15 @@ class Sandbox(evaluator.Sandbox):
 
             flag = out.returncode
             # result = float(result.stdout)
-            # result = re.search(r"AVGtime: (-\d+(\.+\d+)?)", result.stdout)
+            par2 = re.search(r"AVGtime: (-\d+(\.+\d+)?)", out.stdout)
+            par2 = float(par2.group(1))
+            print("par2:",par2)
+
             result = re.search(r"SUCCESScount: (\d+(\.+\d+)?)", out.stdout)
             result = int(result.group(1))
 
             count_list={}
-            for i in [100,200,300,400,500,1000]:
+            for i in [100,200,300,400,500,700,1000]:
                 value = re.search(str(i)+r"Scount: (\d+(\.+\d+)?)", out.stdout)
                 value = int(value.group(1))
                 count_list[i] = value
@@ -334,31 +357,46 @@ specification = r'''
 using namespace std;
 
 void priority(double*& activity, double& var_inc, int vars, Heap<GreaterActivity>& vsids, int var, double coeff) {
-    const double MAX_ACTIVITY = 700, ACTIVITY_FACTOR = 0.9, DECAY_FACTOR = 0.95, DECAY_THRESHOLD = 0.001;
-    double& var_activity = activity[var];
+    double maxActivity = 700, decayFactor = 0.95, decayThreshold = 0.001, coefficientFactor = 2, activityFactor = 0.9, newActivity;
+    double &var_activity = activity[var];
 
-    // Increase the activity of the variable by the coeff
-    var_activity += coeff;
-
-    // Increase the base increment var_inc if the variable's activity is at the maximum threshold
-    if (var_activity >= MAX_ACTIVITY) {
-        var_activity = MAX_ACTIVITY;
-        for (int i = 0; i < vars; ++i)
-            activity[i] *= ACTIVITY_FACTOR;
-        var_inc *= ACTIVITY_FACTOR;
+    // Increase the activity of the variable by the coeff and apply coefficient factor
+    newActivity = var_activity + coeff * coefficientFactor;
+    if(newActivity > maxActivity)
+    {
+        activity[var] = maxActivity;
+        var_inc *= activityFactor;
+        var_activity = maxActivity;
+        // decay other variables' activity
+        for(int i = 0; i < vars; ++i)
+        {
+            if(i != var)
+            {
+                activity[i] = max(activity[i] * decayFactor, 0.0);
+            }
+        }
     }
-    // If the variable's activity is below the decay threshold, reset activity to 0
-    else if (var_activity < DECAY_THRESHOLD) {
-        activity[var] = 0.0;
-        var_inc *= DECAY_FACTOR;
-        for (int i = 0; i < vars; ++i)
-            activity[i] *= DECAY_FACTOR;
+    else
+    {
+        activity[var] = newActivity;
+        if(var_activity < decayThreshold)
+        {
+            var_activity = 0.0;
+            var_inc *= decayFactor;
+            // decay other variables' activity
+            for(int i = 0; i < vars; ++i)
+            {
+                if(i != var)
+                {
+                    activity[i] = max(activity[i] * decayFactor, 0.0);
+                }
+            }
+        }
     }
 
     // Update the variable in the heap
     vsids.update(var);
 }
-
 '''
 
 # It should be noted that the if __name__ == '__main__' is required.
@@ -376,5 +414,5 @@ if __name__ == '__main__':
         config=config,
         max_sample_nums=global_max_sample_num,
         class_config=class_config,
-        log_dir='logs/funsearch_local_llm_2023list1000_1000_042001',
+        log_dir='logs/funsearch_local_llm_2023list1000_1000_043001',
     )
