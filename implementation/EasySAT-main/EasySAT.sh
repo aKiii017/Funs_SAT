@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# 检查参数数量
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 <folder_path> <timeout_value> <parallel_size>" 
+  exit 1
+fi
+
 # 在开始处理之前删除旧的results.txt文件，确保从干净的状态开始
 rm -f results.txt
 
@@ -15,8 +21,10 @@ fi
 
 STARTtime=$(date +%s.%N)
 
-timeout_value=1000
-folder_path="/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2023list1000"
+# 从命令行参数获取超时时间和文件夹路径
+folder_path=$1
+timeout_value=$2
+parallel_size=$3
 
 # 读取目录中的前400个.cnf文件
 file_names=$(find "$folder_path" -type f -name "*.cnf" | head -n 400)
@@ -61,7 +69,7 @@ export folder_path
 while read -r file_name; do
   counter=$((counter + 1))
   process_task "$file_name" &
-  if (( counter % 40 == 0 )); then
+  if (( counter % parallel_size == 0 )); then
     wait # 等待这一批次的任务完成
   fi
 done <<< "$file_names"

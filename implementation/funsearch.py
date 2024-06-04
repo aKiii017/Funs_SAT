@@ -39,10 +39,10 @@ def _extract_function_names(specification: str) -> Tuple[str, str]:
     The function labeled with '@funsearch.evolve' is the function to be searched (like 'greedy' in cap-set).
     This function (_extract_function_names) makes sure that these decorators appears in the specification.
     """
-    run_functions = ['priority'] #code_manipulation.yield_decorated(specification, '@funsearch.run')
+    run_functions = ['Internal::bump_variable_score'] #code_manipulation.yield_decorated(specification, '@funsearch.run')
     if len(run_functions) != 1:
         raise ValueError('Expected 1 function decorated with `@funsearch.run`.')
-    evolve_functions = ['priority'] #code_manipulation.yield_decorated(specification, '@funsearch.evolve')
+    evolve_functions = ['Internal::bump_variable_score'] #code_manipulation.yield_decorated(specification, '@funsearch.evolve')
     if len(evolve_functions) != 1:
         raise ValueError('Expected 1 function decorated with `@funsearch.evolve`.')
     return evolve_functions[0], run_functions[0]
@@ -63,6 +63,8 @@ def main(
         config       : config file.
         max_sample_nums: the maximum samples nums from LLM. 'None' refers to no stop.
     """
+    # include_paths = ["/home/ubuntu/Fun_SAT/implementation/EasySAT-main"]
+
     function_to_evolve, function_to_run = _extract_function_names(specification)
     template = code_manipulation.text_to_program(specification)
     database = programs_database.ProgramsDatabase(config.programs_database, template, function_to_evolve)

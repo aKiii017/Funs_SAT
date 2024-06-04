@@ -1,0 +1,28 @@
+void rephase(int& rephases, int& threshold, int& rephase_limit) {
+    const int conflicts_max = 5000;
+    const double threshold_default = 0.9;
+    const double threshold_min = 0.05;
+    const int rephase_limit_increment_base = 8192;
+    const double threshold_decrease_factor = 0.8;
+    const int rephase_limit_increment_factor1 = 2;
+    const int rephase_limit_increment_factor2 = 4;
+    const int rephase_limit_reset_factor = 5000;
+
+    // Calculate increment factor based on rephases
+    int increment_factor = (rephases > conflicts_max) ? rephase_limit_increment_base : 
+                           ((rephases > 1000) ? rephase_limit_increment_base * rephase_limit_increment_factor1 : 
+                           rephase_limit_increment_base * rephase_limit_increment_factor2);
+    // Increment rephase_limit
+    rephase_limit += increment_factor;
+
+    // Decrease threshold if rephases exceed conflicts_max or rephases > 200
+    if (rephases > conflicts_max || rephases > 200)
+        threshold *= threshold_decrease_factor;
+
+    // Reset threshold and rephases if new threshold is below threshold_min
+    if (threshold < threshold_min) {
+        rephases = 0;
+        threshold = threshold_default;
+        rephase_limit = rephase_limit_reset_factor;
+    }
+}

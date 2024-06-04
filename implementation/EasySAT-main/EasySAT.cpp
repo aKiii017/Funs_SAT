@@ -25,7 +25,9 @@ SOFTWARE.
 ************************************************************************************/
 // #include "EasySAT.hpp"
 // #include <fstream>
-#include "priority.cpp"
+#include "bump_var.cpp"
+#include "rephase.cpp"
+#include "restart_condition.cpp"
 
 #define value(lit) (lit > 0 ? value[lit] : -value[-lit])    // Get the value of a literal
 #define watch(id) (watches[vars + id])                      // Remapping a literal [-maxvar, +maxvar] to its watcher.
@@ -124,7 +126,7 @@ void Solver::alloc_memory() {
 //     // if ((activity[var] += var_inc * coeff) > 1e100) {           // Update score and prevent float overflow
 //     //     for (int i = 1; i <= vars; i++) activity[i] *= 1e-100;
 //     //     var_inc *= 1e-100;}
-//     priority(activity, var_inc, vars, var, coeff);
+//     bump_var(activity, var_inc, vars, var, coeff);
 //     if (vsids.inHeap(var)) vsids.update(var);                 // update heap
 // }
 
@@ -189,8 +191,8 @@ int Solver::analyze(int conflict, int &backtrackLevel, int &lbd) {
         for (int i = (resolve_lit == 0 ? 0 : 1); i < (int)c.lit.size(); i++) {
             int var = abs(c[i]);
             if (mark[var] != time_stamp && level[var] > 0) {
-                // bump_var(var, 0.5);
-                priority(activity, var_inc, vars, vsids, var, 0.5);
+                bump_var(var, 0.5);
+                // bump_var(activity, var_inc, vars, vsids, var, 0.5);
                 bump.push_back(var);
                 mark[var] = time_stamp;
                 if (level[var] >= highestLevel) should_visit_ct++;
@@ -224,7 +226,9 @@ int Solver::analyze(int conflict, int &backtrackLevel, int &lbd) {
         learnt[max_id] = learnt[1], learnt[1] = p, backtrackLevel = level[abs(p)];
     }
     for (int i = 0; i < (int)bump.size(); i++)       // heuristically bump some variables.
-        if (level[bump[i]] >= backtrackLevel - 1)  priority(activity, var_inc, vars, vsids, bump[i], 1); // bump_var(bump[i], 1);//
+        if (level[bump[i]] >= backtrackLevel - 1)  
+            // bump_var(activity, var_inc, vars, vsids, bump[i], 1); 
+            bump_var(bump[i], 1);//
     return 0;
 }
 
@@ -261,9 +265,9 @@ void Solver::restart() {
     else if ((phase_rand -= 20) < 0)for (int i = 1; i <= vars; i++) saved[i] = rand() % 2 ? 1 : -1;
 }
 
-void Solver::rephase() {
-    rephases = 0, threshold *= 0.9, rephase_limit += 8192;
-}
+// void Solver::rephase() {
+//     rephases = 0, threshold *= 0.9, rephase_limit += 8192;
+// }
 
 void Solver::reduce() {
     backtrack(0);
@@ -317,8 +321,8 @@ int Solver::solve() {
             }
         }
         else if (reduces >= reduce_limit) reduce();            
-        else if (lbd_queue_size == 50 && 0.8 * fast_lbd_sum / lbd_queue_size > slow_lbd_sum / conflicts) restart(); 
-        else if (rephases >= rephase_limit) rephase();
+        else if (restart_condition(lbd_queue_size, fast_lbd_sum, slow_lbd_sum, conflicts)) restart(); 
+        else if (rephases >= rephase_limit) rephase(rephases, threshold, rephase_limit);
         else res = decide();
     }
     return res;

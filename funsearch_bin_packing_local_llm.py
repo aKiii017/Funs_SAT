@@ -13,6 +13,14 @@ import bin_packing_utils
 
 import os
 
+data_set='2023list1c'
+timeout_value='100'
+case_num='060201'
+parallel_size='20'
+case_code=data_set+'_'+timeout_value+'_'+case_num
+log_name='logs_cadical'
+time_list=[100,300,500,700,1000]
+
 class LocalLLM(sampler.LLM):
     """Language model that predicts continuation of provided source code.
     """
@@ -26,29 +34,45 @@ class LocalLLM(sampler.LLM):
         # url = 'http://0.0.0.0:8000/v1/completions'
         url = 'http://0.0.0.0:8000/v1/chat/completions'
         additional_prompt = (
-                            # 'Generate a different and more complex Python \'priority\' function. '
-                            #  'Be creative and you can insert multiple if-else and for-loop in the code logic.'
-                            #  'Only output the Python code, no descriptions.'
-                            #  'Only generate the improved version of priority function,dont generate extra functions and other code annotation.'
-                            #  'Improved function should be different from previous functions,and must inclue return value.Do not generate same function and code annotation.'
-                            'Given the existing priority_v0 function, please generate an optimized version named priority_v*. '
+                            'In the context of SAT solvers that use the VSIDS heuristic. '# the activity of a variable represents how often the variable has been involved in conflicts.'
+                            'Given the existing bump_var_v0 function, please generate an optimized version named bump_variable_score_v*. '
+                            # 'The function is used to handle the judgement conditions of restart function.'
+                            # 'The function is used in SAT solvers to increase the activity of a variable.'
+                            'The primary purpose of this function is to increase the specified variable\'s score and rescale the scores if necessary to ensure numerical stability in the scoring system. '
                             'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
-                            'The function is used in SAT solvers to increase the activity of a variable.'
-                            'In the context of SAT solvers that use the VSIDS heuristic, the activity of a variable represents how often the variable has been involved in conflicts.'
                             'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
                             'Ensure the function is significantly different and more advanced than the prior versions. '
                             'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-                            'Existing priority_v0 function for reference:'
+                            'Existing bump_variable_score_v0 function for reference:'
                             'Args:'
-                                'activity: An array that represents the activity level of variables.'
-                                'var_inc: var_inc: A base increment (default is 1) representing the basic amount by which a variable\'s activity is increased with each conflict.'
-                                'vars: An integer representing the total number of variables.'
-                                'vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.'
-                                    'If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  '
-                                'var: The variable number whose activity is to be increased.' 
-                                'coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.'
+                                'lit: The index of a literal, which is a Boolean variable or its negation.'
+                            'The vidx function is used to convert the literal to its corresponding variable index idx. This index is used to access and update the variable\'s score.'
+                            'The score function is called to retrieve the current score of the variable old_score. Scores are typically used in heuristic decision-making to determine which variables should be prioritized for assignment.'
+                            'The current score old_score is increased by an increment value score_inc, resulting in a new score new_score. This increment is a predefined constant used to gradually increase the variable\'s score.'
+                            'The evsids_limit_hit function checks if the new score exceeds a predefined limit. If it does, the scores need to be rescaled.'
+                            'If the new score exceeds the limit, the rescale_variable_scores function is called to rescale all variable scores. Typically, this means reducing all scores proportionally to avoid overflow or excessively large values.'
+                            'The old score is retrieved again, and the new score is recalculated. The new score is then assigned to the variable idx.'
+                            'If the variable idx is already in the priority queue scores, its score is updated. This ensures that the scores in the priority queue are always up to date.'
+                                # 'activity: An array that represents the activity level of variables.'
+                                # 'var_inc: var_inc: A base increment (default is 1) representing the basic amount by which a variable\'s activity is increased with each conflict.'
+                                # 'vars: An integer representing the total number of variables.'
+                                # 'vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.'
+                                #     'If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  '
+                                # 'var: The variable number whose activity is to be increased.' 
+                                # 'coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.'
+                                # 'rephases: The number of conflicts since the last rephases.'
+                                # 'threshold: A threshold for updating the local_best phase.'
+                                # 'rephase_limit: Parameters for when to conduct rephase.'
+                            #     'lbd_queue_size: The number of LBDs in this queue'
+                            #     'fast_lbd_sum: Sum of the Global LBDs.'
+                            #     'slow_lbd_sum: Sum of the recent 50 LBDs'
+                            #     'conflicts: the number of conflicts.'
+                            # 'Return:'
+                            #     'A boolean value stands for the judgement conditions of restart function.'
                              )
-        # additional_prompt = ('Be creative and you can insert multiple if-else and for-loop in the code logic.Please provide the improved priority function which is used in bin packiong problem,and just output the "priority" function, no other explanations needed.Your generated function must be different from previous functions.Use the python code to response.\nFunctions shows below.')
+        extra_info = r'''
+
+                        '''
         self._batch_inference = batch_inference
         self._url = url
         self._additional_prompt = additional_prompt
@@ -65,19 +89,21 @@ class LocalLLM(sampler.LLM):
             for _ in range(self._samples_per_prompt):
                 response = self._do_request(prompt,count_list)
                 all_samples.append(response)
+        print(all_samples)
         return all_samples
 
     def _do_request(self, content: str,count_list) -> str:
         import re
         # import pdb;pdb.set_trace()
         content = '\n'.join([self._additional_prompt,content])
-        content = '\n'.join([content, 'Your task is to create the optimized priority_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
+        content = '\n'.join([content, 'Your task is to create the optimized bump_variable_score_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
         content = '\n'.join([content, 'Do not include exceptional interruptions.'])
-        content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within 700s, you need to try to maximum this value.'])
-        content = '\n'.join([content, 'This Dict is provided for reference: '+str(count_list)])
-        content = '\n'.join([content, 'In this Dict, the key represents time in seconds, and the value represents the number of instances successfully executed in the corresponding time.'])
+        content = '\n'.join([content, 'Please give the optimized code at the begining of your respond with no specification ahead.'])
+        # content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within '+timeout_value+'s, you need to try to maximum this value.'])
+        # content = '\n'.join([content, 'This Dict is provided for reference: '+str(count_list)])
+        # content = '\n'.join([content, 'In this Dict, the key represents time in seconds, and the value represents the number of instances successfully executed in the corresponding time.'])
         
-        JSONfile='JSONfile/2023list1000_1000_043001.json'
+        JSONfile='JSONfile/'+case_code+'.json'
         if not os.path.exists(JSONfile):
             with open(JSONfile, 'w') as outfile:
                 data = []
@@ -89,41 +115,9 @@ class LocalLLM(sampler.LLM):
                 except json.JSONDecodeError:
             # 如果文件为空或不是有效的JSON格式，初始化为空数组
                     data = []    # 文件存在，打开文件        
-
+ 
         new_record = {'id': len(data) + 1, 'prompt': content, 'response': None}
 
-        # content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within 500s, you need to try to maximum this value.'])
-       
-        # first_function_end = content.find('return priorities') + len('return priorities')
-        # content = content[:first_function_end] + re.sub(r'\ndef priority_v\d.*?(?=\ndef|$)', '', content[first_function_end:], flags=re.DOTALL)
-        # content = '\n'.join([self._additional_prompt, content])
-        # import pdb;pdb.set_trace()
-        # repeat the prompt for batch inference (inorder to decease the sample delay)
-        # repeat_prompt: int = self._samples_per_prompt if self._batch_inference else 1
-        # data = {
-        #     # 'model': 'codeLlama',
-        #     # 'model': 'model',
-        #     'model': 'deepseek_7B',
-        #     # 'prompt': content,
-        #     "messages":[
-        #         {"role": "user", "content": content},
-        #     ],
-        #     # 'repeat_prompt': repeat_prompt,
-        #     # 'system_prompt': '',
-        #     # 'stream': False,
-        #     'temperature': 0.5,
-        #     'max_tokens': 4096,
-        #     # 'top_p':1, # 可选参数，控制多样性
-        #     'frequency_penalty':1, # 可选参数，降低重复内容的概率
-        #     # 'params': {
-        #     #     'temperature': 0.5,
-        #     #     'top_k': None,
-        #     #     'top_p': None,
-        #     #     'add_special_tokens': False,
-        #     #     'skip_special_tokens': True,
-        #     # }
-        # }
-        # headers = {'Content-Type': 'application/json'}
         while True:
             try:
                 # response = requests.post(self._url, data=json.dumps(data), headers=headers)
@@ -217,19 +211,21 @@ class Sandbox(evaluator.Sandbox):
             import subprocess
             # conda_env = 'sf'
             # script_path = os.path.expanduser("~/funsearch_vm_schecduling/implementation/vm/VMAgent_plus/vmagent/test_baselines.py")
-            script_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/EasySAT.sh")
-
+            script_path = os.path.expanduser("~/Fun_SAT/implementation/cadical/temp/cadical.sh")
+            data_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/dataset/"+data_set)
            
-            import re
 
             command_run = [
-                script_path
+                script_path,
+                data_path,
+                timeout_value, 
+                parallel_size  
             ]
+
             import re
             # 运行命令
             # subprocess.run(command_make, capture_output=True, text=True, check=True)
             out = subprocess.run(command_run, capture_output=True, text=True, check=True)
-
             flag = out.returncode
             # result = float(result.stdout)
             par2 = re.search(r"AVGtime: (-\d+(\.+\d+)?)", out.stdout)
@@ -240,7 +236,7 @@ class Sandbox(evaluator.Sandbox):
             result = int(result.group(1))
 
             count_list={}
-            for i in [100,200,300,400,500,700,1000]:
+            for i in time_list:#,400,500,700,1000]:
                 value = re.search(str(i)+r"Scount: (\d+(\.+\d+)?)", out.stdout)
                 value = int(value.group(1))
                 count_list[i] = value
@@ -312,7 +308,7 @@ class Sandbox(evaluator.Sandbox):
         if self._verbose:
             print(f'================= Evaluated Program =================')
             program_: code_manipulation.Program = code_manipulation.text_to_program(text=program)
-            func_to_evolve_: str = kwargs.get('func_to_evolve', 'priority')
+            func_to_evolve_: str = kwargs.get('func_to_evolve', 'Internal::bump_variable_score')
             function_: code_manipulation.Function = program_.get_function(func_to_evolve_)
             function_: str = str(function_).strip('\n')
             print(f'{function_}')
@@ -352,50 +348,22 @@ class Sandbox(evaluator.Sandbox):
     
 
 specification = r'''
-#include "EasySAT.hpp"
-#include <fstream>
-using namespace std;
+#include "internal.hpp"
 
-void priority(double*& activity, double& var_inc, int vars, Heap<GreaterActivity>& vsids, int var, double coeff) {
-    double maxActivity = 700, decayFactor = 0.95, decayThreshold = 0.001, coefficientFactor = 2, activityFactor = 0.9, newActivity;
-    double &var_activity = activity[var];
+using namespace CaDiCaL;
 
-    // Increase the activity of the variable by the coeff and apply coefficient factor
-    newActivity = var_activity + coeff * coefficientFactor;
-    if(newActivity > maxActivity)
-    {
-        activity[var] = maxActivity;
-        var_inc *= activityFactor;
-        var_activity = maxActivity;
-        // decay other variables' activity
-        for(int i = 0; i < vars; ++i)
-        {
-            if(i != var)
-            {
-                activity[i] = max(activity[i] * decayFactor, 0.0);
-            }
-        }
-    }
-    else
-    {
-        activity[var] = newActivity;
-        if(var_activity < decayThreshold)
-        {
-            var_activity = 0.0;
-            var_inc *= decayFactor;
-            // decay other variables' activity
-            for(int i = 0; i < vars; ++i)
-            {
-                if(i != var)
-                {
-                    activity[i] = max(activity[i] * decayFactor, 0.0);
-                }
-            }
-        }
-    }
-
-    // Update the variable in the heap
-    vsids.update(var);
+void Internal::bump_variable_score(int lit) {
+  int idx = vidx (lit);
+  double old_score = score (idx);
+  double new_score = old_score + score_inc;
+  if (evsids_limit_hit (new_score)) {
+    rescale_variable_scores ();
+    old_score = score (idx);
+    new_score = old_score + score_inc;
+  }
+  score (idx) = new_score;
+  if (scores.contains (idx))
+    scores.update (idx);
 }
 '''
 
@@ -407,12 +375,12 @@ if __name__ == '__main__':
     config = config.Config(samples_per_prompt=4)
 
     bin_packing_or3 = {'OR3': bin_packing_utils.datasets['OR3']}
-    global_max_sample_num = 2000  # if it is set to None, funsearch will execute an endless loop
+    global_max_sample_num = 200  # if it is set to None, funsearch will execute an endless loop
     funsearch.main(
         specification=specification,
         inputs=bin_packing_or3,
         config=config,
         max_sample_nums=global_max_sample_num,
         class_config=class_config,
-        log_dir='logs/funsearch_local_llm_2023list1000_1000_043001',
+        log_dir= log_name+'/funsearch_local_llm_'+case_code,
     )

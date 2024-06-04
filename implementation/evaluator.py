@@ -225,10 +225,10 @@ class Evaluator:
         self._inputs = inputs
         self._timeout_seconds = timeout_seconds
         self._sandbox = sandbox_class()
-    def extract_priority_body(self, code):
+    def extract_exact_body(self, code):
         import re
         # 查找函数开始的位置
-        pattern_start = r"void priority\(.*?\)\s*{"
+        pattern_start = r"void Internal::bump_variable_score\(.*?\)\s*{"
         start_match = re.search(pattern_start, code)
         if not start_match:
             return "Function start not found."
@@ -260,26 +260,26 @@ class Evaluator:
         # 可选：处理缩进，这里简单地移除每行开头的空白字符
         function_body_lines = function_body.split('\n')
         function_body_dedented = "\n".join(line.lstrip() for line in function_body_lines)
-
+        print('function_body:\n',function_body)
         return function_body
     
     
-    def update_priority_function_body(self, new_body_code):
+    def update_exact_function_body(self, new_body_code):
         import re
-        file_path = '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/priority.cpp'
+        file_path = '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp'
         with open(file_path, 'r') as file:
             content = file.read()
 
         # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
-        pattern = r"(void priority\(.*?\)\s*{)([\s\S]*?)(^\})"
+        pattern = r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
 
         # 构建新的函数体，确保新代码的正确缩进
         replacement = r"\1\n" + new_body_code.replace("\n", "\n    ") + r"\n\3"
-
+        print('replacement: \n',replacement)
         # 使用re.sub函数进行替换，多行模式匹配^}
         updated_content = re.sub(pattern, replacement, content, count=1, flags=re.MULTILINE)
-
+        print('updated_content: \n',updated_content)
         # 将更新后的内容写回文件
         with open(file_path, 'w') as file:
             file.write(updated_content)
@@ -305,7 +305,8 @@ class Evaluator:
         new_function, program = _sample_to_program(
             sample, version_generated, self._template, self._function_to_evolve)
         scores_per_test = {}
-        self.update_priority_function_body(self.extract_priority_body(program))
+        print('program:\n',program)
+        self.update_exact_function_body(self.extract_exact_body(program))
 
         time_reset = time.time()
         for current_input in self._inputs:
