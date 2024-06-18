@@ -1,4 +1,5 @@
-#include "internal.hpp"
+// #include "internal.hpp"
+#include "restarting.cpp"
 
 namespace CaDiCaL {
 
@@ -60,21 +61,21 @@ bool Internal::stabilizing () {
 // restart conflict interval has passed and the fast moving average is above
 // a certain margin over the slow moving average then we restart.
 
-bool Internal::restarting () {
-  if (!opts.restart)
-    return false;
-  if ((size_t) level < assumptions.size () + 2)
-    return false;
-  if (stabilizing ())
-    return reluctant;
-  if (stats.conflicts <= lim.restart)
-    return false;
-  double f = averages.current.glue.fast;
-  double margin = (100.0 + opts.restartmargin) / 100.0;
-  double s = averages.current.glue.slow, l = margin * s;
-  LOG ("EMA glue slow %.2f fast %.2f limit %.2f", s, f, l);
-  return l <= f;
-}
+// bool Internal::restarting () {
+//   if (!opts.restart)
+//     return false;
+//   if ((size_t) level < assumptions.size () + 2)
+//     return false;
+//   if (stabilizing ())
+//     return reluctant;
+//   if (stats.conflicts <= lim.restart)
+//     return false;
+//   double f = averages.current.glue.fast;
+//   double margin = (100.0 + opts.restartmargin) / 100.0;
+//   double s = averages.current.glue.slow, l = margin * s;
+//   LOG ("EMA glue slow %.2f fast %.2f limit %.2f", s, f, l);
+//   return l <= f;
+// }
 
 // This is Marijn's reuse trail idea.  Instead of always backtracking to the
 // top we figure out which decisions will be made again anyhow and only

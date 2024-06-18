@@ -27,6 +27,41 @@ import profile
 from implementation import code_manipulation
 from implementation import programs_database
 
+class ScoreList():
+    def __init__(self,dataset_size='150',parallel_size='25'):
+        self.score={}
+        self.all_score={}
+        self.dataset_size=dataset_size
+        self.parallel_size=parallel_size
+        self.successcnt=0
+    
+    def cal_cur_score(self,score_list_score):
+        score_sum = sum(score_list_score.values())
+        all_score_sum = sum(self.all_score[key] for key in score_list_score if key in self.all_score)
+        print(f"Score sum: {score_sum}, All score sum: {all_score_sum}")
+
+        if score_sum > all_score_sum:
+            return True
+        else:
+            return False
+        
+    def update_successcnt(self,successcnt):
+        self.successcnt=successcnt
+
+    def update_all_score(self,all_score):
+        self.all_score.update(all_score)
+        self.successcnt=sum(self.all_score.values())
+
+    def update_cur_score(self,score_list_score):
+        # 替换 all_score 中对应的值
+        for key, value in score_list_score.items():
+            if key in self.all_score:
+                self.all_score[key] = value
+        self.successcnt=sum(self.all_score.values())
+
+        print(f"Success count: {self.successcnt}")
+
+
 def _trim_preface_of_body(sample: str) -> str:
     """Implemented by RZ: Trim the redundant descriptions/symbols/'def' declaration before the function body.
     Example sample:
@@ -228,7 +263,7 @@ class Evaluator:
     def extract_exact_body(self, code):
         import re
         # 查找函数开始的位置
-        pattern_start = r"void Internal::bump_variable_score\(.*?\)\s*{"
+        pattern_start = r"bool Internal::restarting\(.*?\)\s*{"
         start_match = re.search(pattern_start, code)
         if not start_match:
             return "Function start not found."
@@ -260,26 +295,23 @@ class Evaluator:
         # 可选：处理缩进，这里简单地移除每行开头的空白字符
         function_body_lines = function_body.split('\n')
         function_body_dedented = "\n".join(line.lstrip() for line in function_body_lines)
-        print('function_body:\n',function_body)
         return function_body
     
     
     def update_exact_function_body(self, new_body_code):
         import re
-        file_path = '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp'
+        file_path = '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp'
         with open(file_path, 'r') as file:
             content = file.read()
 
         # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
-        pattern = r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
+        pattern = r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})"
 
         # 构建新的函数体，确保新代码的正确缩进
         replacement = r"\1\n" + new_body_code.replace("\n", "\n    ") + r"\n\3"
-        print('replacement: \n',replacement)
         # 使用re.sub函数进行替换，多行模式匹配^}
         updated_content = re.sub(pattern, replacement, content, count=1, flags=re.MULTILINE)
-        print('updated_content: \n',updated_content)
         # 将更新后的内容写回文件
         with open(file_path, 'w') as file:
             file.write(updated_content)
@@ -290,6 +322,10 @@ class Evaluator:
             sample: str,
             island_id: int | None,
             version_generated: int | None,
+            score_list_score:dict,
+            exec_size:str,
+            score_list:ScoreList,
+            init=False,
             **kwargs  # RZ: add this to do profile
     ) -> dict:
         """Compiles the sample into a program and executes it on test inputs.
@@ -305,7 +341,6 @@ class Evaluator:
         new_function, program = _sample_to_program(
             sample, version_generated, self._template, self._function_to_evolve)
         scores_per_test = {}
-        print('program:\n',program)
         self.update_exact_function_body(self.extract_exact_body(program))
 
         time_reset = time.time()
@@ -316,7 +351,7 @@ class Evaluator:
             
             test_output, runs_ok, count_list = self._sandbox.run(
                 program, self._function_to_run, self._function_to_evolve, self._inputs, current_input,
-                self._timeout_seconds
+                self._timeout_seconds,score_list_score,exec_size,score_list,init
             )
 
             # NOTE：可以不返回?

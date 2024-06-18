@@ -61,7 +61,7 @@ class Sampler:
         self._llm = llm_class(samples_per_prompt)
         self._max_sample_nums = max_sample_nums
 
-    def sample(self, count_list, **kwargs):
+    def sample(self, count_list,score_list, **kwargs):
         """Continuously gets prompts, samples programs, sends them for analysis.
         """
         while True:
@@ -101,7 +101,11 @@ class Sampler:
                 prompt.version_generated,
                 **kwargs,
                 global_sample_nums=cur_global_sample_nums,
-                sample_time=sample_time
+                sample_time=sample_time,
+                score_list_score=score_list.score,
+                exec_size=score_list.parallel_size,
+                score_list=score_list,
+
             )
 
     def _get_global_sample_nums(self) -> int:

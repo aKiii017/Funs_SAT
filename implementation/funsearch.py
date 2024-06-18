@@ -28,8 +28,7 @@ from implementation import evaluator
 from implementation import programs_database
 from implementation import sampler
 from implementation import profile
-
-
+        
 def _extract_function_names(specification: str) -> Tuple[str, str]:
     """Returns the name of the function to evolve and of the function to run.
 
@@ -39,10 +38,10 @@ def _extract_function_names(specification: str) -> Tuple[str, str]:
     The function labeled with '@funsearch.evolve' is the function to be searched (like 'greedy' in cap-set).
     This function (_extract_function_names) makes sure that these decorators appears in the specification.
     """
-    run_functions = ['Internal::bump_variable_score'] #code_manipulation.yield_decorated(specification, '@funsearch.run')
+    run_functions = ['Internal::restarting'] #code_manipulation.yield_decorated(specification, '@funsearch.run')
     if len(run_functions) != 1:
         raise ValueError('Expected 1 function decorated with `@funsearch.run`.')
-    evolve_functions = ['Internal::bump_variable_score'] #code_manipulation.yield_decorated(specification, '@funsearch.evolve')
+    evolve_functions = ['Internal::restarting'] #code_manipulation.yield_decorated(specification, '@funsearch.evolve')
     if len(evolve_functions) != 1:
         raise ValueError('Expected 1 function decorated with `@funsearch.evolve`.')
     return evolve_functions[0], run_functions[0]
@@ -88,7 +87,8 @@ def main(
 
     # We send the initial implementation to be analysed by one of the evaluators.
     initial = template.get_function(function_to_evolve).body
-    count_list=evaluators[0].analyse(initial, island_id=None, version_generated=None, profiler=profiler)
+    score_list=evaluator.ScoreList()
+    count_list=evaluators[0].analyse(initial, island_id=None, version_generated=None, profiler=profiler,score_list_score=score_list.all_score,exec_size=score_list.dataset_size,score_list=score_list,init=True)
 
     # Set global max sample nums.
     samplers = [sampler.Sampler(database, evaluators, config.samples_per_prompt, max_sample_nums=max_sample_nums, llm_class=class_config.llm_class)
@@ -98,4 +98,4 @@ def main(
     # sampler enters an infinite loop, without parallelization only the first
     # sampler will do any work.
     for s in samplers:
-        s.sample(count_list, profiler=profiler)
+        s.sample(count_list, profiler=profiler,score_list=score_list)

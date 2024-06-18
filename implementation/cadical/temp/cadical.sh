@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 检查参数数量
-if [ "$#" -ne 3 ]; then
-  echo "Usage: $0 <folder_path> <timeout_value> <parallel_size>" >&2
+if [ "$#" -ne 4 ]; then
+  echo "Usage: $0 <folder_path> <timeout_value> <parallel_size> <datasat_size>" >&2
   exit 1
 fi
 
@@ -28,9 +28,10 @@ STARTtime=$(date +%s.%N)
 folder_path=$1
 timeout_value=$2
 parallel_size=$3
+datasat_size=$4
 
 # 随机读取目录中的30个 .cnf 文件
-file_names=$(find "$folder_path" -type f -name "*.cnf" | shuf | head -n 2)
+file_names=$(find "$folder_path" -type f -name "*.cnf" | shuf | head -n ${datasat_size})
 counter=0
 total_time=0
 timeout_count=0
@@ -112,11 +113,11 @@ for file_name in "${!run_times[@]}"; do
   counter=$((counter + 1))
   printf "[TASK%03d]%s %s\n" "$counter" "$file_name"
   if [ ${exit_status_s[$file_name]} -eq 124 ]; then
-    echo "[TIMEOUT]${run_times[$file_name]} s"
+    echo "[RUNtime][TIMEOUT]${run_times[$file_name]} s"
   elif [ ${exit_status_s[$file_name]} -eq 134 ]; then
-    echo "[INTERRUPT]${run_times[$file_name]} s"
+    echo "[RUNtime][INTERRUPT]${run_times[$file_name]} s"
   elif [ ${exit_status_s[$file_name]} -eq 139 ]; then
-    echo "[INTERRUPT]${run_times[$file_name]} s"
+    echo "[RUNtime][INTERRUPT]${run_times[$file_name]} s"
   else
     echo "[RUNtime]${run_times[$file_name]} s"
   fi

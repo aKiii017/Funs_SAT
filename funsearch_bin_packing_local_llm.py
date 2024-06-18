@@ -13,13 +13,15 @@ import bin_packing_utils
 
 import os
 
-data_set='2023list1c'
-timeout_value='100'
-case_num='060201'
-parallel_size='20'
+data_set='test'
+dataset_size='150'
+timeout_value='700'
+case_num='061602'
+parallel_size='25'
 case_code=data_set+'_'+timeout_value+'_'+case_num
 log_name='logs_cadical'
 time_list=[100,300,500,700,1000]
+        
 
 class LocalLLM(sampler.LLM):
     """Language model that predicts continuation of provided source code.
@@ -34,41 +36,22 @@ class LocalLLM(sampler.LLM):
         # url = 'http://0.0.0.0:8000/v1/completions'
         url = 'http://0.0.0.0:8000/v1/chat/completions'
         additional_prompt = (
-                            'In the context of SAT solvers that use the VSIDS heuristic. '# the activity of a variable represents how often the variable has been involved in conflicts.'
-                            'Given the existing bump_var_v0 function, please generate an optimized version named bump_variable_score_v*. '
-                            # 'The function is used to handle the judgement conditions of restart function.'
-                            # 'The function is used in SAT solvers to increase the activity of a variable.'
-                            'The primary purpose of this function is to increase the specified variable\'s score and rescale the scores if necessary to ensure numerical stability in the scoring system. '
+                            'In the context of SAT solvers that use the VSIDS heuristic. '
+                            'Given the existing restarting_v0 function, please generate an optimized version named restarting_v*. '
                             'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
+                            'The function evaluates several conditions related to the solver\'s state, conflict count, and metrics of clause quality to decide whether a restart should occur. '
+                            'This helps the solver to avoid getting stuck in difficult regions of the search space and potentially improve its efficiency.'
                             'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
                             'Ensure the function is significantly different and more advanced than the prior versions. '
                             'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-                            'Existing bump_variable_score_v0 function for reference:'
-                            'Args:'
-                                'lit: The index of a literal, which is a Boolean variable or its negation.'
-                            'The vidx function is used to convert the literal to its corresponding variable index idx. This index is used to access and update the variable\'s score.'
-                            'The score function is called to retrieve the current score of the variable old_score. Scores are typically used in heuristic decision-making to determine which variables should be prioritized for assignment.'
-                            'The current score old_score is increased by an increment value score_inc, resulting in a new score new_score. This increment is a predefined constant used to gradually increase the variable\'s score.'
-                            'The evsids_limit_hit function checks if the new score exceeds a predefined limit. If it does, the scores need to be rescaled.'
-                            'If the new score exceeds the limit, the rescale_variable_scores function is called to rescale all variable scores. Typically, this means reducing all scores proportionally to avoid overflow or excessively large values.'
-                            'The old score is retrieved again, and the new score is recalculated. The new score is then assigned to the variable idx.'
-                            'If the variable idx is already in the priority queue scores, its score is updated. This ensures that the scores in the priority queue are always up to date.'
-                                # 'activity: An array that represents the activity level of variables.'
-                                # 'var_inc: var_inc: A base increment (default is 1) representing the basic amount by which a variable\'s activity is increased with each conflict.'
-                                # 'vars: An integer representing the total number of variables.'
-                                # 'vsids: A heap structure (usually a max heap) organized according to the activity levels of variables, used to quickly select the next variable for assignment.'
-                                #     'If the variable var is currently in the heap, then the heap needs to be updated to reflect the change in activity.  '
-                                # 'var: The variable number whose activity is to be increased.' 
-                                # 'coeff: A coefficient for adjusting the amount by which the activity is increased, typically set according to different contexts.'
-                                # 'rephases: The number of conflicts since the last rephases.'
-                                # 'threshold: A threshold for updating the local_best phase.'
-                                # 'rephase_limit: Parameters for when to conduct rephase.'
-                            #     'lbd_queue_size: The number of LBDs in this queue'
-                            #     'fast_lbd_sum: Sum of the Global LBDs.'
-                            #     'slow_lbd_sum: Sum of the recent 50 LBDs'
-                            #     'conflicts: the number of conflicts.'
-                            # 'Return:'
-                            #     'A boolean value stands for the judgement conditions of restart function.'
+                            'Existing restarting_v0 function for reference:'
+                            'If the option to restart (\'opts.restart\') is not enabled, the function immediately returns \'false\', indicating that no restart should occur.'
+                            'This condition checks if the current decision level (\'level\') is less than the number of assumptions plus two. If it is, the function returns \'false\', meaning the solver is too early in its decision process to consider a restart.'
+                            'If the \'stabilizing()\' function returns \'true\', the function returns the value of \'reluctant\', which indicates whether a reluctant restart should be considered based on the solver\'s stabilization state.'
+                            'If the current number of conflicts (\'stats.conflicts\') is less than or equal to the restart limit (\'lim.restart\'), the function returns \'false\', meaning there haven\'t been enough conflicts to warrant a restart.'
+                            'The function calculates the fast and slow exponential moving averages (EMAs) of the glue (a measure of clause quality). '
+                            'It computes the restart margin based on \'opts.restartmargin\' and multiplies the slow EMA by this margin to get the limit (\'l\'). '
+                            'The function returns \'true\' if the fast EMA (\'f\') is greater than or equal to the computed limit (\'l\'), indicating that the conditions for a restart have been met. Otherwise, it returns \'false\'.'
                              )
         extra_info = r'''
 
@@ -89,14 +72,14 @@ class LocalLLM(sampler.LLM):
             for _ in range(self._samples_per_prompt):
                 response = self._do_request(prompt,count_list)
                 all_samples.append(response)
-        print(all_samples)
+        # print(all_samples)
         return all_samples
 
     def _do_request(self, content: str,count_list) -> str:
         import re
         # import pdb;pdb.set_trace()
         content = '\n'.join([self._additional_prompt,content])
-        content = '\n'.join([content, 'Your task is to create the optimized bump_variable_score_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
+        content = '\n'.join([content, 'Your task is to create the optimized restarting_v* function based on the guidelines above. Remember, only the C++ function code is needed.'])
         content = '\n'.join([content, 'Do not include exceptional interruptions.'])
         content = '\n'.join([content, 'Please give the optimized code at the begining of your respond with no specification ahead.'])
         # content = '\n'.join([content, 'Score stands for the amount of instences that are successfully solved within '+timeout_value+'s, you need to try to maximum this value.'])
@@ -122,26 +105,8 @@ class LocalLLM(sampler.LLM):
             try:
                 # response = requests.post(self._url, data=json.dumps(data), headers=headers)
                 
-                from openai import OpenAI
-                openai_api_key = "EMPTY"
-                openai_api_base = "http://172.23.148.56:8000/v1"
-                
-                # --------------Local implement------------------------
-                # from transformers import AutoTokenizer, AutoModelForCausalLM
-                # import torch
-               
-                # tokenizer = AutoTokenizer.from_pretrained("/home/mail-ecnu/Public/wjh/llms/dpseek/DeepSeek-Coder/model", trust_remote_code=True)
-                # model = AutoModelForCausalLM.from_pretrained("/home/mail-ecnu/Public/wjh/llms/dpseek/DeepSeek-Coder/model", trust_remote_code=True, torch_dtype=torch.bfloat16).cuda()
-                # messages=[
-                #     { 'role': 'user', 'content': content}
-                # ]
-                # inputs = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to(model.device)
-                # # tokenizer.eos_token_id is the id of <|EOT|> token
-                # outputs = model.generate(inputs, max_new_tokens=512, do_sample=True, top_k=50, temperature = 0.9,top_p=0.95, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id)
-                # response = tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)
-                # --------------Local implement------------------------
-                
                 # --------------api implement------------------------
+                from openai import OpenAI
                 openai_api_key = "EMPTY"
                 openai_api_base = "http://172.23.148.56:8000/v1"
                 client = OpenAI(
@@ -156,6 +121,29 @@ class LocalLLM(sampler.LLM):
                 
                 print("Completion result:", json.loads(completion.json())['choices'][0]['text'])
                 response = json.loads(completion.json())['choices'][0]['text'] #给model发送prompt
+                # --------------api implement------------------------
+
+                # --------------api implement gpt------------------------
+                # from openai import OpenAI
+                # from openai import AzureOpenAI
+                # openai_api_key = "f825f61246354ec090c5703ca4f76418"
+                # openai_api_base = "https://midivi-main-scu1.openai.azure.com/"
+                # client = AzureOpenAI(
+                #   api_key = openai_api_key,  
+                #   api_version = "2024-02-01",
+                #   azure_endpoint = openai_api_base
+                # )
+                # response = client.chat.completions.create(
+                #     model="gpt-35-turbo",
+                #     messages=[
+                #         {"role": "system", "content": "You are a helpful assistant"},
+                #         {"role": "user", "content": content},
+                #     ],
+                #     stream=False
+                # )
+                # print("Completion result:",response.choices[0].message.content)
+                # response = response.choices[0].message.content
+                # --------------api implement gpt------------------------
 
                 new_record['response'] = response
 
@@ -167,7 +155,6 @@ class LocalLLM(sampler.LLM):
 
 
                 # import pdb;pdb.set_trace()
-                # --------------api implement------------------------
                 print('------------old------------')
                 print(content)#print(response.json()['choices'][0]['message']['content'])
                 # import pdb;pdb.set_trace()
@@ -202,7 +189,7 @@ class Sandbox(evaluator.Sandbox):
         """
         self._verbose = verbose
         self._numba_accelerate = numba_accelerate
-    def _compile_and_run_function(self, program, function_to_run, function_to_evolve, numba_accelerate):
+    def _compile_and_run_function(self, program, function_to_run, function_to_evolve, numba_accelerate,score_list_score,exec_size,score_list:evaluator.ScoreList,init=False):
         try:
             
             import json
@@ -219,7 +206,8 @@ class Sandbox(evaluator.Sandbox):
                 script_path,
                 data_path,
                 timeout_value, 
-                parallel_size  
+                parallel_size,
+                exec_size  
             ]
 
             import re
@@ -232,8 +220,9 @@ class Sandbox(evaluator.Sandbox):
             par2 = float(par2.group(1))
             print("par2:",par2)
 
-            result = re.search(r"SUCCESScount: (\d+(\.+\d+)?)", out.stdout)
-            result = int(result.group(1))
+            successcnt = re.search(r"SUCCESScount: (\d+(\.+\d+)?)", out.stdout)
+            successcnt = int(successcnt.group(1))
+            print("successcnt:",successcnt)
 
             count_list={}
             for i in time_list:#,400,500,700,1000]:
@@ -242,10 +231,77 @@ class Sandbox(evaluator.Sandbox):
                 count_list[i] = value
 
             print(count_list)
-            # result = re.search(r"result:(\d+(\.\d+)?)", result.stdout)
-            # result = re.search(r"result:(\d+(\.\d+)?)", result.stdout)
 
-            # result = float(result.group(1))
+            # 前缀字符串
+            prefix = '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/'+data_set+'/'
+
+            # 正则表达式模式，用于匹配 TASK、其后到 RUNtime 之前的内容和 RESULT
+            pattern = r'\[TASK(\d+)\](.*?)\[RUNtime\].*?\[RESULT\](SATISFIABLE|UNSATISFIABLE|UNKNOWN)'
+
+            # 查找所有匹配的内容
+            matches = re.findall(pattern, out.stdout, re.DOTALL)
+            score_list_score={}
+            # 将匹配结果存储到字典中
+            for match in matches:
+                task_number = f'TASK{match[0]}'
+                task_content = match[1].strip()
+                task_result = 0 if match[2]=='UNKNOWN' else 1
+                # 去掉前缀字符串
+                if task_content.startswith(prefix):
+                    task_content = task_content[len(prefix):]
+                
+                score_list_score[task_content] = task_result
+
+            # 打印结果字典
+            print('score_list_score: ')
+            for scorel in score_list_score.items():
+                print(scorel)
+
+            # 初次运行更新分数list和successcnt
+            if(init):    
+                score_list.update_all_score(score_list_score)
+                score_list.update_successcnt(successcnt)
+            
+            # 计算当前得分是否更高
+            cal=score_list.cal_cur_score(score_list_score)
+            print('cal: ',cal)
+            if cal:
+                # 是则运行整个set比较successcnt
+                command_run_eval = [
+                script_path,
+                data_path,
+                timeout_value, 
+                parallel_size,
+                dataset_size
+                ]
+                import re
+                out_eval = subprocess.run(command_run_eval, capture_output=True, text=True, check=True)
+                successcnt_eval = re.search(r"SUCCESScount: (\d+(\.+\d+)?)", out_eval.stdout)
+                successcnt_eval = int(successcnt_eval.group(1))
+                print("successcnt_eval:",successcnt_eval)
+                if successcnt_eval>score_list.successcnt:
+                    matches_eval = re.findall(pattern, out_eval.stdout, re.DOTALL)
+                    # 结果更好则更新列表和分数
+                    score_list_score_eval={}
+                    # 将匹配结果存储到字典中
+                    for match in matches_eval:
+                        task_number = f'TASK{match[0]}'
+                        task_content = match[1].strip()
+                        task_result = 0 if match[2]=='UNKNOWN' else 1
+                        # 去掉前缀字符串
+                        if task_content.startswith(prefix):
+                            task_content = task_content[len(prefix):]
+
+                        score_list_score_eval[task_content] = task_result
+
+                    score_list.update_cur_score(score_list_score_eval)
+
+            # 给出最后的分数        
+            result=score_list.successcnt
+            print('result: ',result)
+
+            # result=successcnt
+
 
             if flag == 0:
                 # 确保结果被正确解析并放入队列
@@ -266,6 +322,10 @@ class Sandbox(evaluator.Sandbox):
             inputs: Any,  # refers to the dataset
             test_input: str,  # refers to the current instance
             timeout_seconds: int,
+            score_list_score: dict,
+            exec_size:int,
+            score_list:evaluator.ScoreList,
+            init=False,
             **kwargs  # RZ: add this
     ) -> tuple[Any, bool]:
         """Returns `function_to_run(test_input)` and whether execution succeeded.
@@ -297,7 +357,7 @@ class Sandbox(evaluator.Sandbox):
         # 这里我们假设`_compile_and_run_function`将负责使用`subprocess`来执行程序
         # 注意：由于我们不再直接使用multiprocessing.Process，下面的调用方式需要调整
         count_list={}
-        isok, result, count_list = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate)
+        isok, result, count_list = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate,score_list_score,exec_size,score_list,init)
         
 
         # 获取结果，这部分可能需要根据你的实际情况进行调整
@@ -308,7 +368,7 @@ class Sandbox(evaluator.Sandbox):
         if self._verbose:
             print(f'================= Evaluated Program =================')
             program_: code_manipulation.Program = code_manipulation.text_to_program(text=program)
-            func_to_evolve_: str = kwargs.get('func_to_evolve', 'Internal::bump_variable_score')
+            func_to_evolve_: str = kwargs.get('func_to_evolve', 'Internal::restarting')
             function_: code_manipulation.Function = program_.get_function(func_to_evolve_)
             function_: str = str(function_).strip('\n')
             print(f'{function_}')
@@ -352,19 +412,35 @@ specification = r'''
 
 using namespace CaDiCaL;
 
-void Internal::bump_variable_score(int lit) {
-  int idx = vidx (lit);
-  double old_score = score (idx);
-  double new_score = old_score + score_inc;
-  if (evsids_limit_hit (new_score)) {
-    rescale_variable_scores ();
-    old_score = score (idx);
-    new_score = old_score + score_inc;
+bool Internal::restarting() {
+  if (!opts.restart) {
+    return false;
   }
-  score (idx) = new_score;
-  if (scores.contains (idx))
-    scores.update (idx);
+
+  if (stats.conflicts <= lim.restart) {
+    return false;
+  }
+
+  if (level < assumptions.size() + 2 || stabilizing()) {
+    return reluctant;
+  }
+
+  const double fast_ema = averages.current.glue.fast;
+  const double slow_ema = averages.current.glue.slow;
+
+  double slow_ema_limit = slow_ema * (opts.restartmargin / 100.0);
+  double slow_ema_limit_diff = (fast_ema - slow_ema) * (opts.restartmargin / 100.0);
+
+  if (slow_ema_limit_diff < 0.0) {
+    slow_ema_limit_diff /= 2.0;
+  }
+
+  double final_slow_ema_limit = std::max(slow_ema + slow_ema_limit_diff, fast_ema);
+  
+  return fast_ema >= final_slow_ema_limit / 2.0;
 }
+
+
 '''
 
 # It should be noted that the if __name__ == '__main__' is required.
@@ -375,7 +451,7 @@ if __name__ == '__main__':
     config = config.Config(samples_per_prompt=4)
 
     bin_packing_or3 = {'OR3': bin_packing_utils.datasets['OR3']}
-    global_max_sample_num = 200  # if it is set to None, funsearch will execute an endless loop
+    global_max_sample_num = 400  # if it is set to None, funsearch will execute an endless loop
     funsearch.main(
         specification=specification,
         inputs=bin_packing_or3,
