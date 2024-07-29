@@ -138,6 +138,7 @@ count_400s=0
 count_500s=0
 count_700s=0
 count_1000s=0
+count_1200s=0
 count_1500s=0
 
 for file_name in "${!run_times[@]}"; do
@@ -163,6 +164,9 @@ for file_name in "${!run_times[@]}"; do
   if [ $(echo "$execution_time <= 1000" | bc) -eq 1 ]; then
     count_1000s=$((count_1000s + 1))
   fi
+  if [ $(echo "$execution_time <= 1200" | bc) -eq 1 ]; then
+    count_1200s=$((count_1200s + 1))
+  fi
   if [ $(echo "$execution_time <= 1500" | bc) -eq 1 ]; then
     count_1500s=$((count_1500s + 1))
   fi
@@ -173,6 +177,7 @@ echo "300Scount: $count_300s"
 echo "500Scount: $count_500s"
 echo "700Scount: $count_700s"
 echo "1000Scount: $count_1000s"
+echo "1200Scount: $count_1200s"
 echo "1500Scount: $count_1500s"
 
 # make clean -C /home/ubuntu/Fun_SAT/implementation/EasySAT-main

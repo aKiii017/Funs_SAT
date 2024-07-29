@@ -3,29 +3,32 @@
 using namespace CaDiCaL;
 
 bool Internal::restarting() {
-if (!opts.restart || stats.conflicts <= lim.restart || level < assumptions.size() + 2 || stabilizing()) {
-        return reluctant;
+if (!opts.restart || level < assumptions.size() + 2 || stats.conflicts <= lim.restart || stabilizing()) {
+        return false;
       }
     
-      const double fast_ema = averages.current.glue.fast;
-      const double slow_ema = averages.current.glue.slow;
-      const double slow_limit_margin = opts.restartmargin / 100.0;
+      double glue_slow_ema = averages.current.glue.slow;
+      double glue_fast_ema = averages.current.glue.fast;
+      double restart_margin = opts.restartmargin / 100.0;
+      double slow_ema_limit = glue_slow_ema * restart_margin;
+      double max_ema_limit = glue_slow_ema - slow_ema_limit;
+      double final_slow_ema_limit = glue_fast_ema + (glue_slow_ema - glue_fast_ema) * restart_margin;
     
-      if (slow_limit_margin >= 0.5) {
-        const double l = fast_ema * (1.0 + slow_limit_margin) / 2.0;
-        return fast_ema >= l;
+      if (glue_fast_ema >= final_slow_ema_limit) {
+        return true;
       }
     
-      const double slow_limit = slow_ema * slow_limit_margin;
-      const double slow_limit_diff = (fast_ema - slow_ema) * slow_limit_margin;
+      double slow_ema_diff = glue_slow_ema - glue_fast_ema;
+      double ratio = slow_ema_limit / slow_ema_diff;
+      double max_ema_limit_ratio = max_ema_limit / slow_ema_diff;
     
-      if (slow_limit_diff < 0.0) {
-        const double final_slow_limit = std::max(slow_ema + slow_limit_diff / 2.0, fast_ema);
-        return fast_ema >= final_slow_limit / 2.0;
+      if (glue_fast_ema < slow_ema_limit 
+          || max_ema_limit < 0 
+          || max_ema_limit_ratio <= ratio 
+          || max_ema_limit_ratio * 2 >= ratio 
+          || max_ema_limit >= glue_fast_ema * ratio) {
+        return true;
       }
     
-      const double final_slow_limit = std::max(slow_ema + slow_limit_diff, fast_ema);
-      return fast_ema >= final_slow_limit / 2.0;
+      return false;
 }
-
-

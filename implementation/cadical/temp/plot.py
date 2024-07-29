@@ -6,14 +6,28 @@ file_paths = [
     '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_cadical_20.txt',
     '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_kissat_20.txt',
     '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_SBVAcadical_20.txt',
-    '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_061201_20.txt',
-    '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_061401_20.txt'
+    # '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_070601_20.txt',
+    '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_061401_20.txt',
+    '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_051002_20.txt',
+    # # '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_061201_20.txt',
+    # '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/outs/2023_1500_original.txt',
+    # '/home/ubuntu/AutoSAT/temp/eval_results/eva_2023.txt',
+    # '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/outs/2023_1500_050201.txt',
 # 添加更多文件路径
 ]
 
 # 设置颜色和标签
-colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
-labels = ['cadical', 'kissat', 'SBVA-cadical', 'cadical-restart-t100', 'cadical-restart-bump-t100', 'File 6', 'File 7']
+colors = ['b', 'g', 'r', 'm', 'c', 'y', 'k']
+labels = [
+    'cadical', 'kissat', 'SBVA-cadical', 
+        #   'cadical-restart-t100', 
+        # 'cadical-restart-bump-t100', 
+          'cadical-bump-t700', 
+          'cadical-bump-restart-t700', 
+        #   'EasySAT-baseline',
+        #   'EasySAT-AutoSAT',
+        #   'EasySAT-curriculum'
+          ]
 
 # 绘制图形
 plt.figure(figsize=(10, 10))

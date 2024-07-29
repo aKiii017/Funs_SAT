@@ -28,7 +28,7 @@ from implementation import code_manipulation
 from implementation import programs_database
 
 class ScoreList():
-    def __init__(self,dataset_size='150',parallel_size='25'):
+    def __init__(self,dataset_size='240',parallel_size='25'):
         self.score={}
         self.all_score={}
         self.dataset_size=dataset_size
@@ -260,10 +260,14 @@ class Evaluator:
         self._inputs = inputs
         self._timeout_seconds = timeout_seconds
         self._sandbox = sandbox_class()
-    def extract_exact_body(self, code):
+    def extract_exact_body(self, code,current_index):
         import re
         # 查找函数开始的位置
-        pattern_start = r"bool Internal::restarting\(.*?\)\s*{"
+        pattern_starts = [
+            r"bool Internal::restarting\(.*?\)\s*{",
+            # r"void Internal::bump_variable_score\(.*?\)\s*{"
+            ]
+        pattern_start=pattern_starts[current_index]
         start_match = re.search(pattern_start, code)
         if not start_match:
             return "Function start not found."
@@ -298,15 +302,24 @@ class Evaluator:
         return function_body
     
     
-    def update_exact_function_body(self, new_body_code):
+    def update_exact_function_body(self, new_body_code,current_index):
         import re
-        file_path = '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp'
+        file_paths = [
+            '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
+            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp'
+            ]
+        file_path=file_paths[current_index]
         with open(file_path, 'r') as file:
             content = file.read()
 
         # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
-        pattern = r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})"
+        patterns = [
+            r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
+            # r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
+            ]
+        
+        pattern=patterns[current_index]
 
         # 构建新的函数体，确保新代码的正确缩进
         replacement = r"\1\n" + new_body_code.replace("\n", "\n    ") + r"\n\3"
@@ -315,6 +328,19 @@ class Evaluator:
         # 将更新后的内容写回文件
         with open(file_path, 'w') as file:
             file.write(updated_content)
+
+        # # 保存所有文件的内容
+        # all_files_content = {}
+
+        # for path in file_paths:
+        #     with open(path, 'r') as file:
+        #         content = file.read()
+        #         all_files_content[path] = content
+
+        # # 输出所有文件的内容
+        # for path, content in all_files_content.items():
+        #     print(f"Content of {path}:")
+        #     print(content)
 
 
     def analyse(
@@ -325,7 +351,9 @@ class Evaluator:
             score_list_score:dict,
             exec_size:str,
             score_list:ScoreList,
+            current_index,
             init=False,
+            
             **kwargs  # RZ: add this to do profile
     ) -> dict:
         """Compiles the sample into a program and executes it on test inputs.
@@ -341,7 +369,7 @@ class Evaluator:
         new_function, program = _sample_to_program(
             sample, version_generated, self._template, self._function_to_evolve)
         scores_per_test = {}
-        self.update_exact_function_body(self.extract_exact_body(program))
+        self.update_exact_function_body(self.extract_exact_body(program,current_index),current_index)
 
         time_reset = time.time()
         for current_input in self._inputs:
