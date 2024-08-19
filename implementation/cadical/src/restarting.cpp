@@ -3,32 +3,19 @@
 using namespace CaDiCaL;
 
 bool Internal::restarting() {
-if (!opts.restart || level < assumptions.size() + 2 || stats.conflicts <= lim.restart || stabilizing()) {
-        return false;
-      }
-    
-      double glue_slow_ema = averages.current.glue.slow;
-      double glue_fast_ema = averages.current.glue.fast;
-      double restart_margin = opts.restartmargin / 100.0;
-      double slow_ema_limit = glue_slow_ema * restart_margin;
-      double max_ema_limit = glue_slow_ema - slow_ema_limit;
-      double final_slow_ema_limit = glue_fast_ema + (glue_slow_ema - glue_fast_ema) * restart_margin;
-    
-      if (glue_fast_ema >= final_slow_ema_limit) {
-        return true;
-      }
-    
-      double slow_ema_diff = glue_slow_ema - glue_fast_ema;
-      double ratio = slow_ema_limit / slow_ema_diff;
-      double max_ema_limit_ratio = max_ema_limit / slow_ema_diff;
-    
-      if (glue_fast_ema < slow_ema_limit 
-          || max_ema_limit < 0 
-          || max_ema_limit_ratio <= ratio 
-          || max_ema_limit_ratio * 2 >= ratio 
-          || max_ema_limit >= glue_fast_ema * ratio) {
-        return true;
-      }
-    
-      return false;
+if (!opts.restart) return false;
+        if (level <= assumptions.size() + 1) return false;
+        if (stats.conflicts <= lim.restart) return false;
+        
+        const double fast_glue_avg = averages.current.glue.fast;
+        const double slow_glue_avg = averages.current.glue.slow;
+        const double glue_limit = 1.0 - opts.restartmargin / 100.0;
+        
+        const bool fast_ema_limit = fast_glue_avg > slow_glue_avg * glue_limit;
+        
+        if (stabilizing()) {
+            if (!reluctant) return false;
+        }
+        
+        return fast_ema_limit;
 }

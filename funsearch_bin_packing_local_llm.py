@@ -16,11 +16,11 @@ import os
 data_set='2023random_240_1'
 data_set_eval='2023random_240_1'
 dataset_size='240'
-timeout_value='1300'
-case_num='072801'
+timeout_value='100'
+case_num='081801'
 parallel_size='25'
 case_code=data_set+'_'+timeout_value+'_'+case_num
-log_name='logs_cadical'
+log_name='logs_sbva'
 time_list=[100,300,500,700,1000]
         
 
@@ -37,6 +37,25 @@ class LocalLLM(sampler.LLM):
         # url = 'http://0.0.0.0:8000/v1/completions'
         url = 'http://0.0.0.0:8000/v1/chat/completions'
         additional_prompt = [
+            # (
+            #  'In the context of SAT solvers that use the VSIDS heuristic. '
+            #  'Given the existing restarting_v0 function, please generate an optimized version named restarting_v*. '
+            #  'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
+            #  'The function evaluates several conditions related to the solver\'s state, conflict count, and metrics of clause quality to decide whether a restart should occur. '
+            #  'This helps the solver to avoid getting stuck in difficult regions of the search space and potentially improve its efficiency.'
+            #  'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
+            #  'Ensure the function is significantly different and more advanced than the prior versions. '
+            #  'Only the C++ code for the function is required, without any additional descriptions or annotations.'
+            #  'Existing restarting_v0 function for reference:'
+            #  'If the option to restart (\'opts.restart\') is not enabled, the function immediately returns \'false\', indicating that no restart should occur.'
+            #  'This condition checks if the current decision level (\'level\') is less than the number of assumptions plus two. If it is, the function returns \'false\', meaning the solver is too early in its decision process to consider a restart.'
+            #  'If the \'stabilizing()\' function returns \'true\', the function returns the value of \'reluctant\', which indicates whether a reluctant restart should be considered based on the solver\'s stabilization state.'
+            #  'If the current number of conflicts (\'stats.conflicts\') is less than or equal to the restart limit (\'lim.restart\'), the function returns \'false\', meaning there haven\'t been enough conflicts to warrant a restart.'
+            #  'The function calculates the fast and slow exponential moving averages (EMAs) of the glue (a measure of clause quality). '
+            #  'It computes the restart margin based on \'opts.restartmargin\' and multiplies the slow EMA by this margin to get the limit (\'l\'). '
+            #  'The function returns \'true\' if the fast EMA (\'f\') is greater than or equal to the computed limit (\'l\'), indicating that the conditions for a restart have been met. Otherwise, it returns \'false\'.'
+            #   'Your task is to create the optimized restarting_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
+            # ),
             (
              'In the context of SAT solvers that use the VSIDS heuristic. '
              'Given the existing restarting_v0 function, please generate an optimized version named restarting_v*. '
@@ -47,15 +66,26 @@ class LocalLLM(sampler.LLM):
              'Ensure the function is significantly different and more advanced than the prior versions. '
              'Only the C++ code for the function is required, without any additional descriptions or annotations.'
              'Existing restarting_v0 function for reference:'
-             'If the option to restart (\'opts.restart\') is not enabled, the function immediately returns \'false\', indicating that no restart should occur.'
-             'This condition checks if the current decision level (\'level\') is less than the number of assumptions plus two. If it is, the function returns \'false\', meaning the solver is too early in its decision process to consider a restart.'
-             'If the \'stabilizing()\' function returns \'true\', the function returns the value of \'reluctant\', which indicates whether a reluctant restart should be considered based on the solver\'s stabilization state.'
-             'If the current number of conflicts (\'stats.conflicts\') is less than or equal to the restart limit (\'lim.restart\'), the function returns \'false\', meaning there haven\'t been enough conflicts to warrant a restart.'
-             'The function calculates the fast and slow exponential moving averages (EMAs) of the glue (a measure of clause quality). '
-             'It computes the restart margin based on \'opts.restartmargin\' and multiplies the slow EMA by this margin to get the limit (\'l\'). '
-             'The function returns \'true\' if the fast EMA (\'f\') is greater than or equal to the computed limit (\'l\'), indicating that the conditions for a restart have been met. Otherwise, it returns \'false\'.'
+             'This function returns a boolean indicating whether a restart is needed. The initial if statement checks several conditions to decide if a restart should not be performed:'
+             'opts.restart: This is likely a boolean option that enables or disables restarting. If it\'s false, restarting is disabled.'
+             'level <= assumptions.size() + 1: This checks if the current decision level is too close to the number of assumptions. '
+             'Assumptions are literals assumed to be true to restrict the search space temporarily. '
+             'If the solver is still exploring close to these assumptions, it might not restart.'
+             'stats.conflicts <= lim.restart: This checks if the number of conflicts encountered so far is less than a restart limit. '
+             'If not enough conflicts have occurred, the solver might benefit from continuing the current search path rather than restarting.'
+             'The function then calculates a dynamic limit based on the average "glue" level of learned clauses. '
+             'The "glue" level typically measures how many different decision levels are involved in a clause, with lower glue indicating a more useful clause. '
+             'The opts.restartmargin is used to adjust this threshold dynamically, allowing some flexibility in when restarts are triggered.'
+             'This checks if the fast EMA of the glue level is above the calculated limit. '
+             'EMAs are used to smooth out fluctuations and focus on recent trends. '
+             'A fast EMA reacting to the limit suggests that recent clauses are less useful, possibly indicating that a restart could be beneficial.'
+             'This part of the function makes the final decision on whether to restart:'
+             'stabilizing(): This likely checks if the solver is in a stabilizing state, where it might be focusing on consolidating its findings rather than exploring aggressively.'
+             'reluctant: This variable, used only in the stabilizing state, might indicate additional conditions or thresholds that affect restarting during stabilization.'
+             'If the solver is stabilizing, both fast_ema_limit and reluctant must be true to trigger a restart. Otherwise, only fast_ema_limit needs to be true.'
               'Your task is to create the optimized restarting_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
             ),
+
             # (
             #  'In the context of SAT solvers that use the VSIDS heuristic. '# the activity of a variable represents how often the variable has been involved in conflicts.'
             #  'Given the existing bump_variable_score_v0 function, please generate an optimized version named bump_variable_score_v*. '
@@ -80,7 +110,39 @@ class LocalLLM(sampler.LLM):
             #  'The new score is then assigned to the variable idx.'
             #  'If the variable idx is already in the priority queue scores, its score is updated. This ensures that the scores in the priority queue are always up to date.'                             
             #  'Your task is to create the optimized bump_variable_score_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
-            # )
+            # ),
+            # (
+            # 'The tiebreaking_heuristic function is designed to compare two literals, lit1 and lit2, in solving SAT problems. '
+            # 'It calculates a heuristic value to help break ties between these literals based on their relationships with each other.'
+            # 'The function first checks if there is a cached heuristic value for lit2. '
+            # 'This is done using tmp_heuristic_cache_full, a cache that stores precomputed heuristic values. '
+            # 'The function uses the index of lit2 (retrieved by sparsevec_lit_idx(lit2)) to look it up.'
+            # 'If a cached value is found, it is returned immediately, which helps avoid redundant calculations.'
+            # 'If the value is not cached, the function proceeds to update the adjacency matrix with lit1 and lit2 by calling update_adjacency_matrix for each literal.' 
+            # 'The adjacency matrix represents relationships between literals.'
+            # 'The function then retrieves sparse vectors vec1 and vec2 from the adjacency matrix.' 
+            # 'These vectors correspond to the literals abs1 and abs2, where abs1 and abs2 are the absolute values of lit1 and lit2, respectively.'
+            # 'It initializes a variable total_count to accumulate the heuristic value.'
+            # 'The function iterates over the non-zero elements of vec2. For each non-zero element, it updates the adjacency matrix for a variable var and retrieves its sparse vector vec3.'
+            # 'It then computes the dot product between vec1 and vec3, multiplied by the coefficient of vec2 at var, and adds this to total_count.'
+            # 'The computed total_count is then stored in the cache (tmp_heuristic_cache_full) with the index of lit2 as the key for future use.'
+            # 'Finally, the function returns the total_count, which is the heuristic value used to break ties between lit1 and lit2.'
+            # 'Your task is to create the optimized tiebreaking_heuristic_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
+            # ),
+            # (
+            # 'The tiebreaking_heuristic function is designed to compare two literals, lit1 and lit2, in solving SAT problems. '
+            # 'It calculates a heuristic value to help break ties between these literals based on their relationships with each other.'
+            # 'The function first calculates the index idx2 for lit2, then searches for this index in the tmp_heuristic_cache_full hash table.'
+            # 'If found, it directly returns the cached value to avoid redundant computations. '
+            # 'The function updates the adjacency matrices for both literals lit1 and lit2 '
+            # 'and retrieves the corresponding sparse vectors vec1 and vec2 from the updated adjacency matrices.'
+            # 'The function then uses OpenMP to parallelize the computation of the heuristic value.' 
+            # 'It iterates over all elements in vec2, and for each non-zero element, calculates the dot product with vec1, '
+            # 'then multiplies the dot product by the coefficient in vec2 and adds it to total_count.' 
+            # 'After the computation, the result is stored in the cache and returned.'
+            # 'Your task is to create the optimized tiebreaking_heuristic_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
+            # ),
+
             ]
         extra_info = r'''
 
@@ -227,7 +289,8 @@ class Sandbox(evaluator.Sandbox):
             import subprocess
             # conda_env = 'sf'
             # script_path = os.path.expanduser("~/funsearch_vm_schecduling/implementation/vm/VMAgent_plus/vmagent/test_baselines.py")
-            script_path = os.path.expanduser("~/Fun_SAT/implementation/cadical/temp/cadical.sh")
+            # script_path = os.path.expanduser("~/Fun_SAT/implementation/cadical/temp/cadical.sh")
+            script_path = os.path.expanduser("~/Fun_SAT/implementation/SBVA/temp/sbva.sh")
             data_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/dataset/"+data_set)
             data_path_eval = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/dataset/"+data_set_eval)
 
@@ -463,19 +526,13 @@ r'''
 using namespace CaDiCaL;
 
 bool Internal::restarting() {
-  if (!opts.restart || stats.conflicts <= lim.restart || level < assumptions.size() + 2)
-    return false;
+    if (!opts.restart || level <= assumptions.size() + 1 || (stats.conflicts <= lim.restart)) return false;
 
-  if (stabilizing())
-    return reluctant;
+    double limit = (1.0 + opts.restartmargin / 100.0) * averages.current.glue.slow;
+    bool fast_ema_limit = averages.current.glue.fast >= limit;
 
-  double const slow_ema = averages.current.glue.slow;
-  double const fast_ema = averages.current.glue.fast;
-  double const slow_ema_limit = slow_ema * (opts.restartmargin / (100.0 - opts.restartmargin));
-  double const max_ema_lim = slow_ema - slow_ema_limit;
-  double const final_slow_ema_limit = fast_ema + (slow_ema - fast_ema) * opts.restartmargin / 100.0;
-
-  return fast_ema >= final_slow_ema_limit || (fast_ema >= max_ema_lim && (slow_ema_limit / (slow_ema - fast_ema)) <= (fast_ema / (slow_ema - fast_ema)));
+    if (stabilizing()) return fast_ema_limit && reluctant;
+    else return fast_ema_limit;
 }
 ''',
 # r'''
@@ -484,43 +541,65 @@ bool Internal::restarting() {
 # using namespace CaDiCaL;
 
 # void Internal::bump_variable_score(int lit) {
-#     const int idx = vidx(lit);
-#     double& score = stab[idx];
-#     const double old_score = score;
-#     const double new_score = old_score + score_inc;
-
-#     if (new_score > 1e150) {
-#         // Rescale scores if necessary
-#         double max_val = 0.0;
-#         for (int i : vars) {
-#             if (stab[i] > max_val) {
-#                 max_val = stab[i];
-#             }
-#         }
-#         if (max_val == 0.0 || new_score / max_val > 0.95) {
-#             double factor = 1.0 / max_val;
-#             while (new_score * factor > 1e150) {
-#                 // Reduce the scaling factor if scores are still too large
-#                 factor /= 2.0;
-#             }
-#             for (int i : vars) {
-#                 stab[i] *= factor;
-#             }
-#             score_inc *= factor;
-#             score *= factor;
-#         }
-#     }
-#     else {
-#         score = new_score;
-#     }
-
-#     // Update the score in the priority queue
-#     if (scores.contains(idx)) {
-#         scores.update(idx);
-#     }
-
+#   int idx = vidx (lit);
+#   double old_score = score (idx);
+#   double new_score = old_score + score_inc;
+#   if (evsids_limit_hit (new_score)) {
+#     rescale_variable_scores ();
+#     old_score = score (idx);
+#     new_score = old_score + score_inc;
+#   }
+#   score (idx) = new_score;
+#   if (scores.contains (idx))
+#     scores.update (idx);
 # }
-# '''
+# ''',
+# r'''
+# #include "sbva.hpp"
+# using namespace std;
+
+# int Formula::tiebreaking_heuristic(int lit1, int lit2) {
+#   // Check cached value for lit2
+#   const int idx2 = sparsevec_lit_idx(lit2);
+#   const auto it = tmp_heuristic_cache_full.find(idx2);
+#   if (it != tmp_heuristic_cache_full.end()) {
+#     return it->second;
+#   }
+
+#   // Update adjacency matrix for both literals and get corresponding sparse vectors
+#   update_adjacency_matrix(lit1);
+#   update_adjacency_matrix(lit2);
+#   const Eigen::SparseVector<int> vec1 = adjacency_matrix[sparsevec_lit_idx(abs(lit1))];
+#   const Eigen::SparseVector<int> vec2 = adjacency_matrix[idx2];
+
+#   // Compute heuristic value
+#   int total_count = 0;
+#   #pragma omp parallel for reduction(+:total_count)
+#   for (int j = 0; j < vec2.outerSize(); ++j) {
+#     // Retrieve variable and coefficient for vec2
+#     const int var = sparcevec_lit_for_idx(j);
+#     const int coeff = vec2.coeff(j);
+
+#     // Avoid unnecessary computations
+#     if (var == abs(lit1) || coeff == 0) {
+#       continue;
+#     }
+
+#     // Retrieve and compute dot product for vec3
+#     const Eigen::SparseVector<int> vec3 = adjacency_matrix[j];
+#     const int dot_prod = vec3.dot(vec1);
+
+#     // Update total count
+#     total_count += coeff * dot_prod;
+#   }
+
+#   // Cache the heuristic value for future use
+#   tmp_heuristic_cache_full[idx2] = total_count;
+
+#   return total_count;
+# }
+# ''',
+
 ]
 
 # It should be noted that the if __name__ == '__main__' is required.

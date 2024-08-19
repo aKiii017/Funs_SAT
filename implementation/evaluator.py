@@ -265,7 +265,8 @@ class Evaluator:
         # 查找函数开始的位置
         pattern_starts = [
             r"bool Internal::restarting\(.*?\)\s*{",
-            # r"void Internal::bump_variable_score\(.*?\)\s*{"
+            # r"void Internal::bump_variable_score\(.*?\)\s*{",
+            # r"int Formula::tiebreaking_heuristic\(.*?\)\s*{",
             ]
         pattern_start=pattern_starts[current_index]
         start_match = re.search(pattern_start, code)
@@ -306,7 +307,8 @@ class Evaluator:
         import re
         file_paths = [
             '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
-            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp'
+            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp',
+            # '/home/ubuntu/Fun_SAT/implementation/SBVA/tiebreaking_heuristic.cpp'
             ]
         file_path=file_paths[current_index]
         with open(file_path, 'r') as file:
@@ -317,6 +319,7 @@ class Evaluator:
         patterns = [
             r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
             # r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
+            # r"(int Formula::tiebreaking_heuristic\(.*?\)\s*{)([\s\S]*?)(^\})",
             ]
         
         pattern=patterns[current_index]

@@ -188,6 +188,7 @@ def text_to_program(code: str) -> Program:
         temp_file.write(code.encode('utf-8'))
 
     include_paths = ["/home/ubuntu/Fun_SAT/implementation/cadical/src"]
+    # include_paths = ["/home/ubuntu/Fun_SAT/implementation/SBVA"]
 
     index = clang.cindex.Index.create()
     args = ['-std=c++11']
@@ -230,13 +231,12 @@ def text_to_program(code: str) -> Program:
 
 def text_to_function(text: str) -> Function:
     """Returns Function object by parsing input text using Python AST."""
-    # print("test\n",text)
-    # print('text:',text)
 
     text="using namespace CaDiCaL;\n"+text
     text="#include \"internal.hpp\"\n"+text
-    # print("test\n",text)
-    # print('text:',text)
+    # text="using namespace std;\n"+text
+    # text="#include \"sbva.hpp\"\n"+text
+
     # include_paths = ["/home/ubuntu/Fun_SAT/implementation/EasySAT-main"]
     program = text_to_program(text)
     # print('program:',program)

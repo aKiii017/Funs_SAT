@@ -26,7 +26,6 @@ SOFTWARE.
 // #include "EasySAT.hpp"
 // #include <fstream>
 #include "bump_var.cpp"
-#include "rephase.cpp"
 #include "restart_condition.cpp"
 
 #define value(lit) (lit > 0 ? value[lit] : -value[-lit])    // Get the value of a literal
@@ -265,9 +264,9 @@ void Solver::restart() {
     else if ((phase_rand -= 20) < 0)for (int i = 1; i <= vars; i++) saved[i] = rand() % 2 ? 1 : -1;
 }
 
-// void Solver::rephase() {
-//     rephases = 0, threshold *= 0.9, rephase_limit += 8192;
-// }
+void Solver::rephase() {
+    rephases = 0, threshold *= 0.9, rephase_limit += 8192;
+}
 
 void Solver::reduce() {
     backtrack(0);
@@ -322,7 +321,7 @@ int Solver::solve() {
         }
         else if (reduces >= reduce_limit) reduce();            
         else if (restart_condition(lbd_queue_size, fast_lbd_sum, slow_lbd_sum, conflicts)) restart(); 
-        else if (rephases >= rephase_limit) rephase(rephases, threshold, rephase_limit);
+        else if (rephases >= rephase_limit) rephase();
         else res = decide();
     }
     return res;
