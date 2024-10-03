@@ -50,9 +50,15 @@ def _extract_function_names(spec: str) -> Tuple[str, str]:
     import re
 
     # 使用正则表达式匹配函数定义，包括前缀 "Internal::"
-    function_pattern = r'\b(Internal::\w+)\s*\('
+    # function_pattern = r'\b(Internal::\w+)\s*\('
     # function_pattern = r'\b(Formula::\w+)\s*\('
-    
+    # function_pattern = r'\b(Solver::\w+)\s*\('
+    # function_pattern = r'\bvoid\s+(\w+)\s*\('
+    # function_pattern = r'\bbool\s+(\w+)\s*\('
+    function_pattern = r'\b(solver::\w+)\s*\('
+
+
+
     # 查找所有匹配的函数名称
     matches = re.findall(function_pattern, spec)
     

@@ -1,125 +1,79 @@
-import re
-from typing import Tuple
+import clang.cindex
+import tempfile
+from typing import List, Optional
+import dataclasses
 
-def _extract_function_names(spec: str) -> Tuple[str, str]:
-    # 使用正则表达式匹配函数定义，包括前缀 "Internal::"
-    function_pattern = r'\b(Internal::\w+)\s*\('
-    
-    # 查找所有匹配的函数名称
-    matches = re.findall(function_pattern, spec)
-    
-    # 假设 spec 中只有一个要提取的函数名称
-    if matches:
-        function_to_evolve = matches[0]
-        function_to_run = matches[0]
-        return function_to_evolve, function_to_run
-    
-    # 如果没有找到匹配的函数名称，则返回默认值或处理错误
-    return '', ''
+@dataclasses.dataclass
+class Function:
+    name: str
+    args: str
+    body: str
+    return_type: str
 
-# 示例调用
-specifications = [r'''
-#include "internal.hpp"
+    def __str__(self):
+        return f'Function Name: {self.name}\n' \
+               f'Arguments: {self.args}\n' \
+               f'Return Type: {self.return_type}\n' \
+               f'Function Body:\n{self.body}\n'
 
-using namespace CaDiCaL;
+@dataclasses.dataclass
+class Program:
+    functions: List[Function]
+    preface: Optional[str] = None
 
-bool Internal::restarting() {
-  if (!opts.restart) {
-    return false;
-  }
+    def __str__(self) -> str:
+        program = f"{self.preface}\n" if self.preface else ""
+        program += '\n'.join(str(f) for f in self.functions)
+        return program
 
-  if (stats.conflicts <= lim.restart) {
-    return false;
-  }
+def parse_c_code_from_string(source_code: str) -> Program:
+    with tempfile.NamedTemporaryFile(suffix=".c", delete=True) as temp_file:
+        temp_file.write(source_code.encode())
+        temp_file.flush()
 
-  if (level < assumptions.size() + 2 || stabilizing()) {
-    return reluctant;
-  }
+        index = clang.cindex.Index.create()
+        args = ['-x', 'c', '--include-directory=/usr/lib/llvm-10/lib/clang/10.0.0/include']
+        tu = index.parse(temp_file.name, args=args)
 
-  const double fast_ema = averages.current.glue.fast;
-  const double slow_ema = averages.current.glue.slow;
+        functions = []
+        first_function_position = len(source_code)
+        preface = None
+        for node in tu.cursor.walk_preorder():
+            if node.kind == clang.cindex.CursorKind.FUNCTION_DECL:
+                function_position = node.extent.start.offset
+                if function_position < first_function_position:
+                    first_function_position = function_position
+                function_name = node.spelling
+                return_type = node.result_type.spelling
+                if return_type == '_Bool':
+                    return_type='bool'
+                params = ', '.join([param.spelling for param in node.get_arguments()])
+                extent = node.extent
+                start = extent.start.offset
+                end = extent.end.offset
+                body = source_code[start:end]
+                brace_open = body.find('{')
+                brace_close = body.rfind('}')
+                if brace_open != -1 and brace_close != -1 and brace_close > brace_open:
+                    body = body[brace_open:brace_close+1]
+                functions.append(Function(name=function_name, args=params, body=body, return_type=return_type))
 
-  double slow_ema_limit = slow_ema * (opts.restartmargin / 100.0);
-  double slow_ema_limit_diff = (fast_ema - slow_ema) * (opts.restartmargin / 100.0);
+        if first_function_position != len(source_code):
+            preface = source_code[:first_function_position]
 
-  if (slow_ema_limit_diff < 0.0) {
-    slow_ema_limit_diff /= 2.0;
-  }
+        return Program(functions=functions, preface=preface)
 
-  double final_slow_ema_limit = std::max(slow_ema + slow_ema_limit_diff, fast_ema);
-  
-  return fast_ema >= final_slow_ema_limit / 2.0;
+# 示例C代码字符串，包含<stdbool.h>以确保bool被正确处理
+c_code = """
+#include <stdbool.h>
+#include "internal.h"
+#include "restart.h"
+
+bool kissat_restarting(kissat *solver) {
+  // function implementation
 }
+"""
 
-
-''',
-r'''
-#include "internal.hpp"
-
-using namespace CaDiCaL;
-
-void Internal::bump_variable_score(int lit) {
-    int idx = vidx(lit);
-    double old_score = stab[idx];
-    double new_score = old_score + score_inc;
-
-    // Check if rescaling is necessary
-    if (new_score > 1e150) {
-        double max_val = 0.0;
-
-        // Find the maximum score
-        for (auto i : vars) {
-            double score = stab[i];
-            if (score > max_val) {
-                max_val = score;
-            }
-        }
-
-        // Check if scores need to be rescaled
-        if (max_val == 0.0 || new_score / max_val > 0.95) {
-            double factor = 1.0 / max_val;
-
-            // Rescale variable scores
-            for (auto i : vars) {
-                stab[i] *= factor;
-                if (scores.contains(i)) {
-                    scores.update(i);
-                }
-            }
-
-            // Rescale score increment
-            score_inc *= factor;
-            old_score *= factor;
-            new_score = old_score + score_inc;
-        }
-
-        // Incremental rescaling
-        while (new_score > max_val * 0.95) {
-            double factor = 0.5;
-
-            // Rescale variable scores
-            for (auto i : vars) {
-                stab[i] *= factor;
-                if (scores.contains(i)) {
-                    scores.update(i);
-                }
-            }
-
-            // Rescale score increment
-            score_inc *= factor;
-            old_score *= factor;
-            new_score = old_score + score_inc;
-        }
-    }
-
-    // Update variable score
-    stab[idx] = new_score;
-
-    if (scores.contains(idx)) {
-        scores.update(idx);
-    }
-}
-''']
-
-function_to_evolve, function_to_run = _extract_function_names(specifications[1])
-print(f'function_to_evolve: {function_to_evolve}, function_to_run: {function_to_run}')
+# 解析C代码字符串
+program = parse_c_code_from_string(c_code)
+print(program)

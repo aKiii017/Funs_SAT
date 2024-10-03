@@ -1,18 +1,16 @@
 from openai import OpenAI
-from openai import AzureOpenAI
-openai_api_key = "f825f61246354ec090c5703ca4f76418"
-openai_api_base = "https://midivi-main-scu1.openai.azure.com/"
-client = AzureOpenAI(
-  api_key = openai_api_key,  
-  api_version = "2024-02-01",
-  azure_endpoint = openai_api_base
+client = OpenAI(
+    # This is the default and can be omitted
+    base_url="https://api.f2gpt.com/v1",
+    api_key="sk-f27nghhUpWfx5ULqL5MNmPmZhZxkRGkkoPbHLis30bCJ0U4z",
 )
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant"},
-        {"role": "user", "content": "Hello"},
-    ],
-    stream=False
+
+completion = client.chat.completions.create(
+  model="gpt-4o",
+  messages=[
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Hello!"}
+  ]
 )
-print(response.choices[0].message.content)
+
+print(completion.choices[0].message.content)

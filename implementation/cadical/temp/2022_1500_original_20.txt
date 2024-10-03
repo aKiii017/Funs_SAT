@@ -1,0 +1,1723 @@
+configure: reusing default 'build' directory
+configure: building in default '/home/ubuntu/Fun_SAT/implementation/cadical/build'
+configure: root directory '/home/ubuntu/Fun_SAT/implementation/cadical'
+configure: source directory '/home/ubuntu/Fun_SAT/implementation/cadical/src'
+configure: compiler supports all required C99/C++11 extensions
+configure: compiler configuration supports flexible array members
+configure: unlocked IO with '{putc,getc}_unlocked' seems to work
+configure: compiling with 'g++ -Wall -Wextra -O3 -DNDEBUG'
+configure: generated 'build/makefile' from '../makefile.in'
+configure: generated '../makefile' as proxy to ...
+configure: ... '/home/ubuntu/Fun_SAT/implementation/cadical/build/makefile'
+configure: removing '/home/ubuntu/Fun_SAT/implementation/cadical/src/makefile'
+configure: linking '/home/ubuntu/Fun_SAT/implementation/cadical/makefile'
+configure: now run 'make' to compile CaDiCaL
+configure: optionally run 'make test'
+make -C "/home/ubuntu/Fun_SAT/implementation/cadical/build"
+make[1]: Entering directory '/home/ubuntu/Fun_SAT/implementation/cadical/build'
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/analyze.cpp -o src/analyze.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/arena.cpp -o src/arena.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/assume.cpp -o src/assume.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/averages.cpp -o src/averages.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/backtrack.cpp -o src/backtrack.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/backward.cpp -o src/backward.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/bins.cpp -o src/bins.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/block.cpp -o src/block.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp -o src/bump_var.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/ccadical.cpp -o src/ccadical.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/checker.cpp -o src/checker.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/clause.cpp -o src/clause.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/collect.cpp -o src/collect.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/compact.cpp -o src/compact.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/condition.cpp -o src/condition.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/config.cpp -o src/config.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/constrain.cpp -o src/constrain.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/contract.cpp -o src/contract.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/cover.cpp -o src/cover.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/decide.cpp -o src/decide.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/decompose.cpp -o src/decompose.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/deduplicate.cpp -o src/deduplicate.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/drattracer.cpp -o src/drattracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/elim.cpp -o src/elim.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/ema.cpp -o src/ema.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/extend.cpp -o src/extend.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/external.cpp -o src/external.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/external_propagate.cpp -o src/external_propagate.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/file.cpp -o src/file.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/flags.cpp -o src/flags.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/flip.cpp -o src/flip.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/format.cpp -o src/format.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/frattracer.cpp -o src/frattracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/gates.cpp -o src/gates.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/idruptracer.cpp -o src/idruptracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/instantiate.cpp -o src/instantiate.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/internal.cpp -o src/internal.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/ipasir.cpp -o src/ipasir.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lidruptracer.cpp -o src/lidruptracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/limit.cpp -o src/limit.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/logging.cpp -o src/logging.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lookahead.cpp -o src/lookahead.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lratbuilder.cpp -o src/lratbuilder.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lratchecker.cpp -o src/lratchecker.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lrattracer.cpp -o src/lrattracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/lucky.cpp -o src/lucky.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/message.cpp -o src/message.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/minimize.cpp -o src/minimize.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/occs.cpp -o src/occs.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/options.cpp -o src/options.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/parse.cpp -o src/parse.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/phases.cpp -o src/phases.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/probe.cpp -o src/probe.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/profile.cpp -o src/profile.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/proof.cpp -o src/proof.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/propagate.cpp -o src/propagate.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/queue.cpp -o src/queue.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/random.cpp -o src/random.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/reap.cpp -o src/reap.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/reduce.cpp -o src/reduce.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/rephase.cpp -o src/rephase.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/report.cpp -o src/report.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/resources.cpp -o src/resources.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/restart.cpp -o src/restart.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp -o src/restarting.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/restore.cpp -o src/restore.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/score.cpp -o src/score.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/shrink.cpp -o src/shrink.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/signal.cpp -o src/signal.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/solution.cpp -o src/solution.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/solver.cpp -o src/solver.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/stats.cpp -o src/stats.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/subsume.cpp -o src/subsume.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/terminal.cpp -o src/terminal.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/ternary.cpp -o src/ternary.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/transred.cpp -o src/transred.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/util.cpp -o src/util.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/var.cpp -o src/var.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/veripbtracer.cpp -o src/veripbtracer.o
+/home/ubuntu/Fun_SAT/implementation/cadical/scripts/make-build-header.sh > build.hpp
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/version.cpp -o src/version.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/vivify.cpp -o src/vivify.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/walk.cpp -o src/walk.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/watch.cpp -o src/watch.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/contrib/craigtracer.cpp -o contrib/craigtracer.o
+ar rc libcadical.a src/analyze.o src/arena.o src/assume.o src/averages.o src/backtrack.o src/backward.o src/bins.o src/block.o src/bump_var.o src/ccadical.o src/checker.o src/clause.o src/collect.o src/compact.o src/condition.o src/config.o src/constrain.o src/contract.o src/cover.o src/decide.o src/decompose.o src/deduplicate.o src/drattracer.o src/elim.o src/ema.o src/extend.o src/external.o src/external_propagate.o src/file.o src/flags.o src/flip.o src/format.o src/frattracer.o src/gates.o src/idruptracer.o src/instantiate.o src/internal.o src/ipasir.o src/lidruptracer.o src/limit.o src/logging.o src/lookahead.o src/lratbuilder.o src/lratchecker.o src/lrattracer.o src/lucky.o src/message.o src/minimize.o src/occs.o src/options.o src/parse.o src/phases.o src/probe.o src/profile.o src/proof.o src/propagate.o src/queue.o src/random.o src/reap.o src/reduce.o src/rephase.o src/report.o src/resources.o src/restart.o src/restarting.o src/restore.o src/score.o src/shrink.o src/signal.o src/solution.o src/solver.o src/stats.o src/subsume.o src/terminal.o src/ternary.o src/transred.o src/util.o src/var.o src/veripbtracer.o src/version.o src/vivify.o src/walk.o src/watch.o contrib/craigtracer.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/cadical.cpp -o src/cadical.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -o cadical src/cadical.o -L. -lcadical 
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -c /home/ubuntu/Fun_SAT/implementation/cadical/src/mobical.cpp -o src/mobical.o
+g++ -Wall -Wextra -O3 -DNDEBUG -I../build -I/home/ubuntu/Fun_SAT/implementation/cadical/src -o mobical src/mobical.o -L. -lcadical
+make[1]: Leaving directory '/home/ubuntu/Fun_SAT/implementation/cadical/build'
+
+ALLtimes:
+[TASK001]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/23e61c50ee2ac5cad1d337572abdebcf-aws-encryption-sdk-c:aws_cryptosdk_priv_hdr_parse_edks.cnf 
+[RUNtime]774.249 s
+[RESULT]UNSATISFIABLE
+
+[TASK002]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b913c17d26ac9f3ad15fa83dc98960c7-sudoku-N30-27.cnf 
+[RUNtime]276.248 s
+[RESULT]UNSATISFIABLE
+
+[TASK003]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d60f78323b957025e55ca528d641b83b-SC22_Timetable_C_451_E_48_Cl_30_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK004]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/56e7489da32260e1bdd085a418592ec2-cliquecoloring_n18_k6_c5.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK005]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/70289686a242c8380ca26bda45ad1278-summle_X111104_steps6_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]519.234 s
+[RESULT]SATISFIABLE
+
+[TASK006]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/30ca21da9753263cc8cda020802b58ce-GP_500_200_20.cnf 
+[RUNtime]30.5521 s
+[RESULT]SATISFIABLE
+
+[TASK007]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0240f5bddc39ad2f0a786c811fc434a8-SC21_Timetable_C_542_E_71_Cl_36_S_35.cnf 
+[RUNtime]133.93 s
+[RESULT]SATISFIABLE
+
+[TASK008]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d1a4dc04e54d4fa58dfbbf61bd2415b4-SC22_Timetable_C_451_E_50_Cl_30_S_28.cnf 
+[RUNtime]805.145 s
+[RESULT]SATISFIABLE
+
+[TASK009]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e28cf003c086c99f3a3d9a90aebf8ed1-intel046_Iter124.cnf 
+[RUNtime]50.4509 s
+[RESULT]SATISFIABLE
+
+[TASK010]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/78cdffdf5bbb89beb753f9ffab7fa45f-sudoku-N30-6.cnf 
+[RUNtime]365.6 s
+[RESULT]UNSATISFIABLE
+
+[TASK011]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c846dfb21b50596aef8fbe5591d75eb0-UNSAT_MS_opt_snake_p20.pddl_29.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK012]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9cea216ba8c5051e489af11150504ba6-Break_20_36.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK013]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/47135a1fd4c86afbfec0c7879c45268b-SC22_Timetable_C_451_E_46_Cl_30_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK014]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/93695f689b57cdb57c9b6d0d726e0f53-Break_triple_18_48.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK015]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5c54a96de5bbfbfe9152afbc8822588d-cliquecoloring_n60_k5_c4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK016]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fdfd5975c57d7cd2264ef6aff6cb4815-SE_PR_stb_588_138.apx_1.cnf 
+[RUNtime]203.592 s
+[RESULT]SATISFIABLE
+
+[TASK017]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/085b8ebc423dcbd70eceaa04229cf5cd-summle_X111102_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]77.8187 s
+[RESULT]SATISFIABLE
+
+[TASK018]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c23aed727ae2d9cbb888d771991995aa-tseitin_grid_n16_m16.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK019]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a0e98fd44b74e6f255ca1e5a20bc01fd-cfi-rigid-d3-0180-02-orig.cnf 
+[RUNtime]1460.59 s
+[RESULT]UNSATISFIABLE
+
+[TASK020]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8e659f42dd85a193fccc9cbbcc4627ed-sum_of_three_cubes_3_unknown_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK021]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e4f345877ba5fa2b8fb26be06a123748-rphp_p105_r105.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK022]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2d01c7744a990469354a3c53cc2727fb-rphp_p95_r95.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK023]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ea8a79747c7ab142a897b7e8e638245f-j3045_4_mdd_b.cnf 
+[RUNtime]360.017 s
+[RESULT]SATISFIABLE
+
+[TASK024]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d79e09d2a1639a01528c0703df4d4946-pj2008_k400.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK025]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f0f279c7d5043e783f73237cf6bddf33-Break_triple_20_72.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK026]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/27d9905476897885d29cea2744db9805-coreJSON:skipCollection.cnf 
+[RUNtime]707.94 s
+[RESULT]SATISFIABLE
+
+[TASK027]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8bfbffbfea9e5a5993bc024f39adff84-worker_40_80_40_0.85.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK028]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0dc468413b65339fad7e4f981bf2fb1e-reconf20_61_myciel4_2.cnf 
+[RUNtime]24.673 s
+[RESULT]UNSATISFIABLE
+
+[TASK029]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/31cc22a0f42ebaa109a5b807eb6178c2-Break_20_54.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK030]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/02627689047d06fbb642eef14768d751-ps_200_300_70.cnf 
+[RUNtime]71.4857 s
+[RESULT]UNSATISFIABLE
+
+[TASK031]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/bc16508e3f279bec0a072b939bbe6440-af-synthesis_stb_50_40_2_sat.cnf 
+[RUNtime]34.2446 s
+[RESULT]SATISFIABLE
+
+[TASK032]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b29cb3449d70126d186e1f6a4fccc419-pj2015_k9.cnf 
+[RUNtime]733.864 s
+[RESULT]UNSATISFIABLE
+
+[TASK033]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0c75119940f87f2bc1dc3f53aeedc02b-20-100-lambda100-89_sat.cnf 
+[RUNtime]428.182 s
+[RESULT]SATISFIABLE
+
+[TASK034]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/367c25ad50259a685a25b86d6dd171b2-GP_100_950_33.cnf 
+[RUNtime]37.0919 s
+[RESULT]SATISFIABLE
+
+[TASK035]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/24af39156d1daa122e5928d9aba11847-GP_100_948_33.cnf 
+[RUNtime]33.4123 s
+[RESULT]SATISFIABLE
+
+[TASK036]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/048a70da40ea4908c783b8314be2da97-aes_32_2_keyfind_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK037]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2748e075d4b636ef260271a35302049b-cfi-rigid-t2-0048-01-or_3.cnf 
+[RUNtime]14.7566 s
+[RESULT]SATISFIABLE
+
+[TASK038]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/95c00d0ae51d5d0a2a931ce82b77701f-af-synthesis_stb_50_140_0_sat.cnf 
+[RUNtime]451.922 s
+[RESULT]SATISFIABLE
+
+[TASK039]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/43687a48fb119ca61b47c2fc69a71e7d-manthey_single-ordered-initialized-w42-b8.cnf 
+[RUNtime]165.197 s
+[RESULT]UNSATISFIABLE
+
+[TASK040]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5f24ae73bb2a0ec3bef68d8a9680f04f-af-synthesis_stb_50_80_7_unsat.cnf 
+[RUNtime]927.737 s
+[RESULT]UNSATISFIABLE
+
+[TASK041]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e02e21075d3bb8b0e64ea9b8122c75ff-PancakeVsInsertSort_6_7.cnf 
+[RUNtime]79.3605 s
+[RESULT]UNSATISFIABLE
+
+[TASK042]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cbd7e28e510e658abbbe312bdffc6407-worker_50_50_50_0.85.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK043]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f1b3d254596523910f3af07fc1942e64-Break_unsat_12_19.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK044]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0e89b0f96c99f1a6aaaf66c3ae805919-SCPC-500-15.cnf 
+[RUNtime]42.9719 s
+[RESULT]UNSATISFIABLE
+
+[TASK045]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4501f9a0e9fab5d5cff7133022b1f780-50bits_11.dimacs.cnf 
+[RUNtime]866.705 s
+[RESULT]SATISFIABLE
+
+[TASK046]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5e66b728b2445ec69f27e0f1a49f4b29-006.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK047]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7101289c67f4c4ba117ad06ebb7d18a0-6s184.cnf 
+[RUNtime]506.375 s
+[RESULT]UNSATISFIABLE
+
+[TASK048]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6a3e3d3a65a46608b44d81f9e4621087-6s105_Iter35.cnf 
+[RUNtime]530.648 s
+[RESULT]UNSATISFIABLE
+
+[TASK049]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7d2199baf2526263b5f753d290d2790b-md4__zeroOut_19__freeIn_23__seed_2.cnf 
+[RUNtime]198.098 s
+[RESULT]SATISFIABLE
+
+[TASK050]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cb3c725fd30d50c6785b907054194260-worker_40_40_30_0.9.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK051]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/20840b5020649385e3f8f4965de7a123-hantzsche_wendt_unit_83.cnf 
+[RUNtime]1264.83 s
+[RESULT]UNSATISFIABLE
+
+[TASK052]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/02223564bd2f5c20768e63cf28c785e3-mp1-squ_ali_s10x10_c39_abio_SAT.cnf 
+[RUNtime]46.3475 s
+[RESULT]SATISFIABLE
+
+[TASK053]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2c7cb0ff324a42a0699c23317c97a29a-6s320rb1_Iter8.cnf 
+[RUNtime]398.991 s
+[RESULT]UNSATISFIABLE
+
+[TASK054]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d78819115db81dee343d7777fbc5844f-cfi-rigid-s2-0064-02-or_2.cnf 
+[RUNtime]1152.23 s
+[RESULT]UNSATISFIABLE
+
+[TASK055]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f5f1d6a47ed7449a18d872a3f93d8aa5-GP_120_400_15.cnf 
+[RUNtime]15.2155 s
+[RESULT]SATISFIABLE
+
+[TASK056]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/07b7859003d84402cbb1ebdc37655d55-6s186_Iter20.cnf 
+[RUNtime]194.431 s
+[RESULT]UNSATISFIABLE
+
+[TASK057]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4348c6b9af237291558b154a9de82969-aws-encryption-sdk-c:aws_cryptosdk_priv_hdr_parse_aad.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK058]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/81b674a2aa6fbda9b06cf8ea334ddc44-beempgsol2b1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK059]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0c0e6faa4abb622f5bea636ff04d341d-grid-color-12-14-2-cb.cnf 
+[RUNtime]409.425 s
+[RESULT]SATISFIABLE
+
+[TASK060]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7993005e2949524b293b216ed9c65126-cfi-rigid-s2-0064-03-or_2_shuffle_all.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK061]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e9b4369f9a98e397ac69eb7740ffef49-Carry_Save_Fast_2.cnf.cnf 
+[RUNtime]41.5324 s
+[RESULT]SATISFIABLE
+
+[TASK062]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a58badecf3c901594f06d021f54c3a11-aws-c-common:aws_priority_queue_s_sift_either.cnf 
+[RUNtime]232.042 s
+[RESULT]UNSATISFIABLE
+
+[TASK063]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/34c2410669b8063d4b0a16a40b071536-sum_of_three_cubes_still_open_large.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK064]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cd7c8f8aa9901293a9bc31839eafcc40-reconf10_42_queen20_4_0961.cnf 
+[RUNtime]645.975 s
+[RESULT]SATISFIABLE
+
+[TASK065]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/80023e9fd0e627f71c2d953432613b5f-hyp_cec_multi_4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK066]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/39b3fde35939134f3b011ebb31842610-PancakeVsInsertSort_9_4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK067]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f8ad493b11bf0692c1f3919642cebdb1-PancakeVsInsertSort_9_3.cnf 
+[RUNtime]725.616 s
+[RESULT]UNSATISFIABLE
+
+[TASK068]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d21199e73859ca35386912c5c475d6c7-tseitin_n192_d3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK069]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c5be40965caf3abdba3994ff3d1f32b6-grid-color-12-14-4-cb.cnf 
+[RUNtime]561.588 s
+[RESULT]SATISFIABLE
+
+[TASK070]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cd1585619fea2f2634525a3663873764-linked_list_swap_contents_safety_unwind55.cnf 
+[RUNtime]292.527 s
+[RESULT]UNSATISFIABLE
+
+[TASK071]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0a3cb69074519646b0f2933ba7ad2d30-aws-encryption-sdk-c:aws_cryptosdk_hdr_write.cnf 
+[RUNtime]582.161 s
+[RESULT]UNSATISFIABLE
+
+[TASK072]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d7f273dc6e97efe55c8b7f9cc547eb2d-sin_depth_miter_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK073]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/925c82e25f5391fc2f1f7a4a9e093cec-6s186_Iter99.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK074]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d065d395159d19735706e0b5cb823f17-af-synthesis_stb_50_20_8_sat.cnf 
+[RUNtime]384.123 s
+[RESULT]SATISFIABLE
+
+[TASK075]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/45ec40c74fdbf2fe41122ac1e31e6c8e-worker_30_120_30_0.8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK076]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0b4421f6aac81e2dbc87c5b5ddae6511-52bits_12.dimacs.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK077]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e4128445a07bb86afca1f3590d9adfa9-worker_80_80_80_0.8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK078]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5d357f1e4b5abc96c90d305f629edd5c-ps_200_323_70.cnf 
+[RUNtime]59.7138 s
+[RESULT]UNSATISFIABLE
+
+[TASK079]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a7b23445c21b27eb3c918c1e96ba25df-hyp_cec_multi_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK080]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7e9318578a6bdd7dfa9fc261be8a0839-PancakeVsSelectionSort_7_7.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK081]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/436d00b6d41912e800e9855d08c75139-manol-pipe-f7nidw.cnf 
+[RUNtime]26.9005 s
+[RESULT]UNSATISFIABLE
+
+[TASK082]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/73ef1e87dbb7965ecb558e62dedb3a0c-SCPC-500-8.cnf 
+[RUNtime]51.1322 s
+[RESULT]UNSATISFIABLE
+
+[TASK083]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7b933d3e6b425772ed19eb0fec52bbf9-j3037_1_rggt_b.cnf 
+[RUNtime]38.3666 s
+[RESULT]SATISFIABLE
+
+[TASK084]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/01d142c43f3ce9a8c5ef7a1ecdbb6cba-urquhart3_25bis.shuffled.cnf 
+[RUNtime]23.0021 s
+[RESULT]UNSATISFIABLE
+
+[TASK085]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b8f9b018d16835c564dcd8395118c79f-aws-encryption-sdk-c:aws_cryptosdk_priv_hdr_parse_alg_id.cnf 
+[RUNtime]818.293 s
+[RESULT]UNSATISFIABLE
+
+[TASK086]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/064fe286277f695f42b556ef991036ff-sin_depth_miter_2.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK087]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e97ebde59cb17ef6f7c4430224b21ed1-grid-color-14-14-8-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK088]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ccb55d1b802617fcb969e12859d66124-g2-mizh-md5-48-2.cnf 
+[RUNtime]231.12 s
+[RESULT]SATISFIABLE
+
+[TASK089]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7ff8c9781b3ada449ce489cdf444a760-Break_unsat_10_15.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK090]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/af834fd3ce15078d2ab055c996758c00-sum_of_three_cubes_33_known_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK091]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7efdf72de31fa82aeceb7acbc29a59bf-vlsat2_113_1150.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK092]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cd361d33986dccd7f2d86016d6c35241-ecarev-110-4099-22-30-7.cnf 
+[RUNtime]274.513 s
+[RESULT]SATISFIABLE
+
+[TASK093]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a44fce1796383ea31df08af3b0f65db3-soelberg_unit_159.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK094]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5796ee4ac65929640e1b67ae2bfb9e8e-div_miter_lec_3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK095]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/26f8332e50a4ba5c371852e3737a3002-mdp-28-11-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK096]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3d4beaebb3d87819ce9ff59e72047ef7-sudoku-N30-20.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK097]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/00a62eb89afbf27e1addf8f5c437da9b-ortholatin-7.cnf 
+[RUNtime]3.96949 s
+[RESULT]SATISFIABLE
+
+[TASK098]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3d2a6e5c2f8f58dee79fd50444009625-cfi-rigid-z2-0088-03-or_2_shuffle_all.cnf 
+[RUNtime]1031.84 s
+[RESULT]UNSATISFIABLE
+
+[TASK099]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/488b147304549670f31653c932684e2c-sin-mitern28.cnf 
+[RUNtime]79.959 s
+[RESULT]UNSATISFIABLE
+
+[TASK100]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6c34b7032712e16b08d97a0449d610e2-puzzle30_sat.cnf 
+[RUNtime]107.334 s
+[RESULT]SATISFIABLE
+
+[TASK101]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fe800e62b55609cb152965c223e72280-div-mitern171.cnf 
+[RUNtime]119.633 s
+[RESULT]UNSATISFIABLE
+
+[TASK102]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f8b7241f662ab4d36337b74bb7984122-summle_X111119_steps7_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]93.2171 s
+[RESULT]SATISFIABLE
+
+[TASK103]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/109aa0f5e177c1efb72f133a6f8c723b-hantzsche_wendt_unit_92.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK104]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b24684abee2e253a4aee233eed155a5b-GP_100_948_34.cnf 
+[RUNtime]34.7485 s
+[RESULT]SATISFIABLE
+
+[TASK105]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b8d10f8c82a85c03c000fbd005e5a838-worker_50_150_40_0.85.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK106]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c33dc89922f1ddea4e7eeddafe4143b3-reconf20_20_grid10_1_6141.cnf 
+[RUNtime]1187.82 s
+[RESULT]UNSATISFIABLE
+
+[TASK107]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/090585dc32a79f2bf6fb61a2c7079682-mdp-28-16-sat.cnf 
+[RUNtime]592.349 s
+[RESULT]SATISFIABLE
+
+[TASK108]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5e933a625099cc1ec6a8299a7848a2ae-Kakuro-easy-112-ext.xml.hg_7.cnf 
+[RUNtime]197.241 s
+[RESULT]SATISFIABLE
+
+[TASK109]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b3cf73d0383f781adf09a2192fa03a15-string_compare_safety_cbmc_unwinding_670.cnf 
+[RUNtime]504.08 s
+[RESULT]UNSATISFIABLE
+
+[TASK110]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7e5396d6b00b82c2fc0ea1d7c6505afd-manthey_single-ordered-initialized-w50-b7.cnf 
+[RUNtime]1304.9 s
+[RESULT]UNSATISFIABLE
+
+[TASK111]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d518d21a9d851741940749cb59f558af-rphp_p6_r28.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK112]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d32a1553afeebf44835370c9567b3598-cfi-rigid-t2-0048-01-or_3_shuffle_all.cnf 
+[RUNtime]86.9238 s
+[RESULT]SATISFIABLE
+
+[TASK113]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/61175b10026fe42cadd5e2f0088684ea-6s105_Iter99.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK114]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/88bfa72210baef40a2903d95044dc19d-linked_list_swap_contents_safety_unwind40.cnf 
+[RUNtime]197.487 s
+[RESULT]UNSATISFIABLE
+
+[TASK115]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5c5fa629c2c62723eb2d3388db264521-Wallace_Bits_Fast_3.cnf.cnf 
+[RUNtime]16.3593 s
+[RESULT]SATISFIABLE
+
+[TASK116]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c2596b3f0d779d532a667962b1e54b42-pj2008_k300.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK117]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3b97191d94abf3a5e97d6359d886d9df-summle_X111121_steps7_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]24.6744 s
+[RESULT]SATISFIABLE
+
+[TASK118]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/13b13b34fe88f093aca06d6d035ee797-Lab-Project-FreeRTOS-Cellular-Library:Cellular_ATRemovePrefix.cnf 
+[RUNtime]1353.98 s
+[RESULT]UNSATISFIABLE
+
+[TASK119]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2c0379771c5313567ea9e230438f203f-reconf20_320_hc-square-2_1.cnf 
+[RUNtime]400.774 s
+[RESULT]UNSATISFIABLE
+
+[TASK120]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0a20cb72e5b005b8ed09d8a93184604a-j3037_9_gmto_bm1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK121]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6fb0757ee018642fedd0669aad3882fe-grid-color-12-14-10-cb.cnf 
+[RUNtime]673.793 s
+[RESULT]SATISFIABLE
+
+[TASK122]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/efc1b836380d0f84e7512f7b2ccdbb60-PancakeVsInsertSort_8_5.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK123]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b8e3b884886922343f5cb72d92c24b97-frb75-13-2.used-as.sat04-878.cnf 
+[RUNtime]7.06771 s
+[RESULT]SATISFIABLE
+
+[TASK124]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b88d206fb35ef87bd7ec5d4a1430ae0c-20-100-p100-55_sat.cnf 
+[RUNtime]30.1604 s
+[RESULT]SATISFIABLE
+
+[TASK125]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7a67847b81b414d659f005200cf56f6b-size_5_5_5_i198_r12.cnf 
+[RUNtime]1102.49 s
+[RESULT]SATISFIABLE
+
+[TASK126]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fca7a5a04aaed5f0eacccc4139dc894a-satcoin-genesis-SAT-8192.cnf 
+[RUNtime]702.238 s
+[RESULT]SATISFIABLE
+
+[TASK127]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/03ba29d5cb38d345357a74a7b5ccd759-20-100-lambda100-49_sat.cnf 
+[RUNtime]59.7284 s
+[RESULT]SATISFIABLE
+
+[TASK128]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cb8f9ffb66d9b5ef663e6759be0b5e4e-q_query_3_L200_coli.sat.cnf 
+[RUNtime]138.576 s
+[RESULT]UNSATISFIABLE
+
+[TASK129]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/002a0330958a14deb23dcc84b5489e8a-traffic_f_unknown.cnf 
+[RUNtime]168.652 s
+[RESULT]UNSATISFIABLE
+
+[TASK130]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7ab6615515ffc5ceb8f6bd440d159c3d-pj2016_k80.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK131]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ce4345ce697134021029c2686d5eb04c-Carry_Save_Fast_3.cnf.cnf 
+[RUNtime]14.5673 s
+[RESULT]SATISFIABLE
+
+[TASK132]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/41423c03ef173a5b81d6e6776f316fa5-PancakeVsInsertSort_7_8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK133]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/157c7496c04d3fc63565cd7999dc45a5-Carry_Save_Fast_1.cnf.cnf 
+[RUNtime]123.202 s
+[RESULT]SATISFIABLE
+
+[TASK134]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/eb659cd21250abdc8c9cec49073c32c6-linked_list_swap_contents_safety_unwind59.cnf 
+[RUNtime]512.725 s
+[RESULT]UNSATISFIABLE
+
+[TASK135]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d702aa8568706efda8308ef8d24f907b-div-mitern167.cnf 
+[RUNtime]1018.62 s
+[RESULT]UNSATISFIABLE
+
+[TASK136]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/65138afdf7eb054be5131f2b0de84369-satch2ways12u.cnf 
+[RUNtime]3.95588 s
+[RESULT]UNSATISFIABLE
+
+[TASK137]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/59e596f5f845a2487370950b37ec3db2-aws-encryption-sdk-c:aws_cryptosdk_enc_ctx_size.cnf 
+[RUNtime]596.423 s
+[RESULT]UNSATISFIABLE
+
+[TASK138]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ba8621490e4e7212fffdb55fb6bd282d-combined-crypto1-wff-seed-108-wffvars-500-cryptocplx-31-overlap-2.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK139]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3159a02d096424aab6295c76360633a9-SCPC-500-10.cnf 
+[RUNtime]34.9135 s
+[RESULT]UNSATISFIABLE
+
+[TASK140]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/04157f716c1e9606c6a530657bf8f957-Kakuro-easy-125-ext.xml.hg_4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK141]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cac1c09f968ef8654c499156d1292385-SCPC-500-18.cnf 
+[RUNtime]51.8989 s
+[RESULT]UNSATISFIABLE
+
+[TASK142]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4a85e090bda23cef9bf2aed55d489ab6-sin_depth_miter_5.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK143]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/af63ce577d1fea121ba80b4b1d148f0c-sudoku-N30-22.cnf 
+[RUNtime]263.263 s
+[RESULT]UNSATISFIABLE
+
+[TASK144]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/03c44a93577c98119dc498053888937a-ctl_4291_567_1_unsat_pre.cnf 
+[RUNtime]1253.27 s
+[RESULT]UNSATISFIABLE
+
+[TASK145]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b043968ec004b4ac19eb31926c24d22c-mdp-36-11-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK146]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/81e73c41a76d7b432cf86c43ffe23986-PancakeVsInsertSort_8_6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK147]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/889b6d29998ade866e64c46f807a98bc-6s320rb1_Iter9.cnf 
+[RUNtime]111.478 s
+[RESULT]SATISFIABLE
+
+[TASK148]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c221c5dc006de79e561124dab52aae82-mdp-28-12-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK149]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f8a966a2ba189ad5fa45f870f3c5e200-sudoku-N30-7.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK150]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/eede03732955f620b5291f9dcf9f95df-tseitin_n200_d3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK151]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d40af7b45bba9c64033c0dd47b07f4a4-mdp-36-16-sat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK152]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9f7ec7ef3a908c2e93b5553670a207b1-rphp_p14_r14.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK153]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d3c07914f3ebb42906b986aa431243af-summle_X8646_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]112.059 s
+[RESULT]SATISFIABLE
+
+[TASK154]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/920bbe559da4ea37fd636605316a791c-SCPC-500-19.cnf 
+[RUNtime]27.0527 s
+[RESULT]UNSATISFIABLE
+
+[TASK155]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3fb297f59ad2dc32fd3f79d61951d8cb-Carry_Bits_Fast_4.cnf.cnf 
+[RUNtime]6.12307 s
+[RESULT]SATISFIABLE
+
+[TASK156]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e55a49d8065d65650f24c0f3ecef30b6-af-synthesis_stb_50_120_4_unsat.cnf 
+[RUNtime]599.432 s
+[RESULT]UNSATISFIABLE
+
+[TASK157]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5237a944490aeead04c7a4539e6b44d2-SC22_Timetable_C_451_E_43_Cl_30_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK158]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e0b938c32e36e2939d712dd4024f9ec6-j3037_9_mdd_b.cnf 
+[RUNtime]177.869 s
+[RESULT]SATISFIABLE
+
+[TASK159]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2551afad6b364a7225cdd1b9fa82f7c0-worker_500_500_500_0.35.cnf 
+[RUNtime]55.8284 s
+[RESULT]SATISFIABLE
+
+[TASK160]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/072785fd927ff0fd180ce8b9cc00078f-20180321_140826713_p_cnf_320_1120.cnf 
+[RUNtime]33.6728 s
+[RESULT]SATISFIABLE
+
+[TASK161]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c0d927c372e355081aa1f537cc910843-GP_100_948_32.cnf 
+[RUNtime]45.7886 s
+[RESULT]SATISFIABLE
+
+[TASK162]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/51dd2c14736f2d9164f749d6a633ccb5-j3045_10_mdd_bm1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK163]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/54d4838f065e6ca3579b357bc70ea566-div_miter_lec_4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK164]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5e04f38ff11cee5d75fb98e12f6a14fc-sqrt-mitern172.cnf 
+[RUNtime]54.5305 s
+[RESULT]UNSATISFIABLE
+
+[TASK165]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ddcb0cd9b7bca43c3a5189326ae88aab-linked_list_swap_contents_safety_unwind71.cnf 
+[RUNtime]1233.88 s
+[RESULT]UNSATISFIABLE
+
+[TASK166]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/02c6fe8483e4f4474b7ac9731772535d-ncc_none_7047_6_3_3_0_0_420.cnf 
+[RUNtime]963.248 s
+[RESULT]UNSATISFIABLE
+
+[TASK167]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/885c0d25480fe4db3cd5d3b4bc044e76-SCPC-500-17.cnf 
+[RUNtime]109.091 s
+[RESULT]UNSATISFIABLE
+
+[TASK168]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7adc1ade3384505af00ff8f7be23f5bd-ex175_20.cnf 
+[RUNtime]601.719 s
+[RESULT]SATISFIABLE
+
+[TASK169]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3176c9024f756e99dbee852e5c0aa578-Break_triple_12_30.xml.cnf 
+[RUNtime]41.4607 s
+[RESULT]SATISFIABLE
+
+[TASK170]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/eb8a25e0db5d0605e3e15670f7a07f27-grid-color-14-14-2-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK171]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5099718e4b5b8fe2ba7f8b919fdfde2d-satcoin-genesis-SAT-5.cnf 
+[RUNtime]1.16721 s
+[RESULT]SATISFIABLE
+
+[TASK172]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7acf6cf25ddaf2ab98106e0bb3b9ddb1-af-synthesis_stb_50_140_3_sat.cnf 
+[RUNtime]46.6691 s
+[RESULT]SATISFIABLE
+
+[TASK173]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/85aa1f0820da17412b8ee803b4a85207-sudoku-N30-4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK174]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0b495cc867003b7ac112b7c47256228b-h31_large.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK175]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d0ee45ac97c6b5cc63a528f46a5797aa-linked_list_swap_contents_safety_unwind44.cnf 
+[RUNtime]534.831 s
+[RESULT]UNSATISFIABLE
+
+[TASK176]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e01c39b7b41c9ff1621579b747254fab-ncc_none_3001_7_3_3_1_31_435991723.cnf 
+[RUNtime]822.777 s
+[RESULT]SATISFIABLE
+
+[TASK177]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f64806fd4fe79f1efaefa7ce68d93ee1-sin_depth_miter_4.cnf 
+[RUNtime]1311.11 s
+[RESULT]UNSATISFIABLE
+
+[TASK178]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c9886f58320a360adbc8db9470563bea-ctl_4291_567_12_unsat.cnf 
+[RUNtime]409.066 s
+[RESULT]UNSATISFIABLE
+
+[TASK179]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a2609893b71f219f4635d33ef1ff6eca-j3045_4_gmto_bm1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK180]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6b0dfcfa8cf0c0564f17ec0a5434b5b9-ITC2021_Early_4.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK181]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0c5d7e7aa3dd6024816078d2bdcfc4e3-Carry_Bits_Fast_8.cnf.cnf 
+[RUNtime]69.2231 s
+[RESULT]SATISFIABLE
+
+[TASK182]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a7aac5c83f236fd8b3de3275e3f5499d-edit_distance041_183.cnf 
+[RUNtime]132.699 s
+[RESULT]UNSATISFIABLE
+
+[TASK183]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ed410c758e5025f1bb97922574d1c2ff-reconf10_86_sp003_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK184]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/bb0613595001749a0ada02f2da85bc89-PancakeVsInsertSort_7_7.cnf 
+[RUNtime]662.423 s
+[RESULT]UNSATISFIABLE
+
+[TASK185]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9e35558ea8ffba630cd8c8f90e14af14-string_compare_safety_cbmc_unwinding_730.cnf 
+[RUNtime]786.426 s
+[RESULT]UNSATISFIABLE
+
+[TASK186]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a33d32bb816c0da62c7d946c18286a0d-SCPC-500-2.cnf 
+[RUNtime]58.6469 s
+[RESULT]UNSATISFIABLE
+
+[TASK187]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2f9cb22859718ab6c201726a91cfefe1-aws-encryption-sdk-c:aws_cryptosdk_priv_try_gen_key.cnf 
+[RUNtime]1091.63 s
+[RESULT]UNSATISFIABLE
+
+[TASK188]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f2a73aa514c859c91db462e1e2a1315b-af-synthesis_stb_50_140_1_sat.cnf 
+[RUNtime]376.713 s
+[RESULT]SATISFIABLE
+
+[TASK189]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a2bdae1f9d9695e8cf80cfbbd5f7d61f-PancakeVsSelectionSort_8_4.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK190]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0151bedac526ee195bc52e4134cd80e7-ssAES_4-4-8_round_8-10_faultAt_8_fault_injections_2_seed_1579630418.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK191]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/089456508f74be2d96f4112cc495f80a-Eternity-10-06_c18.cnf 
+[RUNtime]257.371 s
+[RESULT]SATISFIABLE
+
+[TASK192]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/72329bc80f5f55dcc356a22f3f11ebec-GP_200_313_5.cnf 
+[RUNtime]26.6587 s
+[RESULT]SATISFIABLE
+
+[TASK193]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d6c845a5f92ebc059b3f0ab2f6d395ed-cfi-rigid-z2-0088-02-or_2_shuffle_all.cnf 
+[RUNtime]927.132 s
+[RESULT]UNSATISFIABLE
+
+[TASK194]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/44ed91b4ca5a5d8323cab4c268d81fd1-grid-color-12-14-12-cb.cnf 
+[RUNtime]1435.92 s
+[RESULT]SATISFIABLE
+
+[TASK195]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/02f2343e32f9070f149708d77556b4aa-Kakuro-easy-117-ext.xml.hg_5.cnf 
+[RUNtime]873.765 s
+[RESULT]SATISFIABLE
+
+[TASK196]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/567964f034c8ffa65952897ce4927c6c-ablmulub16x4o.cnf 
+[RUNtime]182.806 s
+[RESULT]UNSATISFIABLE
+
+[TASK197]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3fb045f58aaf394165735c39c49fad92-linked_list_swap_contents_safety_unwind56.cnf 
+[RUNtime]654.36 s
+[RESULT]UNSATISFIABLE
+
+[TASK198]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5c6495ff589cbbcb550e1655dadbd143-worker_40_80_35_0.85.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK199]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cfa14a7015b0f7fecd98e898f3c95896-velev-vliw-sat-4.0-b8.cnf 
+[RUNtime]325.577 s
+[RESULT]SATISFIABLE
+
+[TASK200]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7016d1da3fdfe543de3b95f96a9ffe4c-summle_X8651_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]25.9395 s
+[RESULT]SATISFIABLE
+
+[TASK201]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9cdf94203777c9f036f412bef1cc7c85-tseitin_n196_d3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK202]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/1ebab99edff4c0470c8aa753bb9d3353-summle_X8637_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]34.0101 s
+[RESULT]SATISFIABLE
+
+[TASK203]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0294158664d9ada36bd23fbb652cb823-smtlib-qfbv-aigs-countbits128-tseitin.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK204]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0dcd0ec81c5e8dc13b72d43a4940279b-hantzsche_wendt_unit_147.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK205]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8f3d4a4fedf4689ae0e6df362478d551-PancakeVsSelectionSort_7_6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK206]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/51e4929accfa3a0e68bff09974c7f0f4-SAT_MS_sat_nurikabe_p16.pddl_166.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK207]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b2bcdd97e7d0ca8858b412eb34b26ba9-hyp_cec_multi_5.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK208]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4af0fbe3087b6e3ad54177e16b85ed06-grid-color-14-14-6-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK209]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d1dbf88a58406c931fd696267ed8159e-s2n:s2n_stuffer_private_key_from_pem.cnf 
+[RUNtime]138.521 s
+[RESULT]UNSATISFIABLE
+
+[TASK210]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/45784477d3143f470c0bd0137a1c01ed-sum_of_three_cubes_still_open.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK211]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3d449de3d6e722c9ce4a38ec748ee3cf-sudoku-N30-10.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK212]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a4bffff28417d6b4d72f7b9122988ba5-reconf10_68_queen15_2.cnf 
+[RUNtime]112.473 s
+[RESULT]SATISFIABLE
+
+[TASK213]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ddc7ca4c5dcb102a3ecc63721498f746-SC22_Timetable_C_436_E_39_Cl_29_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK214]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cda0871abcaa41bb403207731bd24fe5-af-synthesis_stb_50_100_4_unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK215]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d892eb7b3b3a44192ee639e222eee058-reconf10_99_Ins_3_1.cnf 
+[RUNtime]339.759 s
+[RESULT]SATISFIABLE
+
+[TASK216]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/90add18e4ee4facb4f37737a9a2602cc-SC22_Timetable_C_436_E_40_Cl_29_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK217]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a1158a2d8c8a1c6da02c2c4fcb32337f-6s158_Iter2.cnf 
+[RUNtime]247.19 s
+[RESULT]UNSATISFIABLE
+
+[TASK218]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e992a45933d191dc4fbe8cc4836109f8-sum_of_three_cubes_165_known_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK219]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a09b0e7764666af044fa7e63dd7e7aef-PancakeVsSelectionSort_8_3.cnf 
+[RUNtime]440.832 s
+[RESULT]UNSATISFIABLE
+
+[TASK220]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fee70cede2b5b55bfbdb6e48fbe7ce4f-DLTM_twitter690_74_16.cnf 
+[RUNtime]194.492 s
+[RESULT]SATISFIABLE
+
+[TASK221]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6f956a3f95ccaf35a3de1fe72b9cf79e-soelberg_unit_109.cnf 
+[RUNtime]300.615 s
+[RESULT]UNSATISFIABLE
+
+[TASK222]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6965d5369d3ab26daaf074303c3d1739-mp1-squ_ali_s10x10_c39_abix_SAT.cnf 
+[RUNtime]221.531 s
+[RESULT]SATISFIABLE
+
+[TASK223]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/918ca8da0cbca88dcd34b0a6dec2b770-GP_100_950_32.cnf 
+[RUNtime]42.8361 s
+[RESULT]SATISFIABLE
+
+[TASK224]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b96071f89fa1b1670b8375010b1dd42b-SCPC-500-9.cnf 
+[RUNtime]40.2324 s
+[RESULT]UNSATISFIABLE
+
+[TASK225]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/08e151e72fe10402a49463171aa557e8-abw-V-nos6.mtx-w220.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK226]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/047fbe00ecc60835f1ee9d458bbd7ee8-SAT_H_instances_childsnack_p06.hddl_2.cnf 
+[RUNtime]18.2336 s
+[RESULT]SATISFIABLE
+
+[TASK227]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3ff263696219ca9e301b0a1b345eb9aa-SCPC-500-4.cnf 
+[RUNtime]45.5118 s
+[RESULT]UNSATISFIABLE
+
+[TASK228]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4b537d3c18082eb884bf9429b8146214-gaussian.c.75.smt2-cvc4.cnf 
+[RUNtime]590.728 s
+[RESULT]SATISFIABLE
+
+[TASK229]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0823bc5f954c6366702877556f0d3680-linked_list_swap_contents_safety_unwind66.cnf 
+[RUNtime]1061.54 s
+[RESULT]UNSATISFIABLE
+
+[TASK230]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/60a0ab2650e08f32c4fff6ff09369568-eqsparcl12bpwtrc12.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK231]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0398e6b20de133ba8b49c74b67dad7b7-6s133-sc2014.cnf 
+[RUNtime]465.799 s
+[RESULT]UNSATISFIABLE
+
+[TASK232]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fb5cf4ad3c46dd294eb8253218524ba6-cfi-rigid-r2-0072-01-or_3.cnf 
+[RUNtime]495.22 s
+[RESULT]SATISFIABLE
+
+[TASK233]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4408f3ebfc37275a23ef57cfcc8aba6d-aws-encryption-sdk-c:aws_cryptosdk_priv_hdr_parse_content_type.cnf 
+[RUNtime]405.856 s
+[RESULT]UNSATISFIABLE
+
+[TASK234]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c1b30b4e03c3024ad9d084e29e79aa46-BubbleVsPancakeSort_6_6.cnf 
+[RUNtime]42.8455 s
+[RESULT]UNSATISFIABLE
+
+[TASK235]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fec4ba2cf2416933dcf7b8153be97344-bz-X-4-7-6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK236]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c3b4a96d92da617218449abad4334d6d-div-mitern164.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK237]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5e25f9f0d4ef05401fd9ab45a2538c1c-summle_X111117_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]62.0461 s
+[RESULT]SATISFIABLE
+
+[TASK238]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ff3be72b9f5f44036875aa48f5434456-worker_20_60_20_0.9.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK239]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/96f6aab24720f070a02e637f7252b482-grid-color-12-14-8-cb.cnf 
+[RUNtime]1245.75 s
+[RESULT]SATISFIABLE
+
+[TASK240]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/65514d6ff224df20ba8c1aeec1698ab6-PancakeVsInsertSort_8_7.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK241]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7a236bb9e1566b80fa7b593a7e973efa-SCPC-500-16.cnf 
+[RUNtime]120.248 s
+[RESULT]UNSATISFIABLE
+
+[TASK242]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7af73f846548141cc97b8a149a20bfbf-vlsat2_57038_10572502.dimacs.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK243]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/36ecf4ba0451f40e4ede9a1b2ab914f7-af-synthesis_stb_50_200_4_sat.cnf 
+[RUNtime]15.3751 s
+[RESULT]SATISFIABLE
+
+[TASK244]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c98459d6a1763d809729e276b9c4cbbd-linked_list_swap_contents_safety_unwind74.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK245]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0842eb01dc00232edc0b26ccb2f19f25-6-4-6-sc2018.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK246]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6d815089fb4095208754622b4c44a8f7-Carry_Bits_Fast_12.cnf.cnf 
+[RUNtime]1.95506 s
+[RESULT]SATISFIABLE
+
+[TASK247]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e436f6303d3f499969eafe05b0914a4b-bmc_QICE_snp_vld_50.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK248]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f1afd5e8d4b842c15c6a2c420b2b2dba-pj2018_k10.cnf 
+[RUNtime]431.25 s
+[RESULT]SATISFIABLE
+
+[TASK249]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/dcac26e190c906c61ac7222d6d4628c7-grid-color-14-14-12-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK250]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d8bb23406e76bf5a4b7a6edba8784a74-Lab-Project-FreeRTOS-Cellular-Library:Cellular_ATRemoveTrailingWhiteSpaces.cnf 
+[RUNtime]466.4 s
+[RESULT]UNSATISFIABLE
+
+[TASK251]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cf194dbcba619ea53edb4170c056ac5b-grid-color-14-14-14-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK252]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/03bb7baaa45980753a0e7050ae44755d-atco_enc3_opt1_03_53.cnf 
+[RUNtime]1336.18 s
+[RESULT]SATISFIABLE
+
+[TASK253]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7c15baa29f2228703e5161bfabd91773-reconf10_140_queen6_1.cnf 
+[RUNtime]227.679 s
+[RESULT]SATISFIABLE
+
+[TASK254]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0d4970edf84353e5a5798bca3f7f270e-SAT_H_instances_childsnack_p10.hddl_2.cnf 
+[RUNtime]49.0481 s
+[RESULT]SATISFIABLE
+
+[TASK255]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5457c05649be6f3bc4f743c5e6086a18-mdp-28-10-sat.cnf 
+[RUNtime]5.03154 s
+[RESULT]SATISFIABLE
+
+[TASK256]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d90c519010bfda89d1626c0321a55a64-j3045_10_gmto_bm1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK257]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7c6a06895899eab7cb83b658898ac327-reconf10_145_queen6_2.cnf 
+[RUNtime]353.591 s
+[RESULT]SATISFIABLE
+
+[TASK258]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d87714e099c66f0034fb95727fa47ccc-Wallace_Bits_Fast_2.cnf.cnf 
+[RUNtime]0.582274 s
+[RESULT]SATISFIABLE
+
+[TASK259]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/bcb2104a3558d87ac3b2107c10d54648-mp1-blockpuzzle_5x12_s6_free3.cnf 
+[RUNtime]867.685 s
+[RESULT]UNSATISFIABLE
+
+[TASK260]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a65dfd8b3468d202ff3ba8731018622e-j3037_10_gmto_bm1.cnf 
+[RUNtime]64.0969 s
+[RESULT]UNSATISFIABLE
+
+[TASK261]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/48e9f29a92930f1b367efc5754cb679b-af-synthesis_stb_50_80_7_sat.cnf 
+[RUNtime]161.221 s
+[RESULT]SATISFIABLE
+
+[TASK262]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7f4d55b70c61ffc611a58e01d52c19bb-SCPC-500-11.cnf 
+[RUNtime]169.226 s
+[RESULT]UNSATISFIABLE
+
+[TASK263]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5573681b2f40d5d8b30267ac59987e40-Carry_Bits_Fast_16.cnf.cnf 
+[RUNtime]313.405 s
+[RESULT]SATISFIABLE
+
+[TASK264]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/01813075a2ddb68ae1fc655ca003437e-sha256__zeroOut_12__freeIn_16__seed_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK265]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c3de1f05d136b8ec420732ca829f3217-corePKCS11:C_CreateObject.cnf 
+[RUNtime]318.672 s
+[RESULT]UNSATISFIABLE
+
+[TASK266]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ae5f6e83a289d226a353efd95b663717-6s22_Iter99.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK267]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/047c92e7c0a36a23d8107f4313517719-rubikcube701-sc2017.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK268]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fbf3b9f8a03a1efedae3da04622fe96e-sqrt-mitern168.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK269]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/14f35ebcab936f66fc9292ff62cf39a7-h31.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK270]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/28b715dd946dba71ddd58a73d9f82c39-pj2005_k80.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK271]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6dd57612dab7692b8c38225bb852ce36-hwmcc15deep-6s516r-k18-sc2017.cnf 
+[RUNtime]555.364 s
+[RESULT]UNSATISFIABLE
+
+[TASK272]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7018eff980d8183192d7a309e508b320-grid-color-14-14-10-cb.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK273]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c2f827691e524e272d21de55b3749877-GP_100_951_35.cnf 
+[RUNtime]42.5861 s
+[RESULT]SATISFIABLE
+
+[TASK274]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6fa8b4b7f4b059bd46913dbe741c0b94-mdp-36-11-sat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK275]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e99ce61fe251b404ec85f6246fd4bb19-Wallace_Bits_Fast_7.cnf.cnf 
+[RUNtime]16.0156 s
+[RESULT]SATISFIABLE
+
+[TASK276]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9954ccd77da65ad003b73bf38de3bd78-4d_perfect_euler_bricks.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK277]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/aa4638ca3654f1a300c809125a3133ee-6s22_Iter57.cnf 
+[RUNtime]630.501 s
+[RESULT]UNSATISFIABLE
+
+[TASK278]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/48eacbc152c7710dfd6fe17a8a17199e-SCPC-500-7.cnf 
+[RUNtime]55.4177 s
+[RESULT]UNSATISFIABLE
+
+[TASK279]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6b7e3415d7bd20be605b1f9723c43d68-Carry_Bits_Fast_5.cnf.cnf 
+[RUNtime]29.2886 s
+[RESULT]SATISFIABLE
+
+[TASK280]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0e775873f4c4bbc81ff92b87dd3e15e8-grid-strips-grid-y-3.045-NOTKNOWN.cnf 
+[RUNtime]384.206 s
+[RESULT]SATISFIABLE
+
+[TASK281]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b962abe508e5a677dbce14056111b48b-j3037_1_rggt_bm1.cnf 
+[RUNtime]788.963 s
+[RESULT]UNSATISFIABLE
+
+[TASK282]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/90e839c4b05d4a7ac011435921551060-SC22_Timetable_C_436_E_43_Cl_29_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK283]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a5e0082efb1da4dabaa165c2bda5f85e-linked_list_swap_contents_safety_unwind41.cnf 
+[RUNtime]286.513 s
+[RESULT]UNSATISFIABLE
+
+[TASK284]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ed6920e7126f57daabfb85415607fdb5-sum_of_three_cubes_906_unknown_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK285]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6e3ba15d8b33f40738f7e7d7355799a5-SC22_Timetable_C_436_E_41_Cl_29_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK286]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e47567e16e4aeb4d8f3806dfbfdfd646-sudoku-N30-8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK287]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/622787535593269d5e9a1dc4fe01c4af-atco_enc1_opt2_10_16-sc2014.cnf 
+[RUNtime]230.295 s
+[RESULT]SATISFIABLE
+
+[TASK288]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e85b6cb3e2751d5c80559433ba1adf06-vlsat2_24450_2770239.dimacs.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK289]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4b45bebcc3f810b25cca2d16a1ff2084-hyp_cec_multi_3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK290]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cdcdc78497a72d622493b1bac4f0f28b-reconf20_26_3-FullIns_4_1.cnf 
+[RUNtime]566.731 s
+[RESULT]UNSATISFIABLE
+
+[TASK291]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/90ec6ff35305fed1d9a87a3ecd87238b-linked_list_swap_contents_safety_unwind48.cnf 
+[RUNtime]437.899 s
+[RESULT]UNSATISFIABLE
+
+[TASK292]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c1cb62f85f0c6a29c5d3c47d25fbc24a-Carry_Bits_Fast_23.cnf.cnf 
+[RUNtime]2.40477 s
+[RESULT]SATISFIABLE
+
+[TASK293]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/09d8544494e54bc756438e69567b4ba7-mp1-klieber2017s-0300-034-t12.cnf 
+[RUNtime]75.4168 s
+[RESULT]SATISFIABLE
+
+[TASK294]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a7cb2567e1f5b7ec2f4ba09931e29b96-s2n:s2n_stuffer_write_base64.cnf 
+[RUNtime]1073.51 s
+[RESULT]UNSATISFIABLE
+
+[TASK295]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/bd5bc8b7711b75f3cd3ad935bf000659-af-synthesis_stb_50_20_8_unsat.cnf 
+[RUNtime]951.074 s
+[RESULT]UNSATISFIABLE
+
+[TASK296]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0205e0724a8a912dde9ad7dfba2aee0b-003-23-80.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK297]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/aad5bbe8920c5afc84068bb1da27ee8f-LABS_n041_goal003.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK298]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/608941b989227d93c62b3a9b4280011b-summle_X8639_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]42.4491 s
+[RESULT]SATISFIABLE
+
+[TASK299]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a42230be4432b010789b6f97b090343c-soelberg_unit_223.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK300]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e011c703e4a2ff46069ec2af2997b580-sin_depth_miter_6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK301]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/354c2088ae7648e1dc51d12947c8043a-bobsmdct_init_k88.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK302]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/47a1a6f5687ed19c5c0f77c2c81f3f81-tseitin_grid_n14_m14.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK303]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e7c0d40392681b1a55d5d3c826a26766-reconf20_116_le450_25c_1.cnf 
+[RUNtime]393.252 s
+[RESULT]UNSATISFIABLE
+
+[TASK304]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5601a7e094f61f3c5af461300c25243f-summle_X111107_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]725.851 s
+[RESULT]SATISFIABLE
+
+[TASK305]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/351746fa3de2464c903c85e726cfed55-linked_list_swap_contents_safety_unwind67.cnf 
+[RUNtime]536.111 s
+[RESULT]UNSATISFIABLE
+
+[TASK306]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/be2b20414899ed839ac14bf8b9365692-pj2016_k140.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK307]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/1b78438db7da55c2b4c4b8ec6b6cd6c6-soelberg_unit_158.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK308]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d1f5c3af78f13f39595288976115d7d3-3d_perfect_euler_bricks.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK309]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0810eb03d022334fdd1d5a6ad4969d47-gss-18-s100.cnf 
+[RUNtime]132.19 s
+[RESULT]SATISFIABLE
+
+[TASK310]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4551c996fc6f5fbe62b43076abb25077-knight_18.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK311]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8bb5819a23a8f1dff851d608bec008ca-ITC2021_Late_6.xml.cnf 
+[RUNtime]28.7261 s
+[RESULT]SATISFIABLE
+
+[TASK312]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ab660e179140ea816eca23098fd50078-sum_of_three_cubes_33_unknown_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK313]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7d9025b2f7e76f783a4ae5e8c9bf8e5c-4d_euler_bricks.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK314]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b1c44904cf06682f973b60c8282f45e8-mp1-squ_ali_s10x10_c39_bail_SAT.cnf 
+[RUNtime]1.01032 s
+[RESULT]SATISFIABLE
+
+[TASK315]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3666617901c8500d78700dac959729d4-pj2002_k9.cnf 
+[RUNtime]559.379 s
+[RESULT]UNSATISFIABLE
+
+[TASK316]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/354936f86e55ab8d00e6e1f5f7c140a9-xor_op_n44_d3.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK317]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6b630aa05142274d965c8fc019db511e-bmc_QICE_rxrsp_vld_30.cnf 
+[RUNtime]928.042 s
+[RESULT]UNSATISFIABLE
+
+[TASK318]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3cbd82017c4a304c014dd87a69f6028c-bmc_QICE_req_sfl_30.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK319]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e5f5dbace0183455d167a88100312c34-Nb52T6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK320]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/294924aff67e879595e55f15b10a79ef-grid-color-12-14-6-cb.cnf 
+[RUNtime]709.436 s
+[RESULT]SATISFIABLE
+
+[TASK321]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/00aefd1fc30c425075166ca051e57218-barman-pfile10-038.sas.ex.15.cnf 
+[RUNtime]82.578 s
+[RESULT]UNSATISFIABLE
+
+[TASK322]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6901858f1edbe3b1d327902dab720326-reconf20_20_grid10_4_4957.cnf 
+[RUNtime]939.762 s
+[RESULT]UNSATISFIABLE
+
+[TASK323]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5cc5e3d24402696ed4ec03edfa42d663-sudoku-N30-24.cnf 
+[RUNtime]334.679 s
+[RESULT]UNSATISFIABLE
+
+[TASK324]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0855033e761d91ae367e867c5a569f9e-atco_enc1_opt2_10_15.cnf 
+[RUNtime]219.619 s
+[RESULT]UNSATISFIABLE
+
+[TASK325]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/f9dd957b2f5940a3e3adaa2eeaaba011-mdp-36-12-sat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK326]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/024af9416f8c1dad1b4f974757e38d51-8-5-6.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK327]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/810ce4a78bc01ddc5a043d95f9584f2f-005-80-12.cnf 
+[RUNtime]1450.53 s
+[RESULT]SATISFIABLE
+
+[TASK328]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d7039acbd2f060fe1e32a273b07c2c77-sudoku-N30-29.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK329]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/114f1b2ffd86e8a176bcbab664415520-bobsmdct_k88.cnf 
+[RUNtime]499.287 s
+[RESULT]UNSATISFIABLE
+
+[TASK330]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/2a43c3327fb817d82496449265d6630d-mdp-36-16-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK331]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0d209cb420326994f9c4898eb10228ab-008-80-8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK332]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fa88b447f6b41b04686085480678affe-UNSAT_H_instances_childsnack_p12.hddl_1.cnf 
+[RUNtime]75.0006 s
+[RESULT]UNSATISFIABLE
+
+[TASK333]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e7cd2c407974b35fa97f8e64a691bfa0-j3037_10_gmto_b.cnf 
+[RUNtime]67.7293 s
+[RESULT]SATISFIABLE
+
+[TASK334]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4f888358cd62fe7bc602ea6882cdfc6d-bivium-40-200-0s0-0x92fc13b11169afbb2ef11a684d9fe9a19e743cd6aa5ce23fb5-19.cnf 
+[RUNtime]543.521 s
+[RESULT]UNSATISFIABLE
+
+[TASK335]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5ac44f542fd2cd4492067deb7791629a-Carry_Bits_Fast_18.cnf.cnf 
+[RUNtime]2.0023 s
+[RESULT]SATISFIABLE
+
+[TASK336]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/26342c62148962a09872831b7cef8aae-div-mitern165.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK337]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7fe153ced2c966dcdeb42b6714b4d6b7-sudoku-N30-11.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK338]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e8d9e3a985463b8e4f45b6e09b77bf6c-cfi-rigid-t2-0048-02-or_3_shuffle_all.cnf 
+[RUNtime]506.97 s
+[RESULT]SATISFIABLE
+
+[TASK339]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7f09f477d319cd79821c80504aa06a6e-Break_16_56.xml.cnf 
+[RUNtime]424.425 s
+[RESULT]SATISFIABLE
+
+[TASK340]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ee06244cc0ed073bd6abf147dc27eff6-pj2016_k120.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK341]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0a514edbeace21927e52d75f2d4a8efd-ota-for-aws-iot-embedded-sdk:parseJSONbyModel.cnf 
+[RUNtime]954.08 s
+[RESULT]UNSATISFIABLE
+
+[TASK342]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c2828483a78420f9a90e3ed9728c06cc-GP_100_951_37.cnf 
+[RUNtime]41.8906 s
+[RESULT]SATISFIABLE
+
+[TASK343]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d3c22bb79a638adc35682226f35e3bc4-pj2003_k9.cnf 
+[RUNtime]633.353 s
+[RESULT]UNSATISFIABLE
+
+[TASK344]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4db2404ba78dda6f3bc89a2b03057fd2-intel036_Iter109.cnf 
+[RUNtime]49.1655 s
+[RESULT]SATISFIABLE
+
+[TASK345]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/49f5d904bb2e762219287d33f5621971-ITC2021_Late_1.xml.cnf 
+[RUNtime]38.5135 s
+[RESULT]SATISFIABLE
+
+[TASK346]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fff3f8c76467cdf9d92689969fd94281-mod2c-rand3bip-sat-240-2.shuffled-as.sat05-2519.cnf 
+[RUNtime]438.938 s
+[RESULT]SATISFIABLE
+
+[TASK347]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/928436a6e8edbcde2d82504a85c88853-rphp_p90_r90.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK348]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/372021735d9e46002b862aa2a038a818-j3045_4_rggt_bm1.cnf 
+[RUNtime]544.969 s
+[RESULT]UNSATISFIABLE
+
+[TASK349]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/bb80971144a5423532aea9424dade891-div-mitern174.cnf 
+[RUNtime]31.8201 s
+[RESULT]UNSATISFIABLE
+
+[TASK350]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d8602e623f87dd33f4a1a69ee42d15be-reconf20_50_grid10_3_6844.cnf 
+[RUNtime]402.727 s
+[RESULT]UNSATISFIABLE
+
+[TASK351]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/161a73825fb50badeedbf8d12e1e043a-cfi-rigid-z2-0088-03-or_2.cnf 
+[RUNtime]1010.67 s
+[RESULT]UNSATISFIABLE
+
+[TASK352]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/807133f4461a11e39a390dfcf67a4fc6-summle_X11113_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]26.6983 s
+[RESULT]SATISFIABLE
+
+[TASK353]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/1fee9f154615842029ec63d8520f4b4e-GP_300_250_15.cnf 
+[RUNtime]28.3585 s
+[RESULT]SATISFIABLE
+
+[TASK354]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a4451734e7f5f2ce7b481688a693c4e9-worker_20_20_16_0.9.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK355]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/285cb2c9735ac73cad999fba3d669382-summle_X8634_steps8_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]48.5148 s
+[RESULT]SATISFIABLE
+
+[TASK356]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/1fabadca67bfeada7086035761b88b33-sum_of_three_cubes_165_unknown_representation.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK357]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/e6f793931983295561620a027d9b3e95-mdp-36-14-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK358]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b51583e32432c5778c7e3e996c3bfeba-sqrt_ineq_3.c.cnf 
+[RUNtime]16.5622 s
+[RESULT]SATISFIABLE
+
+[TASK359]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/55add9c1c8ad002a0faa34ecf47919a1-SC22_Timetable_C_451_E_45_Cl_30_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK360]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/16a0949c23ac67c57c5773403daaca60-coreMQTT:MQTT_Connect.cnf 
+[RUNtime]1002.22 s
+[RESULT]UNSATISFIABLE
+
+[TASK361]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0447371bb8a97e8fe5d3cee6de1db766-UTI-20-10p0-sc2009.cnf 
+[RUNtime]514.474 s
+[RESULT]UNSATISFIABLE
+
+[TASK362]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c2894b8d82492f03bb73bbc65896c016-aws-c-common:aws_priority_queue_s_remove_node.cnf 
+[RUNtime]788.547 s
+[RESULT]UNSATISFIABLE
+
+[TASK363]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/129162378e8ad29b5485a9c53feee4b7-hantzsche_wendt_unit_93.cnf 
+[RUNtime]113.921 s
+[RESULT]SATISFIABLE
+
+[TASK364]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/9f901378a6feabcc94019a018a70d42b-sin-mitern29.cnf 
+[RUNtime]28.8236 s
+[RESULT]UNSATISFIABLE
+
+[TASK365]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/a130a3f95891daed1bfd71c77bd2d8a1-SAT_dat.k80.cnf 
+[RUNtime]162.213 s
+[RESULT]UNSATISFIABLE
+
+[TASK366]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/5ff92b9fa31963608674761e0d71fce8-sv-comp19_prop-reachsafety.triangular-longer_false-unreach-call.i-witness.cnf 
+[RUNtime]245.835 s
+[RESULT]SATISFIABLE
+
+[TASK367]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/004b0f451f7d96f6a572e9e76360f51a-spg_420_280.cnf 
+[RUNtime]147.56 s
+[RESULT]UNSATISFIABLE
+
+[TASK368]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ca6db14aaa04027d2b8af47ec910bd68-cfi-rigid-s2-0064-04-or_2.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK369]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/c0df94532b1ca8a705d3af05378f377d-SCPC-500-20.cnf 
+[RUNtime]32.7657 s
+[RESULT]UNSATISFIABLE
+
+[TASK370]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/08991fb6c7c45205df7f2bc2f51fb1d9-bobsmdct_k500.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK371]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/98dbd257808e551fd26cad78ba520955-ITC2021_Late_2.xml.cnf 
+[RUNtime]1224.55 s
+[RESULT]SATISFIABLE
+
+[TASK372]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/0616ca6b1e0ae639d12e19ed310963a9-satcoin-genesis-SAT-4.cnf 
+[RUNtime]1.19491 s
+[RESULT]SATISFIABLE
+
+[TASK373]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8efdd60faa21ddcace492bff0479408b-Break_triple_20_54.xml.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK374]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/324e19a2991a29d0765ad256fb7aee85-j3037_9_gmto_b.cnf 
+[RUNtime]668.787 s
+[RESULT]SATISFIABLE
+
+[TASK375]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b3828c92f2c77f8d7581570685679d76-sin_depth_miter_8.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK376]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cd72a64e1b857fd30b9ec831cf462bf1-mp1-21.7.cnf 
+[RUNtime]442.975 s
+[RESULT]SATISFIABLE
+
+[TASK377]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/78a0e76b68b536e2ea7d801fc6061cd2-grid-color-12-14-14-cb.cnf 
+[RUNtime]664.302 s
+[RESULT]SATISFIABLE
+
+[TASK378]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3d2b0088dccf11d1f82c89b7122c26e1-cfi-rigid-z2-0088-01-or_2_shuffle_all.cnf 
+[RUNtime]916.785 s
+[RESULT]UNSATISFIABLE
+
+[TASK379]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6e1b970d637fca70d08b251766edade3-Nb8T61.cnf 
+[RUNtime]142.967 s
+[RESULT]SATISFIABLE
+
+[TASK380]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/6e3015f2ce1f17e4f2b81dae06d73eec-gus-md5-11.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK381]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ac6256657058fe65dc7ddaf773ab83bf-SC21_Timetable_C_527_E_71_Cl_35_S_35.cnf 
+[RUNtime]130.291 s
+[RESULT]SATISFIABLE
+
+[TASK382]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/4513c58c16e72a34f9f8518db7baeb9e-ktf_TF-3.tf_3_0.02_24.cnf 
+[RUNtime]112.895 s
+[RESULT]UNSATISFIABLE
+
+[TASK383]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d9e9100c382d44fb67af82f8d69814f1-cfi-rigid-t2-0048-03-or_3_shuffle_all.cnf 
+[RUNtime]320.514 s
+[RESULT]SATISFIABLE
+
+[TASK384]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/03fb9af7b390fe9e0739150ca3410cf0-4g_5color_166_100_02.cnf 
+[RUNtime]90.1693 s
+[RESULT]SATISFIABLE
+
+[TASK385]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8aee61ed27bf700a548ca9c097203749-SAT_MS_sat_snake_p01.pddl_39.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK386]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/048142b6048cb6c10415e08f68a2c3a3-GP_81_430_13.cnf 
+[RUNtime]12.4046 s
+[RESULT]SATISFIABLE
+
+[TASK387]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/dd0196aee30d0a83b6fe8bc7eba01806-aws-encryption-sdk-c:aws_cryptosdk_priv_hdr_parse_iv.cnf 
+[RUNtime]427.837 s
+[RESULT]UNSATISFIABLE
+
+[TASK388]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7703f7d1901ff09a0f177c52a1a7c107-linked_list_swap_contents_safety_unwind43.cnf 
+[RUNtime]339.131 s
+[RESULT]UNSATISFIABLE
+
+[TASK389]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/b344f80cef9889d952c76736d0ad92d9-9dlx_vliw_at_b_iq6.cnf 
+[RUNtime]616.36 s
+[RESULT]UNSATISFIABLE
+
+[TASK390]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8c0af30cc2a89e3fee97852633bed956-div_miter_lec_1.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK391]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/3e2fe1556893706475f9dd19c1a7b8fe-mdp-32-12-sat.cnf 
+[RUNtime]729.77 s
+[RESULT]SATISFIABLE
+
+[TASK392]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/ce32731c73701c2ac2bed5341b6ae3ca-mp1-9_27.cnf 
+[RUNtime]151.219 s
+[RESULT]SATISFIABLE
+
+[TASK393]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/35ad744923721e37a2f58443179c31a8-coreMQTT:MQTT_SerializeConnect.cnf 
+[RUNtime]831.481 s
+[RESULT]UNSATISFIABLE
+
+[TASK394]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/d6947217ad779e1175c716cca42525c6-summle_X111113_steps7_I1-2-2-4-4-8-25-100.cnf 
+[RUNtime]1415.35 s
+[RESULT]SATISFIABLE
+
+[TASK395]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/fe96b630b3e761821308b544368dd521-GP_100_950_34.cnf 
+[RUNtime]51.3747 s
+[RESULT]SATISFIABLE
+
+[TASK396]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/cd36b290c27ed9bafedfb2ca88469f01-mdp-28-12-sat.cnf 
+[RUNtime]125.822 s
+[RESULT]SATISFIABLE
+
+[TASK397]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/8c8b72ac19c0f93813b614a18abaf512-aws-encryption-sdk-c:aws_cryptosdk_keyring_trace_eq.cnf 
+[RUNtime]593.196 s
+[RESULT]UNSATISFIABLE
+
+[TASK398]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/594b07c07aee036a7aca35d44e2316da-div-mitern168.cnf 
+[RUNtime]911.461 s
+[RESULT]UNSATISFIABLE
+
+[TASK399]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/7edaa759315f3762eee756c5bb843599-SC22_Timetable_C_436_E_42_Cl_29_S_27.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+[TASK400]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/2022/59047491e4828ed2bb79572330df6f77-mdp-32-16-unsat.cnf 
+[RUNtime][TIMEOUT]3000 s
+[RESULT]UNKNOWN
+
+TOTALtime: 549663 s
+AVGtime: -1374.16 s
+TIMEOUTcount: 152
+SUCCESScount: 248
+INTERRUPTcount: 0
+100Scount: 86
+300Scount: 133
+500Scount: 167
+700Scount: 198
+1000Scount: 225
+1200Scount: 235
+1500Scount: 248
+Finish in 30020.9 s

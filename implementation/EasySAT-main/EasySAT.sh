@@ -113,7 +113,7 @@ for file_name in "${!run_times[@]}"; do
   if [ ${exit_status_s[$file_name]} -eq 134 ]; then
     echo "[RUNtime][INTERRUPT]${run_times[$file_name]} s"
   fi
-  if [ $exit_status -eq 0 ]; then
+  if [ ${exit_status_s[$file_name]} -eq 0 ]; then
     echo "[RUNtime]${run_times[$file_name]} s"
   fi
   echo "[RESULT]${sat_status_s[$file_name]}"

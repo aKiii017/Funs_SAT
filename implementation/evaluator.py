@@ -28,7 +28,7 @@ from implementation import code_manipulation
 from implementation import programs_database
 
 class ScoreList():
-    def __init__(self,dataset_size='240',parallel_size='25'):
+    def __init__(self,dataset_size='25',parallel_size='25'):
         self.score={}
         self.all_score={}
         self.dataset_size=dataset_size
@@ -264,9 +264,14 @@ class Evaluator:
         import re
         # 查找函数开始的位置
         pattern_starts = [
-            r"bool Internal::restarting\(.*?\)\s*{",
+            # r"bool Internal::restarting\(.*?\)\s*{",
             # r"void Internal::bump_variable_score\(.*?\)\s*{",
             # r"int Formula::tiebreaking_heuristic\(.*?\)\s*{",
+            # r"void Solver::bump_var\(.*?\)\s*{",
+            # r"void kissat_bump_score_increment\(.*?\)\s*{",
+            # r"bool kissat_restarting\(.*?\)\s*{",
+            r"void solver::inc_activity\(.*?\)\s*{",
+
             ]
         pattern_start=pattern_starts[current_index]
         start_match = re.search(pattern_start, code)
@@ -306,9 +311,13 @@ class Evaluator:
     def update_exact_function_body(self, new_body_code,current_index):
         import re
         file_paths = [
-            '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
+            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
             # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp',
             # '/home/ubuntu/Fun_SAT/implementation/SBVA/tiebreaking_heuristic.cpp'
+            # '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/bump_var.cpp',
+            # '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_bump_score_increment.c',
+            # '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_restarting.c',
+            '/home/ubuntu/z3/src/sat/inc_activity.cpp',
             ]
         file_path=file_paths[current_index]
         with open(file_path, 'r') as file:
@@ -317,9 +326,13 @@ class Evaluator:
         # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
         patterns = [
-            r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
+            # r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
             # r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
             # r"(int Formula::tiebreaking_heuristic\(.*?\)\s*{)([\s\S]*?)(^\})",
+            # r"(void Solver::bump_var\(.*?\)\s*{)([\s\S]*?)(^\})",
+            # r"(void kissat_bump_score_increment\(.*?\)\s*{)([\s\S]*?)(^\})",
+            # r"(bool kissat_restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
+            r"(void solver::inc_activity\(.*?\)\s*{)([\s\S]*?)(^\})",
             ]
         
         pattern=patterns[current_index]
