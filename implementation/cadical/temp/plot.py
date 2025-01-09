@@ -13,7 +13,7 @@ file_paths = [
     '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_cadical_20.txt',
     '/home/ubuntu/Fun_SAT/implementation/cadical/temp/2023_1500_051002_20.txt',
 ]
-colors = ['r', 'b']
+colors = ['#b83945', '#377483']
 labels = [
     'cadical-original',
     'cadical-after optimization'

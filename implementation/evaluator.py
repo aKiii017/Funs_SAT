@@ -28,7 +28,7 @@ from implementation import code_manipulation
 from implementation import programs_database
 
 class ScoreList():
-    def __init__(self,dataset_size='25',parallel_size='25'):
+    def __init__(self,dataset_size='24',parallel_size='24'):
         self.score={}
         self.all_score={}
         self.dataset_size=dataset_size

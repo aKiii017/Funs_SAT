@@ -13,12 +13,12 @@ import bin_packing_utils
 
 import os
 
-data_set='2024random_25_1'
-data_set_eval='2024random_25_1'
-dataset_size='25'
-timeout_value='100'
-case_num='100101'
-parallel_size='25'
+data_set='knightsrandom_24'
+data_set_eval='knightsrandom_24'
+dataset_size='24'
+timeout_value='500'
+case_num='101001'
+parallel_size='24'
 case_code=data_set+'_'+timeout_value+'_'+case_num
 log_name='logs_z3'
 time_list=[100,300,500,700,1000]
@@ -254,17 +254,21 @@ class LocalLLM(sampler.LLM):
             #     Arguments:
             #         solver: A pointer to a kissat structure representing the SAT solver instance.
             #     Behavior:
-            #         The function begins by checking if the restart option is disabled (!GET_OPTION(restart)), if the decision level is zero (!solver->level), or if the number of conflicts is less than a predetermined restart conflict limit (CONFLICTS < solver->limits.restart.conflicts). 
-            #         If any of these conditions are true, it returns false, indicating no need for a restart.
-            #         It then checks if the solver is in a stable phase (solver->stable). If true, the function determines whether to trigger a restart based on a reluctant trigger mechanism by calling kissat_reluctant_triggered(&solver->reluctant).
-            #         For unstable modes, the function computes the average "fast" and "slow" glue values, which are measures of clause quality. Based on these values and a user-defined margin (restartmargin), it calculates a limit (limit) that helps in deciding whether to restart.
-            #         If the "fast" glue value is not exceeding the "slow" glue value (fast <= slow), it continues without restarting. Otherwise, it calculates a displacement limit for variables based on the "fast" glue value and the margin.
-            #         The function then examines the solver\'s trail from the most recent decision to the earliest. During this examination, it counts the number of displaced variables and the maximum decision level observed.
-            #         The restart conditions are checked against:
-            #             Exceeding the threshold of displaced variables.
-            #             A significant portion of decisions being on the current maximum level (max_level_count > 0.5 * seen_lits).
-            #             The computed limit being less than or equal to the "fast" glue value (limit <= fast).
-            #         If any of the above conditions are met, the function returns true, indicating a restart should occur. Otherwise, if none of the criteria are satisfied, it concludes with false.             
+            #         The function first checks if restarting is enabled in the solver's options using GET_OPTION(restart). 
+            #         If restarting is disabled, the function immediately returns false, indicating no restart.
+            #         It checks if the decision level (solver->level) is greater than zero. 
+            #         A level of zero indicates the root level, where no decisions have been made yet, and hence no restart is needed.
+            #         The function evaluates whether the number of conflicts (CONFLICTS) is less than the set limit for restarts (solver->limits.restart.conflicts). 
+            #         If the current number of conflicts hasn't reached this limit, it returns false to avoid restarting.
+            #         If the solver is in a stable phase (solver->stable), it checks if a reluctant trigger (kissat_reluctant_triggered) for restarting is activated by examining the state of the solver->reluctant trigger structure. 
+            #         This mechanism ensures that restarts are spaced out effectively during stable periods.
+            #         For non-stable phases, it computes the average values of fast and slow glue using AVERAGE(fast_glue) and AVERAGE(slow_glue), respectively. 
+            #         These metrics represent how tightly variables are connected in recent conflicts, influencing the decision to restart.
+            #         The function then calculates a limit for restart by applying a margin (GET_OPTION(restartmargin)) to the slow glue average. 
+            #         This margin is calculated as (100.0 + GET_OPTION(restartmargin)) / 100.0 times the slow glue average.
+            #         Finally, it checks if the computed limit is less than or equal to the average fast glue. 
+            #         If true, it indicates that the solver's performance is deteriorating, making a restart beneficial to potentially improve future problem-solving by reorganizing the internal state and decision heuristics.
+            #         If any of the above conditions for not restarting are true, the function will return false; otherwise, it returns true, signaling that a restart is advisable at this point.             
             #  Task:
             #     Create the optimized kissat_restarting_v* function based on the guidelines above. 
             #     Ensure that no new member variables or functions are introduced beyond those already mentioned. 
@@ -326,7 +330,7 @@ class LocalLLM(sampler.LLM):
                     It checks if the updated activity value exceeds a preset threshold (1 << 24) to prevent integer overflow. If this threshold is exceeded:
                         The function executes rescale_activity(), which iterates through all variables, scaling down their activity values to ensure numerical stability within the system. This activity scaling is crucial in maintaining proper operational balance and preventing runaway growth in activity values.
                         This rescaling makes certain that the increment value (m_activity_inc) remains proportionate, thereby curbing excessive accumulation in future updates.
-                    After updating the activity, the function checks if the variable v is currently managed within a priority queue (m_case_split_queue), which is utilized for maintaining variable priorities based on activities.
+                        After updating the activity, the function checks if the variable v is currently managed within a priority queue (m_case_split_queue), which is utilized for maintaining variable priorities based on activities.
                         If the variable is in the queue, it triggers an event handler (activity_increased_eh) to update its position, ensuring that the queue properties (such as order and integrity) are properly maintained.
                     The function's approach permits the SAT solver to dynamically prioritize variables that are increasingly relevant to recent conflicts or conditions, thereby improving the efficiency of the solving process.
                     By attentively managing the activity increments and queue updates, the function averts numerical instabilities and sustains both the efficiency and effectiveness of the solver's operations.             Task:
@@ -559,6 +563,7 @@ class Sandbox(evaluator.Sandbox):
             # subprocess.run(command_make, capture_output=True, text=True, check=True)
             out = subprocess.run(command_run, capture_output=True, text=True, check=True)
             flag = out.returncode
+            print('flag:',flag)
             # result = float(result.stdout)
             par2 = re.search(r"AVGtime: (-\d+(\.+\d+)?)", out.stdout)
             par2 = float(par2.group(1))
@@ -871,22 +876,13 @@ specifications = [
 # #include "internal.h"
 
 # void kissat_bump_score_increment(kissat *solver) {
-#     const double dec_factor = GET_OPTION(decay) * 1e-3;
-#     double scinc = solver->scinc;
-
-#     if (scinc < 1.0)
-#         scinc = 1.0;
-
-#     const double decay_adjustment = 1.0 / (1.0 - dec_factor);
-#     double new_scinc = scinc * decay_adjustment;
-
-#     if (new_scinc > MAX_SCORE) {
-#         solver->scinc = MAX_SCORE / scinc;
-#         new_scinc = MAX_SCORE;
-#         kissat_rescale_scores(solver);
-#     } else {
-#         solver->scinc = new_scinc;
-#     }
+#   const double old_scinc = solver->scinc;
+#   const double decay = GET_OPTION (decay) * 1e-3;
+#   const double factor = 1.0 / (1.0 - decay);
+#   const double new_scinc = old_scinc * factor;
+#   solver->scinc = new_scinc;
+#   if (new_scinc > MAX_SCORE)
+#     kissat_rescale_scores (solver);
 # }
 # ''',
 # r'''
@@ -895,71 +891,19 @@ specifications = [
 # #include "restart.h"
 
 # bool kissat_restarting(kissat *solver) {
-#     if (!GET_OPTION (restart) || !solver->level || CONFLICTS < solver->limits.restart.conflicts)
-#         return false;
-
-#     if (solver->stable)
-#         return kissat_reluctant_triggered (&solver->reluctant);
-
-#     const double fast = AVERAGE (fast_glue);
-#     const double slow = AVERAGE (slow_glue);
-#     const double margin = (100.0 + GET_OPTION (restartmargin)) / 100.0;
-#     const double limit = margin * slow;
-
-#     if (fast <= slow)
-#         return false;
-
-#     const int limit_displaced = fast * (GET_OPTION (restartmargin) / 100.0);
-#     const int trail_size = SIZE_STACK (solver->trail);
-#     const value * values = solver->values;
-#     const int *trail = BEGIN_STACK (solver->trail);
-
-#     int max_level = 0;
-#     int max_level_count = 0;
-#     int seen_lits = 0;
-#     int displaced_variables = 0;
-
-#     for (int i = trail_size - 1; i >= 0; i--)
-#     {
-#         const int lit = trail[i];
-#         const int idx = IDX (lit);
-#         const int level = LEVEL (idx);
-
-#         if (level <= 0 || displaced_variables > limit_displaced)
-#             break;
-
-#         seen_lits += !values[idx];
-
-#         if (level > max_level)
-#         {
-#             max_level = level;
-#             max_level_count = 1;
-#         }
-#         else if (level == max_level)
-#         {
-#             max_level_count++;
-#         }
-
-#         if (!values[idx] && level == solver->level)
-#         {
-#             displaced_variables++;
-#         }
-
-#         if (displaced_variables > limit_displaced)
-#         {
-#             break;
-#         }
-#         else if (max_level_count > (0.5 * seen_lits))
-#         {
-#             return true;
-#         }
-#         else if (limit <= fast)
-#         {
-#             return true;
-#         }
-#     }
-
+#   if (!GET_OPTION (restart))
 #     return false;
+#   if (!solver->level)
+#     return false;
+#   if (CONFLICTS < solver->limits.restart.conflicts)
+#     return false;
+#   if (solver->stable)
+#     return kissat_reluctant_triggered (&solver->reluctant);
+#   const double fast = AVERAGE (fast_glue);
+#   const double slow = AVERAGE (slow_glue);
+#   const double margin = (100.0 + GET_OPTION (restartmargin)) / 100.0;
+#   const double limit = margin * slow;
+#   return (limit <= fast);
 # }
 
 # ''',
@@ -970,9 +914,11 @@ using namespace sat;
 void solver::inc_activity(bool_var v) {
     unsigned &act = m_activity[v];
     act += m_activity_inc;
-    m_case_split_queue.activity_increased_eh(v);
-    if (act > (1 << 24))
+
+    if (act > (1 << 24)) {
         rescale_activity();
+        m_case_split_queue.activity_increased_eh(v);
+    }
 }
 ''',
 
