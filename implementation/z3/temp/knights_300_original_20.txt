@@ -1,0 +1,180 @@
+Z3 was successfully built.
+Z3Py scripts can already be executed in the 'build/python' directory.
+Z3Py scripts stored in arbitrary directories can be executed if the 'build/python' directory is added to the PYTHONPATH environment variable and the 'build' directory is added to the LD_LIBRARY_PATH environment variable.
+Use the following command to install Z3 at prefix /home/ubuntu/miniconda3.
+    sudo make install
+Z3 was successfully installed.
+
+ALLtimes:
+[TASK001]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/475803537529d9d14a034957f48a6d38-x9-09076.sat.sanitized.cnf 
+[RUNtime]145.18 s
+[RESULT]UNSATISFIABLE
+
+[TASK002]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/f45e5faf1bcccbdd3065dd6367c3bd16-x9-10083.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK003]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/697c96ac45534726c7dbd96faa11a86a-x9-11094.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK004]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/5865fb9a6575d2ae6542c36ab96646a9-x9-11088.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK005]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/edceb8782e72e290fa54757dbfdd0173-x9-09057.sat.sanitized.cnf 
+[RUNtime]193.041 s
+[RESULT]UNSATISFIABLE
+
+[TASK006]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/c5a98231dd54cbca06135293bb7e1985-x9-11053.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK007]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/c6568fc8805127e876c4c23551bf49fa-x9-10076.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK008]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/b44ea915362c3a140269003d45b1d053-x9-11034.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK009]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/14e4cfcf0d83b2185fad41684d00d4dc-x9-12035.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK010]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/19e2c3a0865c8c1b4543d11213bebe5f-x9-09024.sat.sanitized.cnf 
+[RUNtime]118.838 s
+[RESULT]UNSATISFIABLE
+
+[TASK011]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/57f4ea7ab160d996e38e69fac59869c4-x9-09047.sat.sanitized.cnf 
+[RUNtime]195.692 s
+[RESULT]UNSATISFIABLE
+
+[TASK012]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/0265448c232e3a25aa5bcd29b1b14567-x9-10051.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK013]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/09b61bbf19748094a7d896aac314ab36-x9-12063.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK014]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/e08f11f0a3bd266ee5c78ce332de107f-x9-10096.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK015]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/5e1c11b77cdf3717b81b957120f0f477-x9-12001.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK016]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/b7273af3d468ea2595f11a6dbd6ef6ce-x9-10007.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK017]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/eddd68e14d69cce7190b99f4e7abdafb-x9-10098.sat.sanitized.cnf 
+[RUNtime]8.25063 s
+[RESULT]SATISFIABLE
+
+[TASK018]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/3c6e1d1c4b8d3d08aa4c1df3805f4f7d-x9-10031.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK019]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/c3e53c353f30d9e2eb54ed93d6ce4f02-x9-09007.sat.sanitized.cnf 
+[RUNtime]185.229 s
+[RESULT]UNSATISFIABLE
+
+[TASK020]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/f376d4c191518ed704326960b6b19a4b-x9-10084.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK021]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/195852083a05edee1902233698eec14a-x9-11077.sat.sanitized.cnf 
+[RUNtime]123.955 s
+[RESULT]SATISFIABLE
+
+[TASK022]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/915a25bd189357e4c6d7771b69a6849f-x9-09004.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK023]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/a45a0358685867bd4f1c7f7c0b0e379c-x9-10014.sat.sanitized.cnf 
+[RUNtime]229.335 s
+[RESULT]SATISFIABLE
+
+[TASK024]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/54c2da6d387a6f5ad6e014ae4d4decfc-x9-10038.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK025]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/3a75ad246dbc750a7391ad887c5b0835-x9-11093.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK026]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/df1bd67978b9b0ec1d326ba174bc273c-x9-12021.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK027]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/c0e6e6eeebd48ca600cfc7d662fa804c-x9-10093.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK028]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/bbfed8974655bca520259deb10d2347b-x9-09054.sat.sanitized.cnf 
+[RUNtime]176.337 s
+[RESULT]SATISFIABLE
+
+[TASK029]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/d195412a62cdcbb851136f60af76f463-x9-09098.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK030]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/af05a6b68a1cff165b684d9ff0ae3b3b-x9-12098.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK031]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/8b18bb75459a4161633ba2a3c8ee183e-x9-11062.sat.sanitized.cnf 
+[RUNtime]10.1652 s
+[RESULT]SATISFIABLE
+
+[TASK032]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/f296fe701a562022c0de0cf565fbca7d-x9-08014.sat.sanitized.cnf 
+[RUNtime]101.914 s
+[RESULT]UNSATISFIABLE
+
+[TASK033]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/ad4e151d80c7012d88dd79bcfceaade5-x9-08075.sat.sanitized.cnf 
+[RUNtime]68.1657 s
+[RESULT]UNSATISFIABLE
+
+[TASK034]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/9d9c4fa425282759eb9e98b82fb5f56e-x9-12087.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK035]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/7fb202a51c0223f3119887a57086ca4d-x9-09051.sat.sanitized.cnf 
+[RUNtime]266.665 s
+[RESULT]UNSATISFIABLE
+
+[TASK036]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/ded23680dfeab2879c05bc0e4de21126-x9-09014.sat.sanitized.cnf 
+[RUNtime]246.725 s
+[RESULT]UNSATISFIABLE
+
+[TASK037]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/09c1b79b1cfe3522364fe60aef780703-x9-12092.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK038]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/1507d9812624b3e0eaf15e40100be020-x9-12014.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK039]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/13ae2628d8e113db1786dba41a65fe38-x9-10027.sat.sanitized.cnf 
+[RUNtime]230.798 s
+[RESULT]SATISFIABLE
+
+[TASK040]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/knights/aa9b67fd19d54ad51b93ee4ba5dc75fc-x9-10002.sat.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+TOTALtime: 17300.3 s
+AVGtime: -432.507 s
+TIMEOUTcount: 25
+SUCCESScount: 15
+INTERRUPTcount: 0
+100Scount: 3
+300Scount: 15
+500Scount: 15
+700Scount: 40
+1000Scount: 40
+1500Scount: 40
+Finish in 602.073 s

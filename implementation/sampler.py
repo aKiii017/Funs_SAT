@@ -122,16 +122,14 @@ class Sampler:
             current_evaluators = self._evaluators_list[self._evaluator_index]
             chosen_evaluator = np.random.choice(current_evaluators)
 
+            # NOTE: multifunc需要改这条路get_prompt->_generate_prompt->_generate_prompt
             prompt = current_database.get_prompt()
             reset_time = time.time()
-
             samples = self._llm.draw_samples(prompt.code, count_list,self._database_index)
             sample_time = (time.time() - reset_time) / self._samples_per_prompt
-
             new_code = "".join(samples)
             self._global_sample_nums_plus_one()
             cur_global_sample_nums = self._get_global_sample_nums()
-
             chosen_evaluator.analyse(
                 new_code,
                 prompt.island_id,
@@ -140,7 +138,7 @@ class Sampler:
                 global_sample_nums=cur_global_sample_nums,
                 sample_time=sample_time,
                 score_list_score=score_list.score,
-                exec_size=score_list.parallel_size,
+                # exec_size=score_list.parallel_size,
                 score_list=score_list,
                 current_index=self._database_index
             )

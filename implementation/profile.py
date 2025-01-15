@@ -7,9 +7,20 @@ import os.path
 from typing import List, Dict
 import logging
 import json
-from implementation import code_manipulation
+# from implementation import code_manipulation
 from torch.utils.tensorboard import SummaryWriter
 
+import yaml
+with open('config.yaml', 'r') as file:
+    conf = yaml.safe_load(file)
+language = conf['language']
+
+if language == 'cpp':
+    from implementation import code_manipulation_cpp as code_manipulation
+elif language == 'c':
+    from implementation import code_manipulation_c as code_manipulation
+else:
+    raise ValueError("Unsupported language specified in config.yaml")
 
 
 class Profiler:

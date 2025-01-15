@@ -8,21 +8,49 @@ from implementation import config
 from implementation import sampler
 from implementation import evaluator_accelerate
 from implementation import evaluator
-from implementation import code_manipulation
+# from implementation import code_manipulation
 import bin_packing_utils
 
 import os
 
-data_set='knightsrandom_24'
-data_set_eval='knightsrandom_24'
-dataset_size='24'
-timeout_value='500'
-case_num='101001'
-parallel_size='24'
-case_code=data_set+'_'+timeout_value+'_'+case_num
-log_name='logs_z3'
-time_list=[100,300,500,700,1000]
+# data_set='test_eval'
+# data_set_eval='test_eval'
+# dataset_size='4'
+# eval_dataset_size = '2'
+# timeout_value='2'
+# case_num='101001'
+# parallel_size='2'
+# case_code=data_set+'_'+timeout_value+'_'+case_num
+# log_name='logs_kissat'
+# time_list=[100,300,500,700,1000]
         
+import yaml
+
+# Load YAML configuration
+with open('config.yaml', 'r') as file:
+    conf = yaml.safe_load(file)
+
+language = conf['language']
+
+if language == 'cpp':
+    from implementation import code_manipulation_cpp as code_manipulation
+elif language == 'c':
+    print('c')
+    from implementation import code_manipulation_c as code_manipulation
+else:
+    raise ValueError("Unsupported language specified in config.yaml")
+
+data_set = conf['data_set']
+data_set_eval = conf['data_set_eval']
+dataset_size = conf['dataset_size']
+eval_dataset_size = conf['eval_dataset_size']
+timeout_value = conf['timeout_value']
+case_num = conf['case_num']
+parallel_size = conf['parallel_size']
+case_code=data_set+'_'+timeout_value+'_'+case_num
+log_name = conf['log_name']
+time_list = conf['time_list']
+
 
 class LocalLLM(sampler.LLM):
     """Language model that predicts continuation of provided source code.
@@ -36,106 +64,7 @@ class LocalLLM(sampler.LLM):
         super().__init__(samples_per_prompt)
         # url = 'http://0.0.0.0:8000/v1/completions'
         url = 'http://0.0.0.0:8000/v1/chat/completions'
-        additional_prompt = [
-            # (
-            #  'In the context of SAT solvers that use the VSIDS heuristic. '
-            #  'Given the existing restarting_v0 function, please generate an optimized version named restarting_v*. '
-            #  'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
-            #  'The function evaluates several conditions related to the solver\'s state, conflict count, and metrics of clause quality to decide whether a restart should occur. '
-            #  'This helps the solver to avoid getting stuck in difficult regions of the search space and potentially improve its efficiency.'
-            #  'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
-            #  'Ensure the function is significantly different and more advanced than the prior versions. '
-            #  'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-            #  'Existing restarting_v0 function for reference:'
-            #  'If the option to restart (\'opts.restart\') is not enabled, the function immediately returns \'false\', indicating that no restart should occur.'
-            #  'This condition checks if the current decision level (\'level\') is less than the number of assumptions plus two. If it is, the function returns \'false\', meaning the solver is too early in its decision process to consider a restart.'
-            #  'If the \'stabilizing()\' function returns \'true\', the function returns the value of \'reluctant\', which indicates whether a reluctant restart should be considered based on the solver\'s stabilization state.'
-            #  'If the current number of conflicts (\'stats.conflicts\') is less than or equal to the restart limit (\'lim.restart\'), the function returns \'false\', meaning there haven\'t been enough conflicts to warrant a restart.'
-            #  'The function calculates the fast and slow exponential moving averages (EMAs) of the glue (a measure of clause quality). '
-            #  'It computes the restart margin based on \'opts.restartmargin\' and multiplies the slow EMA by this margin to get the limit (\'l\'). '
-            #  'The function returns \'true\' if the fast EMA (\'f\') is greater than or equal to the computed limit (\'l\'), indicating that the conditions for a restart have been met. Otherwise, it returns \'false\'.'
-            #   'Your task is to create the optimized restarting_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
-            # ),
-
-            # (
-            #  'In the context of SAT solvers that use the VSIDS heuristic. '# the activity of a variable represents how often the variable has been involved in conflicts.'
-            #  'Given the existing bump_variable_score_v0 function, please generate an optimized version named bump_variable_score_v*. '
-            #  'ensure that no new member variables or functions are introduced beyond those already mentioned, and avoid any syntax errors or undefined behaviors.'
-            #  'This function is part of a SAT solver\'s implementation designed to dynamically adjust the heuristic scores of variables '
-            #  'based on their involvement in conflict resolution or other heuristic decisions. '
-            #  'The new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
-            #  'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
-            #  'Ensure the function is significantly different and more advanced than the prior versions. '
-            #  'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-            #  'Existing bump_variable_score_v0 function for reference:'
-            #  'Args:'
-            #      'lit: An integer representing the literal whose variable\'s score needs to be bumped.'
-            #  'The function increments the score of the variable associated with lit by score_inc, a predefined increment value, enhancing the variable\'s priority for future decision-making.'
-            #  'If updating the score results in exceeding a predefined limit (evsids_limit_hit), a rescaling function (rescale_variable_scores) is triggered to prevent numerical overflow:'
-            #  'Scores are recalibrated, and then the score increment is reapplied to ensure the updated value is within the acceptable range.'
-            #  'The function updates the score of the variable at index idx to new_score.'
-            #  'It checks if the variable\'s index is currently in the scores data structure. '
-            #  'If it is, its position in the structure is updated to reflect its new score. '
-            #  'This data structure is crucial for efficiently selecting the next variable for decision-making based on their activity scores.'
-            #  'Your task is to create the optimized bump_variable_score_v* function based on the guidelines above.'
-            #  'Remember, only the C++ function code is needed, and it should adhere strictly to C++11 standards without referencing undefined functions, variables, or external libraries.'
-            #  'Additionally, ensure that no new member variables or functions are introduced beyond those already mentioned.'
-            # ),
-
-
-            # (
-            # 'The tiebreaking_heuristic function is designed to compare two literals, lit1 and lit2, in solving SAT problems. '
-            # 'It calculates a heuristic value to help break ties between these literals based on their relationships with each other.'
-            # 'The function first checks if there is a cached heuristic value for lit2. '
-            # 'This is done using tmp_heuristic_cache_full, a cache that stores precomputed heuristic values. '
-            # 'The function uses the index of lit2 (retrieved by sparsevec_lit_idx(lit2)) to look it up.'
-            # 'If a cached value is found, it is returned immediately, which helps avoid redundant calculations.'
-            # 'If the value is not cached, the function proceeds to update the adjacency matrix with lit1 and lit2 by calling update_adjacency_matrix for each literal.' 
-            # 'The adjacency matrix represents relationships between literals.'
-            # 'The function then retrieves sparse vectors vec1 and vec2 from the adjacency matrix.' 
-            # 'These vectors correspond to the literals abs1 and abs2, where abs1 and abs2 are the absolute values of lit1 and lit2, respectively.'
-            # 'It initializes a variable total_count to accumulate the heuristic value.'
-            # 'The function iterates over the non-zero elements of vec2. For each non-zero element, it updates the adjacency matrix for a variable var and retrieves its sparse vector vec3.'
-            # 'It then computes the dot product between vec1 and vec3, multiplied by the coefficient of vec2 at var, and adds this to total_count.'
-            # 'The computed total_count is then stored in the cache (tmp_heuristic_cache_full) with the index of lit2 as the key for future use.'
-            # 'Finally, the function returns the total_count, which is the heuristic value used to break ties between lit1 and lit2.'
-            # 'Your task is to create the optimized tiebreaking_heuristic_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
-            # ),
-            # (
-            # 'The tiebreaking_heuristic function is designed to compare two literals, lit1 and lit2, in solving SAT problems. '
-            # 'It calculates a heuristic value to help break ties between these literals based on their relationships with each other.'
-            # 'The function first calculates the index idx2 for lit2, then searches for this index in the tmp_heuristic_cache_full hash table.'
-            # 'If found, it directly returns the cached value to avoid redundant computations. '
-            # 'The function updates the adjacency matrices for both literals lit1 and lit2 '
-            # 'and retrieves the corresponding sparse vectors vec1 and vec2 from the updated adjacency matrices.'
-            # 'The function then uses OpenMP to parallelize the computation of the heuristic value.' 
-            # 'It iterates over all elements in vec2, and for each non-zero element, calculates the dot product with vec1, '
-            # 'then multiplies the dot product by the coefficient in vec2 and adds it to total_count.' 
-            # 'After the computation, the result is stored in the cache and returned.'
-            # 'Your task is to create the optimized tiebreaking_heuristic_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
-            # ),
-            # (
-            #  'In the context of SAT solvers that use the VSIDS heuristic. '
-            #  'Given the existing bump_var_v0 function, please generate an optimized version named bump_var_v*. '
-            #  'This new version should be more efficient, incorporating multiple conditional logic and loops as necessary. '
-            #  'The function is part of a SAT solver\'s implementation, which is designed to dynamically adjust the heuristic scores of variables '
-            #  'based on their involvement in conflict resolution or other heuristic decisions. '
-            #  'The new versions should try to help SAT solver escape from local optimum, and perform more efficiently.'
-            #  'Ensure the function is significantly different and more advanced than the prior versions. '
-            #  'Only the C++ code for the function is required, without any additional descriptions or annotations.'
-            #  'Existing bump_var_v0 function for reference:'
-            #  'Args:'
-            #      'var: An integer representing the index of a variable.'
-            #      'coeff: A double value used as a coefficient to scale the increment of the variable\'s activity score.'
-            #  'This function increments the activity score of the variable var by var_inc (a base increment value) scaled by coeff. '
-            #  'This is done to increase the priority of the variable for future decision-making.'
-            #  'If this updated score exceeds 1e100, it triggers a normalization step to prevent floating-point overflow:'
-            #  'All variable scores are scaled down by multiplying with 1e-100.'
-            #  'The base increment value var_inc is also scaled down by the same factor to maintain consistent scaling.'
-            #  'The function checks if the variable is currently in the VSIDS heap. If it is, its position in the heap is updated to reflect its new activity score. '
-            #  'This heap is crucial for efficiently selecting the next variable for decision-making based on their activity scores.'
-            #   'Your task is to create the optimized restarting_v* function based on the guidelines above. Remember, only the C++ function code is needed.'
-            # ),
+        additional_prompt = conf['additional_prompt']
             # ('''
             #  In the context of SAT solvers that use the VSIDS heuristic, 
             #  you are tasked with developing an optimized version of the bump_variable_score function, 
@@ -308,39 +237,39 @@ class LocalLLM(sampler.LLM):
             #     The code should adhere strictly to C standards without referencing undefined functions, variables, or external libraries.
             #  '''
             #  ),
-            ('''
-             In the context of SAT solvers that use the VSIDS heuristic, 
-             you are tasked with developing an optimized version of the inc_activity function, 
-             named inc_activity_v*. This function is integral to a SAT solver's implementation, 
-             designed to determine whether a restart of the SAT solver is necessary based on dynamic conditions and performance metrics.
-             The new version should be more efficient and capable of helping the SAT solver escape from local optima.
-             Requirements:
-                Function Name: inc_activity_v*
-                Language: C++
-                Dependencies: Avoid using undefined functions, variables, or external libraries.
-                Member Variables and Functions: Use only those that have been explicitly mentioned or are evident from the provided context.
-                Complexity: Incorporate multiple conditional logics and loops as necessary to enhance efficiency and decision-making capability.
-                Behavioral Guarantees: Ensure no syntax errors or undefined behaviors are introduced. The function should significantly differ from and advance beyond the prior versions.
-             Existing Function for Reference:
-                Function: inc_activity
-                Arguments:
-                    v: A type bool_var that specifies the variable index within the SAT solver.
-                Behavior:
-                    The function begins by increasing the activity of the specified variable (v) by adding a fixed increment (m_activity_inc). This increment reflects the variable's significance based on recent solver activities.
-                    It checks if the updated activity value exceeds a preset threshold (1 << 24) to prevent integer overflow. If this threshold is exceeded:
-                        The function executes rescale_activity(), which iterates through all variables, scaling down their activity values to ensure numerical stability within the system. This activity scaling is crucial in maintaining proper operational balance and preventing runaway growth in activity values.
-                        This rescaling makes certain that the increment value (m_activity_inc) remains proportionate, thereby curbing excessive accumulation in future updates.
-                        After updating the activity, the function checks if the variable v is currently managed within a priority queue (m_case_split_queue), which is utilized for maintaining variable priorities based on activities.
-                        If the variable is in the queue, it triggers an event handler (activity_increased_eh) to update its position, ensuring that the queue properties (such as order and integrity) are properly maintained.
-                    The function's approach permits the SAT solver to dynamically prioritize variables that are increasingly relevant to recent conflicts or conditions, thereby improving the efficiency of the solving process.
-                    By attentively managing the activity increments and queue updates, the function averts numerical instabilities and sustains both the efficiency and effectiveness of the solver's operations.             Task:
-                Create the optimized inc_activity_v* function based on the guidelines above. 
-                Ensure that no new member variables or functions are introduced beyond those already mentioned. 
-                The code should adhere strictly to C standards without referencing undefined functions, variables, or external libraries.
-             '''
-             ),
+            # ('''
+            #  In the context of SAT solvers that use the VSIDS heuristic, 
+            #  you are tasked with developing an optimized version of the inc_activity function, 
+            #  named inc_activity_v*. This function is integral to a SAT solver's implementation, 
+            #  designed to determine whether a restart of the SAT solver is necessary based on dynamic conditions and performance metrics.
+            #  The new version should be more efficient and capable of helping the SAT solver escape from local optima.
+            #  Requirements:
+            #     Function Name: inc_activity_v*
+            #     Language: C++
+            #     Dependencies: Avoid using undefined functions, variables, or external libraries.
+            #     Member Variables and Functions: Use only those that have been explicitly mentioned or are evident from the provided context.
+            #     Complexity: Incorporate multiple conditional logics and loops as necessary to enhance efficiency and decision-making capability.
+            #     Behavioral Guarantees: Ensure no syntax errors or undefined behaviors are introduced. The function should significantly differ from and advance beyond the prior versions.
+            #  Existing Function for Reference:
+            #     Function: inc_activity
+            #     Arguments:
+            #         v: A type bool_var that specifies the variable index within the SAT solver.
+            #     Behavior:
+            #         The function begins by increasing the activity of the specified variable (v) by adding a fixed increment (m_activity_inc). This increment reflects the variable's significance based on recent solver activities.
+            #         It checks if the updated activity value exceeds a preset threshold (1 << 24) to prevent integer overflow. If this threshold is exceeded:
+            #             The function executes rescale_activity(), which iterates through all variables, scaling down their activity values to ensure numerical stability within the system. This activity scaling is crucial in maintaining proper operational balance and preventing runaway growth in activity values.
+            #             This rescaling makes certain that the increment value (m_activity_inc) remains proportionate, thereby curbing excessive accumulation in future updates.
+            #             After updating the activity, the function checks if the variable v is currently managed within a priority queue (m_case_split_queue), which is utilized for maintaining variable priorities based on activities.
+            #             If the variable is in the queue, it triggers an event handler (activity_increased_eh) to update its position, ensuring that the queue properties (such as order and integrity) are properly maintained.
+            #         The function's approach permits the SAT solver to dynamically prioritize variables that are increasingly relevant to recent conflicts or conditions, thereby improving the efficiency of the solving process.
+            #         By attentively managing the activity increments and queue updates, the function averts numerical instabilities and sustains both the efficiency and effectiveness of the solver's operations.             Task:
+            #     Create the optimized inc_activity_v* function based on the guidelines above. 
+            #     Ensure that no new member variables or functions are introduced beyond those already mentioned. 
+            #     The code should adhere strictly to C standards without referencing undefined functions, variables, or external libraries.
+            #  '''
+            #  ),
 
-            ]
+            # ]
         extra_info = r'''
 
                         '''
@@ -456,7 +385,7 @@ class LocalLLM(sampler.LLM):
                     api_key="sk-f27nghhUpWfx5ULqL5MNmPmZhZxkRGkkoPbHLis30bCJ0U4z",
                 )
                 completion = client.chat.completions.create(
-                  model="gpt-4o",
+                  model="gpt-3.5-turbo",
                   messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": content}
@@ -512,7 +441,9 @@ class Sandbox(evaluator.Sandbox):
         """
         self._verbose = verbose
         self._numba_accelerate = numba_accelerate
-    def _compile_and_run_function(self, program, function_to_run, function_to_evolve, numba_accelerate,score_list_score,exec_size,score_list:evaluator.ScoreList,init=False):
+    def _compile_and_run_function(self, program, function_to_run, function_to_evolve, numba_accelerate,score_list_score,
+                                #   exec_size,
+                                  score_list:evaluator.ScoreList,init=False):
         try:
             
             import json
@@ -525,9 +456,10 @@ class Sandbox(evaluator.Sandbox):
             # script_path = os.path.expanduser("~/Fun_SAT/implementation/SBVA/temp/sbva.sh")
             # script_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/EasySAT.sh")
             # script_path = os.path.expanduser("~/Fun_SAT/implementation/kissat/temp/kissat.sh")
-            script_path = os.path.expanduser("/home/ubuntu/z3/temp/z3.sh")
-            data_path = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/dataset/"+data_set)
-            data_path_eval = os.path.expanduser("~/Fun_SAT/implementation/EasySAT-main/dataset/"+data_set_eval)
+            # script_path = os.path.expanduser("/home/ubuntu/z3/temp/z3.sh")
+            script_path = os.path.expanduser(conf['script_path'])
+            data_path = os.path.expanduser("~/Fun_SAT/dataset/"+data_set)
+            data_path_eval = os.path.expanduser("~/Fun_SAT/dataset/"+data_set_eval)
 
             command_run = []
             if(init):  
@@ -536,7 +468,8 @@ class Sandbox(evaluator.Sandbox):
                 data_path_eval,
                 timeout_value, 
                 parallel_size,
-                exec_size  
+                dataset_size
+                # exec_size  
             ]
             else:
                 command_run = [
@@ -544,7 +477,8 @@ class Sandbox(evaluator.Sandbox):
                 data_path,
                 timeout_value, 
                 parallel_size,
-                exec_size  
+                eval_dataset_size
+                # exec_size  
             ]
             # # 构造命令
             # command_run = []
@@ -563,7 +497,6 @@ class Sandbox(evaluator.Sandbox):
             # subprocess.run(command_make, capture_output=True, text=True, check=True)
             out = subprocess.run(command_run, capture_output=True, text=True, check=True)
             flag = out.returncode
-            print('flag:',flag)
             # result = float(result.stdout)
             par2 = re.search(r"AVGtime: (-\d+(\.+\d+)?)", out.stdout)
             par2 = float(par2.group(1))
@@ -682,7 +615,7 @@ class Sandbox(evaluator.Sandbox):
             test_input: str,  # refers to the current instance
             timeout_seconds: int,
             score_list_score: dict,
-            exec_size:int,
+            # exec_size:int,
             score_list:evaluator.ScoreList,
             init=False,
             **kwargs  # RZ: add this
@@ -716,7 +649,9 @@ class Sandbox(evaluator.Sandbox):
         # 这里我们假设`_compile_and_run_function`将负责使用`subprocess`来执行程序
         # 注意：由于我们不再直接使用multiprocessing.Process，下面的调用方式需要调整
         count_list={}
-        isok, result, count_list = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate,score_list_score,exec_size,score_list,init)
+        isok, result, count_list = self._compile_and_run_function(program, function_to_run, function_to_evolve, self._numba_accelerate,score_list_score,
+                                                                #   exec_size,
+                                                                  score_list,init)
         
 
         # 获取结果，这部分可能需要根据你的实际情况进行调整
@@ -766,7 +701,8 @@ class Sandbox(evaluator.Sandbox):
 
     
 
-specifications = [
+specifications = conf['specifications']
+# specifications = [
 # r'''
 # #include "internal.hpp"
 
@@ -907,23 +843,23 @@ specifications = [
 # }
 
 # ''',
-r'''
-#include "sat/sat_solver.h"
-using namespace sat;
+# r'''
+# #include "sat/sat_solver.h"
+# using namespace sat;
 
-void solver::inc_activity(bool_var v) {
-    unsigned &act = m_activity[v];
-    act += m_activity_inc;
+# void solver::inc_activity(bool_var v) {
+#     unsigned &act = m_activity[v];
+#     act += m_activity_inc;
 
-    if (act > (1 << 24)) {
-        rescale_activity();
-        m_case_split_queue.activity_increased_eh(v);
-    }
-}
-''',
+#     if (act > (1 << 24)) {
+#         rescale_activity();
+#         m_case_split_queue.activity_increased_eh(v);
+#     }
+# }
+# ''',
 
 
-]
+# ]
 
 # It should be noted that the if __name__ == '__main__' is required.
 # Because the inner code uses multiprocess evaluation.

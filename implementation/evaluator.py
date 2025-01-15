@@ -24,15 +24,31 @@ import copy
 from typing import Any, Type
 import profile
 
-from implementation import code_manipulation
+# from implementation import code_manipulation
 from implementation import programs_database
 
+import yaml
+with open('config.yaml', 'r') as file:
+    conf = yaml.safe_load(file)
+language = conf['language']
+
+if language == 'cpp':
+    from implementation import code_manipulation_cpp as code_manipulation
+elif language == 'c':
+    from implementation import code_manipulation_c as code_manipulation
+else:
+    raise ValueError("Unsupported language specified in config.yaml")
+       
+print('lang:',language)
+
 class ScoreList():
-    def __init__(self,dataset_size='24',parallel_size='24'):
+    def __init__(self,
+                #  dataset_size='24',parallel_size='24'
+                 ):
         self.score={}
         self.all_score={}
-        self.dataset_size=dataset_size
-        self.parallel_size=parallel_size
+        # self.dataset_size=dataset_size
+        # self.parallel_size=parallel_size
         self.successcnt=0
     
     def cal_cur_score(self,score_list_score):
@@ -263,16 +279,18 @@ class Evaluator:
     def extract_exact_body(self, code,current_index):
         import re
         # 查找函数开始的位置
-        pattern_starts = [
-            # r"bool Internal::restarting\(.*?\)\s*{",
-            # r"void Internal::bump_variable_score\(.*?\)\s*{",
-            # r"int Formula::tiebreaking_heuristic\(.*?\)\s*{",
-            # r"void Solver::bump_var\(.*?\)\s*{",
-            # r"void kissat_bump_score_increment\(.*?\)\s*{",
-            # r"bool kissat_restarting\(.*?\)\s*{",
-            r"void solver::inc_activity\(.*?\)\s*{",
+        # pattern_starts = [
+        # #     # r"bool Internal::restarting\(.*?\)\s*{",
+        # #     # r"void Internal::bump_variable_score\(.*?\)\s*{",
+        # #     # r"int Formula::tiebreaking_heuristic\(.*?\)\s*{",
+        # #     # r"void Solver::bump_var\(.*?\)\s*{",
+        # #     # r"void kissat_bump_score_increment\(.*?\)\s*{",
+        #     r"bool kissat_restarting\(.*?\)\s*{",
+        # #     r"void solver::inc_activity\(.*?\)\s*{",
 
-            ]
+        #     ]
+        pattern_starts = conf['pattern_starts']
+
         pattern_start=pattern_starts[current_index]
         start_match = re.search(pattern_start, code)
         if not start_match:
@@ -310,31 +328,35 @@ class Evaluator:
     
     def update_exact_function_body(self, new_body_code,current_index):
         import re
-        file_paths = [
-            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
-            # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp',
-            # '/home/ubuntu/Fun_SAT/implementation/SBVA/tiebreaking_heuristic.cpp'
-            # '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/bump_var.cpp',
-            # '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_bump_score_increment.c',
-            # '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_restarting.c',
-            '/home/ubuntu/z3/src/sat/inc_activity.cpp',
-            ]
+        # file_paths = [
+        # #     # '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp',
+        # #     # '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp',
+        # #     # '/home/ubuntu/Fun_SAT/implementation/SBVA/tiebreaking_heuristic.cpp'
+        # #     # '/home/ubuntu/Fun_SAT/implementation/EasySAT-main/bump_var.cpp',
+        # #     # '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_bump_score_increment.c',
+        #     '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_restarting.c',
+        # #     '/home/ubuntu/z3/src/sat/inc_activity.cpp',
+        #     ]
+        file_paths = conf['file_paths']
+
         file_path=file_paths[current_index]
         with open(file_path, 'r') as file:
             content = file.read()
 
         # 正则表达式匹配priority函数的定义及其函数体
         # 注意：此处假设函数体由花括号包围，并考虑到C++中可能的注释和空白字符
-        patterns = [
-            # r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
-            # r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
-            # r"(int Formula::tiebreaking_heuristic\(.*?\)\s*{)([\s\S]*?)(^\})",
-            # r"(void Solver::bump_var\(.*?\)\s*{)([\s\S]*?)(^\})",
-            # r"(void kissat_bump_score_increment\(.*?\)\s*{)([\s\S]*?)(^\})",
-            # r"(bool kissat_restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
-            r"(void solver::inc_activity\(.*?\)\s*{)([\s\S]*?)(^\})",
-            ]
-        
+        # patterns = [
+        # #     # r"(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
+        # #     # r"(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})"
+        # #     # r"(int Formula::tiebreaking_heuristic\(.*?\)\s*{)([\s\S]*?)(^\})",
+        # #     # r"(void Solver::bump_var\(.*?\)\s*{)([\s\S]*?)(^\})",
+        # #     # r"(void kissat_bump_score_increment\(.*?\)\s*{)([\s\S]*?)(^\})",
+        #     r"(bool kissat_restarting\(.*?\)\s*{)([\s\S]*?)(^\})",
+        # #     r"(void solver::inc_activity\(.*?\)\s*{)([\s\S]*?)(^\})",
+        #     ]
+        patterns = conf['patterns']
+        # print('patterns:',patterns)
+        # print('patterns1:',patterns1)
         pattern=patterns[current_index]
 
         # 构建新的函数体，确保新代码的正确缩进
@@ -365,7 +387,7 @@ class Evaluator:
             island_id: int | None,
             version_generated: int | None,
             score_list_score:dict,
-            exec_size:str,
+            # exec_size:str,
             score_list:ScoreList,
             current_index,
             init=False,
@@ -392,10 +414,11 @@ class Evaluator:
             # RZ: IMPORTANT !!! if self._inputs is a dict,
             # current_input is a key (perhaps in string type)
             # do not ignore this when implementing SandBox !!!
-            
             test_output, runs_ok, count_list = self._sandbox.run(
                 program, self._function_to_run, self._function_to_evolve, self._inputs, current_input,
-                self._timeout_seconds,score_list_score,exec_size,score_list,init
+                self._timeout_seconds,score_list_score,
+                # exec_size,
+                score_list,init
             )
 
             # NOTE：可以不返回?

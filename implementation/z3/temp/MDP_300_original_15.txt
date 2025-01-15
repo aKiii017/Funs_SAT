@@ -1,0 +1,145 @@
+src/sat/inc_activity.cpp
+src/sat/sat_solver.cpp
+g++  -o z3  shell/datalog_frontend.o shell/dimacs_frontend.o shell/drat_frontend.o shell/main.o shell/opt_frontend.o shell/smtlib_frontend.o shell/z3_log_frontend.o shell/install_tactic.o shell/mem_initializer.o shell/gparams_register_modules.o api/api.a cmd_context/extra_cmds/extra_cmds.a opt/opt.a tactic/portfolio/portfolio.a tactic/fpa/fpa_tactics.a tactic/ufbv/ufbv_tactic.a tactic/smtlogics/smtlogic_tactics.a muz/fp/fp.a muz/bmc/bmc.a muz/ddnf/ddnf.a muz/tab/tab.a muz/clp/clp.a muz/spacer/spacer.a muz/rel/rel.a muz/transforms/transforms.a muz/dataflow/dataflow.a muz/base/muz.a tactic/fd_solver/fd_solver.a sat/sat_solver/sat_solver.a qe/qe.a tactic/sls/sls_tactic.a smt/tactic/smt_tactic.a tactic/bv/bv_tactics.a nlsat/tactic/nlsat_tactic.a sat/tactic/sat_tactic.a sat/smt/sat_smt.a smt/smt.a smt/proto_model/proto_model.a math/subpaving/tactic/subpaving_tactic.a solver/assertions/solver_assertions.a tactic/arith/arith_tactics.a tactic/core/core_tactics.a ast/fpa/fpa.a ackermannization/ackermannization.a tactic/aig/aig_tactic.a ast/pattern/pattern.a parsers/smt2/smt2parser.a cmd_context/cmd_context.a solver/solver.a qe/lite/qe_lite.a qe/mbp/mbp.a tactic/tactic.a ast/sls/ast_sls.a ast/simplifiers/simplifiers.a ast/converters/converters.a model/model.a ast/macros/macros.a ast/proofs/proofs.a ast/substitution/substitution.a ast/normal_forms/normal_forms.a ast/rewriter/bit_blaster/bit_blaster.a ast/rewriter/rewriter.a math/lp/lp.a nlsat/nlsat.a sat/sat.a math/grobner/grobner.a ast/euf/euf.a parsers/util/parser_util.a smt/params/smt_params.a ast/ast.a math/subpaving/subpaving.a math/realclosure/realclosure.a params/params.a math/automata/automata.a math/hilbert/hilbert.a math/simplex/simplex.a math/dd/dd.a math/interval/interval.a math/polynomial/polynomial.a util/util.a -lpthread 
+g++ -o libz3.so -shared api/dll/dll.o api/dll/install_tactic.o api/dll/mem_initializer.o api/dll/gparams_register_modules.o api/api_algebraic.o api/api_arith.o api/api_array.o api/api_ast.o api/api_ast_map.o api/api_ast_vector.o api/api_bv.o api/api_config_params.o api/api_context.o api/api_datalog.o api/api_datatype.o api/api_fpa.o api/api_goal.o api/api_log.o api/api_model.o api/api_numeral.o api/api_opt.o api/api_params.o api/api_parsers.o api/api_pb.o api/api_polynomial.o api/api_qe.o api/api_quant.o api/api_rcf.o api/api_seq.o api/api_solver.o api/api_special_relations.o api/api_stats.o api/api_tactic.o api/z3_replayer.o api/api_log_macros.o api/api_commands.o cmd_context/extra_cmds/extra_cmds.a opt/opt.a tactic/portfolio/portfolio.a tactic/fpa/fpa_tactics.a tactic/ufbv/ufbv_tactic.a tactic/smtlogics/smtlogic_tactics.a muz/fp/fp.a muz/bmc/bmc.a muz/ddnf/ddnf.a muz/tab/tab.a muz/clp/clp.a muz/spacer/spacer.a muz/rel/rel.a muz/transforms/transforms.a muz/dataflow/dataflow.a muz/base/muz.a tactic/fd_solver/fd_solver.a sat/sat_solver/sat_solver.a qe/qe.a tactic/sls/sls_tactic.a smt/tactic/smt_tactic.a tactic/bv/bv_tactics.a nlsat/tactic/nlsat_tactic.a sat/tactic/sat_tactic.a sat/smt/sat_smt.a smt/smt.a smt/proto_model/proto_model.a math/subpaving/tactic/subpaving_tactic.a solver/assertions/solver_assertions.a tactic/arith/arith_tactics.a tactic/core/core_tactics.a ast/fpa/fpa.a ackermannization/ackermannization.a tactic/aig/aig_tactic.a ast/pattern/pattern.a parsers/smt2/smt2parser.a cmd_context/cmd_context.a solver/solver.a qe/lite/qe_lite.a qe/mbp/mbp.a tactic/tactic.a ast/sls/ast_sls.a ast/simplifiers/simplifiers.a ast/converters/converters.a model/model.a ast/macros/macros.a ast/proofs/proofs.a ast/substitution/substitution.a ast/normal_forms/normal_forms.a ast/rewriter/bit_blaster/bit_blaster.a ast/rewriter/rewriter.a math/lp/lp.a nlsat/nlsat.a sat/sat.a math/grobner/grobner.a ast/euf/euf.a parsers/util/parser_util.a smt/params/smt_params.a ast/ast.a math/subpaving/subpaving.a math/realclosure/realclosure.a params/params.a math/automata/automata.a math/hilbert/hilbert.a math/simplex/simplex.a math/dd/dd.a math/interval/interval.a math/polynomial/polynomial.a util/util.a -lpthread  -Wl,-soname,libz3.so
+ln -f -s ../libz3.so python
+Z3 was successfully built.
+Z3Py scripts can already be executed in the 'build/python' directory.
+Z3Py scripts stored in arbitrary directories can be executed if the 'build/python' directory is added to the PYTHONPATH environment variable and the 'build' directory is added to the LD_LIBRARY_PATH environment variable.
+Use the following command to install Z3 at prefix /home/ubuntu/miniconda3.
+    sudo make install
+Z3 was successfully installed.
+
+ALLtimes:
+[TASK001]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-12-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK002]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-14-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK003]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-14-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK004]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-10-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK005]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-11-sat.cnf 
+[RUNtime]295.646 s
+[RESULT]SATISFIABLE
+
+[TASK006]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-16-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK007]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-12-sat.cnf 
+[RUNtime]134.802 s
+[RESULT]SATISFIABLE
+
+[TASK008]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-16-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK009]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-14-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK010]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-12-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK011]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-14-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK012]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-12-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK013]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-10-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK014]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-12-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK015]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-11-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK016]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-16-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK017]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-12-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK018]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-10-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK019]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-10-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK020]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-14-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK021]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-16-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK022]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-16-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK023]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-11-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK024]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-14-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK025]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-11-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK026]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-28-11-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK027]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-10-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK028]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-32-10-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK029]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-16-sat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK030]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/MDP/mdp-36-11-unsat.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+TOTALtime: 17230.5 s
+AVGtime: -574.35 s
+TIMEOUTcount: 28
+SUCCESScount: 2
+INTERRUPTcount: 0
+100Scount: 0
+300Scount: 2
+500Scount: 2
+700Scount: 30
+1000Scount: 30
+1500Scount: 30
+Finish in 601.493 s

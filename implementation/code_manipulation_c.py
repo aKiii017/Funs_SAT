@@ -39,6 +39,11 @@ import tempfile
 from typing import List, Optional
 from absl import logging
 
+import yaml
+# Load YAML configuration
+with open('config.yaml', 'r') as file:
+    conf = yaml.safe_load(file)
+
 @dataclasses.dataclass
 class Function:
     """A parsed C++ function."""
@@ -205,6 +210,8 @@ def text_to_program(source_code: str) -> Program:
 def text_to_function(text: str) -> Function:
     """Returns Function object by parsing input text using Python AST."""
 
+    for include in conf['includes']:
+        text = include + "\n" + text
 
     # text="using namespace CaDiCaL;\n"+text
     # text="#include \"internal.hpp\"\n"+text
@@ -218,20 +225,12 @@ def text_to_function(text: str) -> Function:
     # text="#include \"bump.h\"\n"+text
     # text="#include \"internal.h\"\n"+text
 
-    text="#include <stdbool.h>\n"+text
-    text="#include \"internal.h\"\n"+text
-    text="#include \"restart.h\"\n"+text
+    # text="#include <stdbool.h>\n"+text
+    # text="#include \"internal.h\"\n"+text
+    # text="#include \"restart.h\"\n"+text
 
     # include_paths = ["/home/ubuntu/Fun_SAT/implementation/EasySAT-main"]
     program = text_to_program(text)
-    # print('program:',program)
-    # print("Preface:", program.preface)
-    # print("Functions:", len(program.functions))
-    # for func in program.functions:
-    #     print(f"Function name: {func.name}")
-    #     print(f"Arguments: {func.args}")
-    #     print(f"Return type: {func.return_type}")
-    #     print(f"Body:\n{func.body}")
 
     if len(program.functions) != 1:
         raise ValueError(f'Only one function expected, got {len(program.functions)}'

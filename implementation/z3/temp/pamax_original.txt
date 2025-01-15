@@ -1,0 +1,85 @@
+src/sat/inc_activity.cpp
+src/sat/sat_solver.cpp
+g++  -o z3  shell/datalog_frontend.o shell/dimacs_frontend.o shell/drat_frontend.o shell/main.o shell/opt_frontend.o shell/smtlib_frontend.o shell/z3_log_frontend.o shell/install_tactic.o shell/mem_initializer.o shell/gparams_register_modules.o api/api.a cmd_context/extra_cmds/extra_cmds.a opt/opt.a tactic/portfolio/portfolio.a tactic/fpa/fpa_tactics.a tactic/ufbv/ufbv_tactic.a tactic/smtlogics/smtlogic_tactics.a muz/fp/fp.a muz/bmc/bmc.a muz/ddnf/ddnf.a muz/tab/tab.a muz/clp/clp.a muz/spacer/spacer.a muz/rel/rel.a muz/transforms/transforms.a muz/dataflow/dataflow.a muz/base/muz.a tactic/fd_solver/fd_solver.a sat/sat_solver/sat_solver.a qe/qe.a tactic/sls/sls_tactic.a smt/tactic/smt_tactic.a tactic/bv/bv_tactics.a nlsat/tactic/nlsat_tactic.a sat/tactic/sat_tactic.a sat/smt/sat_smt.a smt/smt.a smt/proto_model/proto_model.a math/subpaving/tactic/subpaving_tactic.a solver/assertions/solver_assertions.a tactic/arith/arith_tactics.a tactic/core/core_tactics.a ast/fpa/fpa.a ackermannization/ackermannization.a tactic/aig/aig_tactic.a ast/pattern/pattern.a parsers/smt2/smt2parser.a cmd_context/cmd_context.a solver/solver.a qe/lite/qe_lite.a qe/mbp/mbp.a tactic/tactic.a ast/sls/ast_sls.a ast/simplifiers/simplifiers.a ast/converters/converters.a model/model.a ast/macros/macros.a ast/proofs/proofs.a ast/substitution/substitution.a ast/normal_forms/normal_forms.a ast/rewriter/bit_blaster/bit_blaster.a ast/rewriter/rewriter.a math/lp/lp.a nlsat/nlsat.a sat/sat.a math/grobner/grobner.a ast/euf/euf.a parsers/util/parser_util.a smt/params/smt_params.a ast/ast.a math/subpaving/subpaving.a math/realclosure/realclosure.a params/params.a math/automata/automata.a math/hilbert/hilbert.a math/simplex/simplex.a math/dd/dd.a math/interval/interval.a math/polynomial/polynomial.a util/util.a -lpthread 
+g++ -o libz3.so -shared api/dll/dll.o api/dll/install_tactic.o api/dll/mem_initializer.o api/dll/gparams_register_modules.o api/api_algebraic.o api/api_arith.o api/api_array.o api/api_ast.o api/api_ast_map.o api/api_ast_vector.o api/api_bv.o api/api_config_params.o api/api_context.o api/api_datalog.o api/api_datatype.o api/api_fpa.o api/api_goal.o api/api_log.o api/api_model.o api/api_numeral.o api/api_opt.o api/api_params.o api/api_parsers.o api/api_pb.o api/api_polynomial.o api/api_qe.o api/api_quant.o api/api_rcf.o api/api_seq.o api/api_solver.o api/api_special_relations.o api/api_stats.o api/api_tactic.o api/z3_replayer.o api/api_log_macros.o api/api_commands.o cmd_context/extra_cmds/extra_cmds.a opt/opt.a tactic/portfolio/portfolio.a tactic/fpa/fpa_tactics.a tactic/ufbv/ufbv_tactic.a tactic/smtlogics/smtlogic_tactics.a muz/fp/fp.a muz/bmc/bmc.a muz/ddnf/ddnf.a muz/tab/tab.a muz/clp/clp.a muz/spacer/spacer.a muz/rel/rel.a muz/transforms/transforms.a muz/dataflow/dataflow.a muz/base/muz.a tactic/fd_solver/fd_solver.a sat/sat_solver/sat_solver.a qe/qe.a tactic/sls/sls_tactic.a smt/tactic/smt_tactic.a tactic/bv/bv_tactics.a nlsat/tactic/nlsat_tactic.a sat/tactic/sat_tactic.a sat/smt/sat_smt.a smt/smt.a smt/proto_model/proto_model.a math/subpaving/tactic/subpaving_tactic.a solver/assertions/solver_assertions.a tactic/arith/arith_tactics.a tactic/core/core_tactics.a ast/fpa/fpa.a ackermannization/ackermannization.a tactic/aig/aig_tactic.a ast/pattern/pattern.a parsers/smt2/smt2parser.a cmd_context/cmd_context.a solver/solver.a qe/lite/qe_lite.a qe/mbp/mbp.a tactic/tactic.a ast/sls/ast_sls.a ast/simplifiers/simplifiers.a ast/converters/converters.a model/model.a ast/macros/macros.a ast/proofs/proofs.a ast/substitution/substitution.a ast/normal_forms/normal_forms.a ast/rewriter/bit_blaster/bit_blaster.a ast/rewriter/rewriter.a math/lp/lp.a nlsat/nlsat.a sat/sat.a math/grobner/grobner.a ast/euf/euf.a parsers/util/parser_util.a smt/params/smt_params.a ast/ast.a math/subpaving/subpaving.a math/realclosure/realclosure.a params/params.a math/automata/automata.a math/hilbert/hilbert.a math/simplex/simplex.a math/dd/dd.a math/interval/interval.a math/polynomial/polynomial.a util/util.a -lpthread  -Wl,-soname,libz3.so
+ln -f -s ../libz3.so python
+Z3 was successfully built.
+Z3Py scripts can already be executed in the 'build/python' directory.
+Z3Py scripts stored in arbitrary directories can be executed if the 'build/python' directory is added to the PYTHONPATH environment variable and the 'build' directory is added to the LD_LIBRARY_PATH environment variable.
+Use the following command to install Z3 at prefix /home/ubuntu/miniconda3.
+    sudo make install
+Z3 was successfully installed.
+
+ALLtimes:
+[TASK001]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/32585e66749f42e161e94fc49fd64750-pcmax-scheduling-m26-6398-62377-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK002]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/31e788a12ddc8b43ec20e77d53abaa23-pcmax-scheduling-m40-26287-324155-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK003]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/5432e4dd44480fadbd66647db1750c80-pcmax-scheduling-m24-24102-255206-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK004]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/da929c2aefde5e59878ad87c4323e581-pcmax-scheduling-m12-8049-55035-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK005]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/207b28c3cefc55b143259222cbfd4962-pcmax-scheduling-m37-28831-324346-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK006]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/bd8bc25be2b36c64b38459c17e815814-pcmax-scheduling-m11-1517-6802-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK007]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/bfadd34e71516e95d0ba2a3a8fb2ba03-pcmax-scheduling-m19-10199-62102-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK008]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/62dcbf79f5ecef5618c9d9a00311326c-pcmax-scheduling-m13-1655-9604-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK009]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/dafc03ea784fee849febca7b64230558-pcmax-scheduling-m30-14113-167638-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK010]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/5b5dfab02ce5c12a50be3bc7d7cc42c7-pcmax-scheduling-m15-2352-13561-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK011]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/7f1c7da531539f3be4a1e0e916913086-pcmax-scheduling-m19-2974-16501-UNSAT.sanitized.cnf 
+[RUNtime]198.977 s
+[RESULT]UNSATISFIABLE
+
+[TASK012]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/0ac6aaf6db6a0e4ec3a06e865d01086f-pcmax-scheduling-m13-2011-12813-UNSAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK013]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/6fc528fc3d0fd5a2c50992feb8bf0357-pcmax-scheduling-m24-17855-226744-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK014]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/74f145bb935650f5c982d7eec6967945-pcmax-scheduling-m43-38782-385402-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+[TASK015]/home/ubuntu/Fun_SAT/implementation/EasySAT-main/dataset/pcmax/9e85aad5707405fb349c6c5548040cf4-pcmax-scheduling-m35-32274-371389-SAT.sanitized.cnf 
+[RUNtime][TIMEOUT]600 s
+[RESULT]UNKNOWN
+
+TOTALtime: 8598.98 s
+AVGtime: -573.265 s
+TIMEOUTcount: 14
+SUCCESScount: 1
+INTERRUPTcount: 0
+100Scount: 0
+300Scount: 1
+500Scount: 1
+700Scount: 15
+1000Scount: 15
+1500Scount: 15
+Finish in 300.933 s

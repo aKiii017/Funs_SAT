@@ -22,13 +22,24 @@ from __future__ import annotations
 # we should use typing.xxx rather than collections.abc.xxx
 from typing import Any, Tuple, Sequence
 
-from implementation import code_manipulation
+# from implementation import code_manipulation
 from implementation import config as config_lib
 from implementation import evaluator
 from implementation import programs_database
 from implementation import sampler
 from implementation import profile
-        
+
+import yaml
+with open('config.yaml', 'r') as file:
+    conf = yaml.safe_load(file)
+language = conf['language']
+
+if language == 'cpp':
+    from implementation import code_manipulation_cpp as code_manipulation
+elif language == 'c':
+    from implementation import code_manipulation_c as code_manipulation
+else:
+    raise ValueError("Unsupported language specified in config.yaml")
 # def _extract_function_names(specification: str) -> Tuple[str, str]:
 #     """Returns the name of the function to evolve and of the function to run.
 
@@ -46,7 +57,7 @@ from implementation import profile
 #         raise ValueError('Expected 1 function decorated with `@funsearch.evolve`.')
 #     return evolve_functions[0], run_functions[0]
 
-def _extract_function_names(spec: str) -> Tuple[str, str]:
+def _extract_function_names(spec: str,index=0) -> Tuple[str, str]:
     import re
 
     # 使用正则表达式匹配函数定义，包括前缀 "Internal::"
@@ -55,10 +66,10 @@ def _extract_function_names(spec: str) -> Tuple[str, str]:
     # function_pattern = r'\b(Solver::\w+)\s*\('
     # function_pattern = r'\bvoid\s+(\w+)\s*\('
     # function_pattern = r'\bbool\s+(\w+)\s*\('
-    function_pattern = r'\b(solver::\w+)\s*\('
+    # function_pattern = r'\b(solver::\w+)\s*\('
 
-
-
+    function_pattern = conf['function_pattern']
+    function_pattern = function_pattern[index]
     # 查找所有匹配的函数名称
     matches = re.findall(function_pattern, spec)
     
@@ -69,7 +80,7 @@ def _extract_function_names(spec: str) -> Tuple[str, str]:
         return function_to_evolve, function_to_run
     
     # 如果没有找到匹配的函数名称，则返回默认值或处理错误
-    return '', ''
+    return 'error', 'error'
 
 
 def main(
@@ -120,9 +131,11 @@ def main(
     evaluators_list = []
     current_index=0
     score_list = evaluator.ScoreList()
-    for spec in specifications:
-        function_to_evolve, function_to_run = _extract_function_names(spec)
+    for index, spec in enumerate(specifications):
+        print('spec',spec)
+        function_to_evolve, function_to_run = _extract_function_names(spec,index)
         template = code_manipulation.text_to_program(spec)
+        print('template',template)
         function_to_evolve_list.append(function_to_evolve)
         function_to_run_list.append(function_to_run)
         templates.append(template)
@@ -154,7 +167,7 @@ def main(
             version_generated=None, 
             profiler=profiler,
             score_list_score=score_list.all_score,
-            exec_size=score_list.dataset_size,
+            # exec_size=score_list.dataset_size,
             score_list=score_list, 
             init=True,
             current_index=current_index

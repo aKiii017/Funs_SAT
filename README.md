@@ -1,107 +1,187 @@
 # FunSearch Implementation
 
-This repository implements the following publication:
-
-> Romera-Paredes, B. et al. [Mathematical discoveries from program search with large language models](https://www.nature.com/articles/s41586-023-06924-6). *Nature* (2023)
-
-## Installation and Requirements
-
-Please note that **the Python version must be larger or equal to Python 3.9**, or the '*ast*' package used in the implementations will fail to work. 
-
-You can run FunSearch for online bin packing locally if enough GPU devices are available. Or you can try to use LLM interfaces to request responses online. 
-
-Please install the packages listed in `requirements.txt`.
-
-## Project Structure
-
-There are some independent directories in this project:
-
-- `bin_packing` contains an example jupyter notebook for the bin packing task. [See here](#colab).
-- `implementation` contains an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline. 
-- `llm-server` contains the implementations of an LLM server that gets the prompt by monitoring requests from FunSearch and response to the inference results to the FunSearch algorithm. 
-
-## Files in `funsearch/implementation`
-
-There are some files in `funsearch/implementation`. They are as follows:
-
-- `code_manipulatoin.py` provides functions to modify the code in the specification.
-- `config.py` includes configs of funsearch.
-- `evaluator.py` trims the sample results from LLM, and evaluates the sampled functions.
-- `evaluator_accelerate.py` accelerates the evaluation using the 'numba' library.
-- `funsearch.py` implements funsearch pipeline. 
-- `profile.py` records the score of the sampled functions.
-- `programs_database.py` evolves the sampled functions.
-- `sampler.py` sends prompts to LLM and gets results.
-
-## <span id="colab">Run FunSearch Demo on Colab</span>
-
-The jupyter notebook in `bin_packing/bin_packing_funsearch.ipynb` can be opened via [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RayZhhh/funsearch/blob/main/bin_packing/bin_packing_funsearch.ipynb). Please note that do not run jupyter notebook locally, as the jupyter notebook backend does not support multiprocess running.
-
-## Run FunSearch Demo Locally
-
-### Parameters and Settings
-
-If you want to adjust the following parameters, you should modify the code in `funsearch/implementation` manually. 
-
-- `timeout_seconds` This parameter defines the maximum evaluation time for a single function. If the evaluation time exceeds this, the evaluation process will be killed. This strategy can prevent *while True* loop and reduce total evaluation costs but may discard potential outstanding functions. You can modify this in `implementation/evaluator.py/class Evaluator`.
-- `_reduce_score` This function does reduction to the score of a sampled function in some instances. The reduction is implemented as *mean* by default. You can modify it in `implementation/program_database.py`, where you can find a '_reduce_score' function.
-
-### Use Local LLM
-
-1. First, start the local LLM server.
+## 环境
 
 ```shell
-# Suppose we are in funsearch directory (root dir of this project).
-cd llm-server
-# Start LLM server: python llm_server.py --port 8088 --path [model path] --d [GPU IDs]
-python llm_server.py --port 8088 --path /LLms/CodeLlama-34b --d 0 1 2 3 4 5
+conda env create -f funsat.yml
 ```
 
-2. Then, start FunSearch.
+## 数据集
+- SAT competition2024
+  https://benchmark-database.de/?track=main_2024
+- SAT competition2023
+  https://satcompetition.github.io/2023/downloads.html
+  
+放在`~/Fun_SAT/dataset/`下
+## 配置文件
 
-```shell
-# Run FunSearch
-python funsearch_bin_packing_local_llm.py
+`config.yaml` 
+
+- data_set: 训练集全集
+- data_set_eval: 验证集，可以与训练集相同，用size区分
+- dataset_size: 训练集size
+- eval_dataset_size: 验证集size
+- timeout_value: 超时时限
+- case_num: 实验编号
+- parallel_size: 同时运行的实例数，根据空闲核数确定
+- log_name: log的储存地址
+- time_list: 不同时限内完成的数目，目前没有实际用途，仅输出用作参考
+- script_path: 运行试验sat求解器的脚本地址
+```yaml
+  # kissat
+  '~/Fun_SAT/implementation/kissat/temp/kissat.sh'
+
+  # cadical
+  # '~/Fun_SAT/implementation/cadical/temp/cadical.sh'
+
+  # SBVA
+  # '~/Fun_SAT/implementation/SBVA/temp/sbva.sh'
+
+  # z3
+  # '~/Fun_SAT/implementation/z3/temp/z3.sh'
+```
+- pattern_starts: 函数起点的pattern
+```yaml
+  # kissat
+  # bump
+  - 'void kissat_bump_score_increment\(.*?\)\s*{' 
+  # restart
+  # - 'bool kissat_restarting\(.*?\)\s*{' 
+
+  # cadical
+  # bump
+  # - 'void Internal::bump_variable_score\(.*?\)\s*{' 
+  # restart
+  # - 'bool Internal::restarting\(.*?\)\s*{' 
+
+  # SBVA
+  # - 'int Formula::tiebreaking_heuristic\(.*?\)\s*{'
+
+  # z3
+  # - 'void solver::inc_activity\(.*?\)\s*{'
+```
+- file_paths: 要修改的函数地址
+```yaml
+  # kissat
+  # bump
+  - '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_bump_score_increment.c'  
+  # restart
+  # - '/home/ubuntu/Fun_SAT/implementation/kissat/src/kissat_restarting.c' 
+
+  # cadical
+  # bump
+  # - '/home/ubuntu/Fun_SAT/implementation/cadical/src/bump_var.cpp'  
+  # restart
+  # - '/home/ubuntu/Fun_SAT/implementation/cadical/src/restarting.cpp' 
+
+  # SBVA
+  # - '/home/ubuntu/Fun_SAT/implementation/SBVA/tiebreaking_heuristic.cpp'
+  
+  # z3
+  # - '/home/ubuntu/z3/src/sat/inc_activity.cpp'
+```
+- patterns: 修改函数时识别的pattern
+```yaml
+  # kissat
+  # bump
+  - '(void kissat_bump_score_increment\(.*?\)\s*{)([\s\S]*?)(^\})'  
+  # restart
+  # - '(bool kissat_restarting\(.*?\)\s*{)([\s\S]*?)(^\})' 
+
+  # cadical
+  # bump
+  # - '(void Internal::bump_variable_score\(.*?\)\s*{)([\s\S]*?)(^\})'  
+  # restart
+  # - '(bool Internal::restarting\(.*?\)\s*{)([\s\S]*?)(^\})'
+
+  # SBVA
+  # - '(int Formula::tiebreaking_heuristic\(.*?\)\s*{)([\s\S]*?)(^\})'
+
+  # z3
+  # - '(void solver::inc_activity\(.*?\)\s*{)([\s\S]*?)(^\})'
+```
+- language: 求解器的实现语言，'c' 或者 'cpp'
+- function_pattern: 为获取函数名的pattern
+```yaml
+  # kissat
+  # bump
+  - '\bvoid\s+(\w+)\s*\(' 
+  # restart
+  # - '\bbool\s+(\w+)\s*\(' 
+
+  # cadical
+  # - '\b(Internal::\w+)\s*\('  
+
+  # SBVA
+  # - '\b(Formula::\w+)\s*\('
+
+  # z3
+  # - '\b(solver::\w+)\s*\('
+```
+- includes: 函数的preface，有这部分才能成功进行语法分析
+```yaml
+  # 需要一个列表，除了这一项以外都只需要列表中的一项
+  # kissat
+  # bump
+  - "#include \"bump.h\""
+  - "#include \"internal.h\""
+  # restart
+  # - "#include <stdbool.h>"
+  # - "#include \"internal.h\""
+  # - "#include \"restart.h\""
+  
+  # cadical
+  # - "using namespace CaDiCaL;"
+  # - "#include \"internal.hpp\""
+
+  # SBVA
+  # - "using namespace std;"
+  # - "#include \"sbva.hpp\""
+
+  # z3
+  # - "using namespace sat;"
+  # - "#include \"sat/sat_solver.h\""
+```
+- include_paths: 也是有这部分才能成功进行语法分析
+```yaml
+  # kissat
+  - "/home/ubuntu/Fun_SAT/implementation/kissat/src" 
+
+  # cadical
+  # - "/home/ubuntu/Fun_SAT/implementation/cadical/src"  
+
+  # SBVA
+  # - "/home/ubuntu/Fun_SAT/implementation/SBVA"
+
+  # z3
+  # - "/home/ubuntu/Fun_SAT/implementation/z3/src"
+```
+- additional_prompt: 给llm的prompt，函数的简单介绍，根据实验情况有时需要添加一些限制
+```yaml
+- |
+  In the context of SAT solvers that use the VSIDS heuristic, 
+  ...
+```
+- specifications: 初始函数
+```yaml
+- |
+  #include "internal.hpp"
+
+  using namespace CaDiCaL;
+  
+  void Internal::bump_variable_score(int lit) {
+    int idx = vidx (lit);
+    double old_score = score (idx);
+    double new_score = old_score + score_inc;
+    if (evsids_limit_hit (new_score)) {
+      rescale_variable_scores ();
+      old_score = score (idx);
+      new_score = old_score + score_inc;
+    }
+    score (idx) = new_score;
+    if (scores.contains (idx))
+      scores.update (idx);
+  }
 ```
 
-You can see logs via *Tensorboard*. Please check the *log_dir* variable defined in `bin_packing_funsearch_my_template.py`, and start the Tensorboard using the following instructions:
-
-```shell
-# Suppose we are in funsearch directory (root directory of this project)
-cd logs
-tensorboard --logdir funsearch_local_llm
-```
-
-### Use LLM Interfaces
-
-1. Set the API's IP address according to your API provider. The code is in `funsearch_bin_packing_llm_api.py` line 33.
-
-```python
-conn = http.client.HTTPSConnection("api.chatanywhere.com.cn")
-```
-
-2. Set the API key in request headers, the code lies in `funsearch_bin_packing_llm_api.py` line 44-48. You should replace `sk-ys...` with your API key.
-
-```python
-headers = {
-  'Authorization': 'Bearer sk-ys02zx...(replace with your API key)...',
-  'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-  'Content-Type': 'application/json'
-}
-```
-
-3. Start FunSearch.
-
-```shell
-# Run FunSearch
-python funsearch_bin_packing_llm_api.py
-```
-
-You can see logs via *Tensorboard*. Please check the *log_dir* variable defined in `bin_packing_funsearch_my_template.py`, and start the Tensorboard using the following instructions:
-
-```shell
-# Suppose we are in funsearch directory (root directory of this project).
-cd logs
-tensorboard --logdir funsearch_llm_api
-```
 
